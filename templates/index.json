@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-slideshow": {
@@ -11,7 +20,7 @@
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Button label",
-            "link": "shopify:\/\/collections",
+            "link": "shopify://collections",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-right",
@@ -38,17 +47,18 @@
     "all-products": {
       "type": "featured-collection",
       "custom_css": [
-        ".card--standard{max-width: 600px; margin: auto;}"
+        ".card--standard {max-width: 600px; margin: auto;}",
+        "h2 {text-align: center; font-weight: 700; font-family: 'Poppins', sans-serif;}"
       ],
       "settings": {
         "collection": "all",
         "products_to_show": 24,
-        "title": "Featured collection",
-        "heading_size": "h2",
+        "title": "Latest Products",
+        "heading_size": "h1",
         "description": "",
         "show_description": true,
         "description_style": "subtitle",
-        "columns_desktop": 1,
+        "columns_desktop": 3,
         "enable_desktop_slider": true,
         "full_width": false,
         "show_view_all": true,
