@@ -306,26 +306,21 @@
 </div>
 
 <script>
-$(document).ready(function(){
-  $(".owl-carousel").owlCarousel({
-    items: 1, // number of items to display at a time
-    loop: true, // infinite loop
-    margin: 10, // space between items
-    nav: true, // show next/prev buttons
-    navText: ['<span class="svg-wrapper">Previous</span>', '<span class="svg-wrapper">Next</span>'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      768: {
-        items: 2
-      },
-      1024: {
-        items: 3
-      }
-    }
-  });
+var owl = $('.owl-carousel');
+owl.owlCarousel({
+    items:4,
+    loop:true,
+    margin:10,
+    autoplay:true,
+    autoplayTimeout:1000,
+    autoplayHoverPause:true
 });
+$('.play').on('click',function(){
+    owl.trigger('play.owl.autoplay',[1000])
+})
+$('.stop').on('click',function(){
+    owl.trigger('stop.owl.autoplay')
+})
 </script>
 
 {% schema %}
