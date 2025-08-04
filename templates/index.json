@@ -20,7 +20,7 @@
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Button label",
-            "link": "shopify://collections",
+            "link": "shopify:\/\/collections",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-right",
@@ -139,7 +139,7 @@
       }
     },
     "featured_collection_custom_HmbC3q": {
-      "type": "featured-collection-custom",
+      "type": "carousel-section",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "collection": "frontpage",
