@@ -277,23 +277,27 @@
 </div>
 
 <script>
-var owl = $('.owl-carousel');
-owl.owlCarousel({
+$(document).ready(function(){
+  $(".owl-carousel").owlCarousel({
     items:4,
     loop:true,
     margin:10,
     autoplay:true,
     autoplayTimeout:1000,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:3
-        },
-        1000:{
-            items:4
-        }
+    nav: true, // show next/prev buttons
+    navText: ['<span class="svg-wrapper">Previous</span>', '<span class="svg-wrapper">Next</span>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      768: {
+        items: 3
+      },
+      1024: {
+        items: 4
+      }
+    }
+  });
 });
 </script>
 
