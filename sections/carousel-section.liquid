@@ -198,7 +198,7 @@
       </slider-component> {% endcomment %}
 
     <!-- Set up your HTML -->
-<div class="owl-carousel owl-theme">
+<div class="owl-carousel owl-theme px-0 px-lg-5 mb-4">
   {% if section.settings.collection.products.size > 0 %}
     {% assign lazy_load = false %}
     {% paginate section.settings.collection.products by section.settings.products_to_show %}
