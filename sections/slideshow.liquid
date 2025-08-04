@@ -307,45 +307,45 @@
 
       {% if slide_link != blank %}
         <script>
-  const slide = document.getElementById('Slide-{{ section.id }}-{{ forloop.index }}');
-  let startX = 0;
-  let isDragging = false;
+            const slide = document.getElementById('Slide-{{ section.id }}-{{ forloop.index }}');
+            let startX = 0;
+            let isDragging = false;
 
-  slide.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    isDragging = false;
-  });
+            slide.addEventListener('mousedown', (e) => {
+              startX = e.clientX;
+              isDragging = false;
+            });
 
-  slide.addEventListener('mousemove', (e) => {
-    if (Math.abs(e.clientX - startX) > 10) {
-      isDragging = true;
-    }
-  });
+            slide.addEventListener('mousemove', (e) => {
+              if (Math.abs(e.clientX - startX) > 1) {
+                isDragging = true;
+              }
+            });
 
-  slide.addEventListener('mouseup', (e) => {
-    if (!isDragging) {
-      window.location.href = "{{ slide_link }}";
-    }
-  });
+            slide.addEventListener('mouseup', (e) => {
+              if (!isDragging) {
+                window.location.href = "{{ slide_link }}";
+              }
+            });
 
-  // Also support touch devices
-  slide.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = false;
-  });
+            // Also support touch devices
+            slide.addEventListener('touchstart', (e) => {
+              startX = e.touches[0].clientX;
+              isDragging = false;
+            });
 
-  slide.addEventListener('touchmove', (e) => {
-    if (Math.abs(e.touches[0].clientX - startX) > 10) {
-      isDragging = true;
-    }
-  });
+            slide.addEventListener('touchmove', (e) => {
+              if (Math.abs(e.touches[0].clientX - startX) > 1) {
+                isDragging = true;
+              }
+            });
 
-  slide.addEventListener('touchend', (e) => {
-    if (!isDragging) {
-      window.location.href = "{{ slide_link }}";
-    }
-  });
-</script>
+            slide.addEventListener('touchend', (e) => {
+              if (!isDragging) {
+                window.location.href = "{{ slide_link }}";
+              }
+            });
+        </script>
 
       {% endif %}
     {%- endfor -%}

@@ -1,44 +1,136 @@
 {
   "sections": {
+    "multicolumn_i76hQ8": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_acEbFJ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/51874a63e4deab781424bce14622d36c.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": "shopify:\/\/collections"
+          }
+        },
+        "column_PeQ6GR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/901d2e53c4c24322605e9d6e1ce6c432.png",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_ncBpyP": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/5dc8c302492e635e127027ee5809c8e4.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_K9QJ3r": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/fe3aebeb1c773810a86fc6cfedc214d0.webp",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_acEbFJ",
+        "column_PeQ6GR",
+        "column_ncBpyP",
+        "column_K9QJ3r"
+      ],
+      "custom_css": [
+        ".multicolumn-list {justify-content: center;}",
+        ".multicolumn.background-primary .multicolumn-card{background: none}"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 6,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "hero-slideshow": {
       "type": "slideshow",
       "blocks": {
         "slide-0": {
           "type": "slide",
           "settings": {
+            "image_desktop": "shopify:\/\/shop_images\/3dc4a16fcd7881ecb499247330e86e2e.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/f6d2404eb03d10bc46d4602cde27de8b.jpg",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
+            "heading": "",
             "heading_size": "h1",
             "subheading": "",
-            "button_label": "Button label",
+            "button_label": "",
             "link": "shopify:\/\/collections",
             "button_style_secondary": false,
             "show_text_box": false,
-            "box_align": "middle-right",
-            "text_alignment": "left",
+            "box_align": "top-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_fXhpmF": {
+          "type": "slide",
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
             "text_alignment_mobile": "center",
             "color_scheme": "scheme-1"
           }
         }
       },
       "block_order": [
-        "slide-0"
+        "slide-0",
+        "slide_fXhpmF"
       ],
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "small",
+        "slide_height": "adapt_image",
         "slider_visual": "dots",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
+        "auto_rotate": true,
+        "change_slides_speed": 4,
         "image_behavior": "none",
-        "show_text_below": true,
+        "show_text_below": false,
         "accessibility_info": "Slideshow about our brand"
       }
     },
     "all-products": {
       "type": "featured-collection",
       "custom_css": [
-        ".card--standard{max-width: 600px; margin: auto;}"
+        ".card--standard {max-width: 600px; margin: auto;}"
       ],
       "settings": {
         "collection": "all",
@@ -130,6 +222,7 @@
     }
   },
   "order": [
+    "multicolumn_i76hQ8",
     "hero-slideshow",
     "all-products",
     "collection-list",
