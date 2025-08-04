@@ -224,6 +224,15 @@
           opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
         }
       </style>
+      {%- assign slide_link = block.settings.link -%}
+      {% if slide_link != blank  %}
+        <style>
+          .slideshow__slide{
+            cursor: pointer;
+          }
+        </style>
+      {% endif %}
+      
       <div
         class="slideshow__slide grid__item grid--1-col slider__slide"
         id="Slide-{{ section.id }}-{{ forloop.index }}"
@@ -240,7 +249,7 @@
             assign desktop_height = image_desktop.width | divided_by: image_desktop.aspect_ratio | round
             assign mobile_height = image_mobile.width | divided_by: image_mobile.aspect_ratio | round
           -%}
-
+        
           {%- if image_desktop and image_mobile -%}
             <picture>
               <source
@@ -295,6 +304,50 @@
           </div>
         </div>
       </div>
+
+      {% if slide_link != blank %}
+        <script>
+  const slide = document.getElementById('Slide-{{ section.id }}-{{ forloop.index }}');
+  let startX = 0;
+  let isDragging = false;
+
+  slide.addEventListener('mousedown', (e) => {
+    startX = e.clientX;
+    isDragging = false;
+  });
+
+  slide.addEventListener('mousemove', (e) => {
+    if (Math.abs(e.clientX - startX) > 10) {
+      isDragging = true;
+    }
+  });
+
+  slide.addEventListener('mouseup', (e) => {
+    if (!isDragging) {
+      window.location.href = "{{ slide_link }}";
+    }
+  });
+
+  // Also support touch devices
+  slide.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = false;
+  });
+
+  slide.addEventListener('touchmove', (e) => {
+    if (Math.abs(e.touches[0].clientX - startX) > 10) {
+      isDragging = true;
+    }
+  });
+
+  slide.addEventListener('touchend', (e) => {
+    if (!isDragging) {
+      window.location.href = "{{ slide_link }}";
+    }
+  });
+</script>
+
+      {% endif %}
     {%- endfor -%}
     
     </div>
