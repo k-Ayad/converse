@@ -20,7 +20,7 @@ slideshow-component .slideshow.banner {
   visibility: visible;
 }
 
-@media screen and (max-width: 749px) {
+/* @media screen and (max-width: 749px) {
   .slideshow--placeholder.banner--mobile-bottom.banner--adapt_image .slideshow__media,
   .slideshow--placeholder.banner--adapt_image:not(.banner--mobile-bottom) {
     height: 28rem;
@@ -31,7 +31,7 @@ slideshow-component .slideshow.banner {
   .slideshow--placeholder.banner--adapt_image {
     height: 56rem;
   }
-}
+} */
 
 .slideshow__text.banner__box {
   display: flex;

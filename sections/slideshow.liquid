@@ -2,29 +2,142 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
-{%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
-  {%- style -%}
-    @media screen and (max-width: 749px) {
-      #Slider-{{ section.id }}::before,
-      #Slider-{{ section.id }} .media::before,
-      #Slider-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
-        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
-    }
+{%- if section.settings.slide_height == 'adapt_image' -%}
+  {%- assign first_block = section.blocks.first -%}
+  {%- assign image_desktop = first_block.settings.image_desktop -%}
+  {%- assign image_mobile = first_block.settings.image_mobile -%}
 
-    @media screen and (min-width: 750px) {
-      #Slider-{{ section.id }}::before,
-      #Slider-{{ section.id }} .media::before {
-        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
+  {%- if image_desktop and image_mobile -%}
+    <style>
+      @media screen and (max-width: 749px) {
+        #Slider-{{ section.id }}::before,
+        #Slider-{{ section.id }} .media::before,
+        #Slider-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+          padding-bottom: {{ 1 | divided_by: image_mobile.aspect_ratio | times: 100 | round: 2 }}%;
+          content: '';
+          display: block;
+        }
       }
-    }
-  {%- endstyle -%}
+
+      @media screen and (min-width: 750px) {
+        #Slider-{{ section.id }}::before,
+        #Slider-{{ section.id }} .media::before {
+          padding-bottom: {{ 1 | divided_by: image_desktop.aspect_ratio | times: 100 | round: 2 }}%;
+          content: '';
+          display: block;
+        }
+      }
+    </style>
+  {%- endif -%}
 {%- endif -%}
 
+<style>
+  .slideshow__controls{
+    display: none !important;
+  }
+
+  /* Desktop: vertical dots on right side */
+@media screen and (min-width: 750px) {
+  .slider-counter-wrapper-in-slide {
+    position: absolute;
+    top: 50%;
+    right: 0rem;
+    /* transform: translateY(-50%); */
+    z-index: 3;
+  }
+
+  .slider-counter--dots {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Mobile: horizontal dots centered at bottom */
+@media screen and (max-width: 749px) {
+  .slider-counter-wrapper-in-slide {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+
+  .slider-counter--dots {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}
+
+/* Dot styling (optional improvements) */
+.slider-counter__link--dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.slider-counter__link--dots.is-active .dot {
+  opacity: 1;
+}
+
+.slideshow-dots-wrapper {
+  position: absolute;
+  pointer-events: auto;
+  z-index: 3;
+}
+
+/* Desktop – right side */
+@media screen and (min-width: 750px) {
+  .slideshow-dots-wrapper {
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+  }
+
+  .slider-counter--dots {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .slideshow__control-wrapper{
+    flex-direction: column;
+  }
+}
+
+/* Mobile – bottom center */
+@media screen and (max-width: 749px) {
+  .slideshow-dots-wrapper {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .slider-counter--dots {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}
+
+/* Dot appearance */
+.slider-counter__link--dots .dot {
+  width: 10px;
+  height: 10px;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  transition: opacity 0.2s ease;
+}
+
+.slider-counter__link--dots.is-active .dot {
+  opacity: 1;
+}
+
+</style>
 <slideshow-component
   class="slider-mobile-gutter{% if section.settings.layout == 'grid' %} page-width{% endif %}{% if section.settings.show_text_below %} mobile-text-below{% endif %}"
   role="region"
@@ -44,7 +157,7 @@
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
       </button>
-      <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
+      {% comment %} <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
         {%- if section.settings.slider_visual == 'counter' -%}
           <span class="slider-counter--current">1</span>
           <span aria-hidden="true"> / </span>
@@ -67,7 +180,7 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-      </div>
+      </div> {% endcomment %}
       <button
         type="button"
         class="slider-button slider-button--next"
@@ -121,43 +234,38 @@
         tabindex="-1"
       >
         <div class="slideshow__media banner__media media{% if block.settings.image == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
-          {%- if block.settings.image -%}
-            {%- liquid
-              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
-              if section.settings.image_behavior == 'ambient'
-                assign sizes = '120vw'
-                assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
-              else
-                assign sizes = '100vw'
-                assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
-              endif
-              assign fetch_priority = 'auto'
-              if section.index == 1
-                assign fetch_priority = 'high'
-              endif
-            -%}
-            {%- if forloop.first %}
-              {{
-                block.settings.image
-                | image_url: width: 3840
-                | image_tag: height: height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
-              }}
-            {%- else -%}
-              {{
-                block.settings.image
-                | image_url: width: 3840
-                | image_tag: loading: 'lazy', height: height, sizes: sizes, widths: widths
-              }}
-            {%- endif -%}
+          {%- liquid
+            assign image_desktop = block.settings.image_desktop
+            assign image_mobile = block.settings.image_mobile
+            assign desktop_height = image_desktop.width | divided_by: image_desktop.aspect_ratio | round
+            assign mobile_height = image_mobile.width | divided_by: image_mobile.aspect_ratio | round
+          -%}
+
+          {%- if image_desktop and image_mobile -%}
+            <picture>
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ image_mobile | image_url: width: 750 }}"
+              >
+              <source
+                media="(min-width: 750px)"
+                srcset="{{ image_desktop | image_url: width: 1500 }}"
+              >
+              <img
+                src="{{ image_desktop | image_url: width: 1500 }}"
+                alt="{{ image_desktop.alt | escape }}"
+                width="100%"
+                height="mobile_height"
+                loading="lazy"
+                class="banner__image"
+              >
+            </picture>
           {%- else -%}
-            {%- assign placeholder_slide = forloop.index | modulo: 2 -%}
-            {%- if placeholder_slide == 1 -%}
-              {{ 'hero-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- else -%}
-              {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
+            {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
+
         </div>
+
         <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
           <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
             {%- if block.settings.heading != blank -%}
@@ -188,7 +296,26 @@
         </div>
       </div>
     {%- endfor -%}
-  </div>
+    
+    </div>
+    <!-- Move this here -->
+    {%- if section.settings.slider_visual == 'dots' and section.blocks.size > 1 -%}
+      <div class="slideshow-dots-wrapper">
+        <slider-dots aria-controls="Slider-{{ section.id }}" class="slider-counter slider-counter--dots">
+          <div class="slideshow__control-wrapper">
+            {%- for block in section.blocks -%}
+              <button
+                class="slider-counter__link slider-counter__link--dots link  {% if forloop.first %}is-active{% endif %}"
+                aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                <span class="dot"></span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </slider-dots>
+      </div>
+    {%- endif -%}
 
   {%- if section.blocks.size > 1 and section.settings.auto_rotate == false -%}
     <div class="slideshow__controls slider-buttons{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
@@ -203,7 +330,7 @@
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
       </button>
-      <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
+      {% comment %} <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
         {%- if section.settings.slider_visual == 'counter' -%}
           <span class="slider-counter--current">1</span>
           <span aria-hidden="true"> / </span>
@@ -226,7 +353,7 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-      </div>
+      </div> {% endcomment %}
       <button
         type="button"
         class="slider-button slider-button--next"
@@ -260,6 +387,7 @@
 {%- if request.design_mode -%}
   <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
+<script src="{{ 'slideshow-drag.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -270,6 +398,7 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+ 
     {
       "type": "select",
       "id": "layout",
@@ -341,7 +470,6 @@
       "id": "change_slides_speed",
       "min": 3,
       "max": 9,
-      "step": 2,
       "unit": "s",
       "label": "t:sections.slideshow.settings.change_slides_speed.label",
       "default": 5
@@ -385,16 +513,27 @@
     }
   ],
   "blocks": [
+    
     {
       "type": "slide",
       "name": "t:sections.slideshow.blocks.slide.name",
       "limit": 5,
       "settings": [
+         {
+          "type": "header",
+          "content": "Note: You must add both Desktop and mobile images"
+        },
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+          "id": "image_desktop",
+          "label": "Desktop image"
         },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile image"
+        },
+
         {
           "type": "range",
           "id": "image_overlay_opacity",
