@@ -281,7 +281,12 @@
     $('.owl-carousel').owlCarousel({
       loop: true,
       margin: 10,
-      nav: true,
+      items:4,
+      margin:10,
+      autoplay:true,
+      autoplayTimeout:1000,
+      nav: true, // show next/prev buttons
+      navText: ['<span class="svg-wrapper">Previous</span>', '<span class="svg-wrapper">Next</span>'],
       responsive: {
         0: { items: 1 },
         600: { items: 2 },
