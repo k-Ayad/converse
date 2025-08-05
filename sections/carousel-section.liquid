@@ -225,9 +225,15 @@
         0: {
           items: 1,
         },
+        480: {
+          items: 2,
+        },
         768: {
-          items: {{ section.settings.number_of_items }},
-        }
+          items: 3,
+        },
+        1024: {
+          items: 1,
+        },
       },
     });
 
@@ -252,12 +258,12 @@
     },
     {
       "type": "range",
-      "id": "number_of_items",
-      "label": "Number of items",
-      "max": 4,
       "min": 1,
+      "max": 4,
       "step": 1,
-      "default": 4,
+      "label": "Number Of Items",
+      "id": "no_of_items",
+      "default": 4
     }
   ],
   "presets": [
