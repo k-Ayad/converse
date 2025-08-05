@@ -190,6 +190,13 @@
         "collection": "frontpage",
         "no_of_items": 4
       }
+    },
+    "single_carousel_section_bUa4Hx": {
+      "type": "single-carousel-section",
+      "name": "Product Single Carousel",
+      "settings": {
+        "collection": "frontpage"
+      }
     }
   },
   "order": [
@@ -200,6 +207,7 @@
     "featured_collection_custom_HmbC3q",
     "collection-banner",
     "carousel_section_h4YyB6",
-    "carousel_with_side_section_CPaH3J"
+    "carousel_with_side_section_CPaH3J",
+    "single_carousel_section_bUa4Hx"
   ]
 }
