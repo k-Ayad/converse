@@ -151,19 +151,19 @@
         "featured_collection_JggGi8": {
           "type": "featured_collection",
           "settings": {
-            "collection": "kids-collection"
+            "collection": ""
           }
         },
         "featured_collection_dwU7Jx": {
           "type": "featured_collection",
           "settings": {
-            "collection": "lifestyle-collection"
+            "collection": ""
           }
         },
         "featured_collection_UBq9zF": {
           "type": "featured_collection",
           "settings": {
-            "collection": "training-collection"
+            "collection": ""
           }
         }
       },
@@ -172,15 +172,11 @@
         "featured_collection_dwU7Jx",
         "featured_collection_UBq9zF"
       ],
-      "custom_css": [
-        ".collection-list-wrapper {padding: 0; margin: 0; max-width: none;}",
-        ".collection-list {column-gap: unset;}"
-      ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "",
         "heading_size": "h1",
-        "image_ratio": "adapt",
+        "image_ratio": "portrait",
         "columns_desktop": 3,
         "color_scheme": "",
         "show_view_all": true,
@@ -189,6 +185,35 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "blocks": {
+        "featured_collection_JggGi8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_dwU7Jx": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_UBq9zF": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_JggGi8",
+        "featured_collection_dwU7Jx",
+        "featured_collection_UBq9zF"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -197,6 +222,7 @@
     "collection-list",
     "image-banner",
     "featured_collection_custom_HmbC3q",
-    "collection_list_e6MeYD"
+    "collection_list_e6MeYD",
+    "collection-banner"
   ]
 }
