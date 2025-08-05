@@ -206,40 +206,57 @@
   .product-card:hover .sale-price {
     color: #be1623;
   }
+
+  #owl-carousel-single.owl-carousel {
+    overflow: hidden;
+  }
+
+  #owl-carousel-single .owl-stage-outer {
+    overflow: hidden;
+  }
+
+  #owl-carousel-single .owl-stage {
+    display: flex !important;
+  }
+
+  #owl-carousel-single .owl-item {
+    float: none;
+    width: 100% !important;
+  }
 </style>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var $carousel = $('#owl-carousel-single');
-  
-      $carousel.owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        smartSpeed: 600,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          768: {
-            items: 1,
-          }
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var $carousel = $('#owl-carousel-single');
+
+    $carousel.owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: false,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      smartSpeed: 600,
+      responsive: {
+        0: {
+          items: 1,
         },
-      });
-  
-      $('.owl-prev-custom').on('click', function () {
-        $carousel.trigger('prev.owl.carousel');
-      });
-  
-      $('.owl-next-custom').on('click', function () {
-        $carousel.trigger('next.owl.carousel');
-      });
+        768: {
+          items: 1,
+        },
+      },
     });
-  </script>
+
+    $('.owl-prev-custom').on('click', function () {
+      $carousel.trigger('prev.owl.carousel');
+    });
+
+    $('.owl-next-custom').on('click', function () {
+      $carousel.trigger('next.owl.carousel');
+    });
+  });
+</script>
 
 {% schema %}
 {
