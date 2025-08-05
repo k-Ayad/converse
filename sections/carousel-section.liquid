@@ -208,74 +208,40 @@
   }
 </style>
 
-{% if section.settings.no_of_items == 4 %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var $carousel = $('.owl-carousel');
-  
-      $carousel.owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        smartSpeed: 600,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          768: {
-            items: 4,
-          }
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var $carousel = $('.owl-carousel');
+
+    $carousel.owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: false,
+      dots: false,
+      autoplay: true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      smartSpeed: 600,
+      responsive: {
+        0: {
+          items: 1,
         },
-      });
-  
-      $('.owl-prev-custom').on('click', function () {
-        $carousel.trigger('prev.owl.carousel');
-      });
-  
-      $('.owl-next-custom').on('click', function () {
-        $carousel.trigger('next.owl.carousel');
-      });
+        768: {
+          items: {{ section.settings.no_of_items | default: 4 }},
+        }
+      },
     });
-  </script>
-{% elsif  section.settings.no_of_items == 1 %}
-    <script>
-      alert({{section.settings.no_of_items}});
-    document.addEventListener('DOMContentLoaded', function () {
-      var $carousel = $('.owl-carousel');
-  
-      $carousel.owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        smartSpeed: 600,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          768: {
-            items: 1,
-          }
-        },
-      });
-  
-      $('.owl-prev-custom').on('click', function () {
-        $carousel.trigger('prev.owl.carousel');
-      });
-  
-      $('.owl-next-custom').on('click', function () {
-        $carousel.trigger('next.owl.carousel');
-      });
+
+    console.log('Items setting:', {{ section.settings.no_of_items | default: 4 }});
+
+    $('.owl-prev-custom').on('click', function () {
+      $carousel.trigger('prev.owl.carousel');
     });
-  </script>
-{% endif %}
+
+    $('.owl-next-custom').on('click', function () {
+      $carousel.trigger('next.owl.carousel');
+    });
+  });
+</script>
 
 {% schema %}
 {
