@@ -66,6 +66,11 @@
     font-weight: 500;
     letter-spacing: 0;
 }
+
+  .collections-content a {
+    text-decoration: none !important;
+    font-family: 'Poppins', sans-serif;
+  }
 </style>
 {%- liquid
   assign ratio = 1
@@ -132,8 +137,7 @@
             <h4 class="title">{{ card_collection.title | upcase }}</h4>
             <p class="title" style="color:white; font-weight:300 !important; margin: unset;">COLLECTION</p>
             <a href="{{ card_collection.url }}" style="background-color:white;" class="btn bg-white"
-              >View All <i class="fa fa-long-arrow-right" aria-hidden="true"></i></i
-            ></a>
+              >View All <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
           </div>
         </div>
       {%- endif -%}
