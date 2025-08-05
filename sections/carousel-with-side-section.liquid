@@ -9,7 +9,7 @@
   </div>
   <div class="custom-wide-column">
     <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
-  
+
     <div class="owl-carousel">
       {% for product in section.settings.collection.products %}
         {% assign first_variant = product.variants.first %}
@@ -63,7 +63,7 @@
         {% endif %}
       {% endfor %}
     </div>
-  
+
     <button class="owl-next-custom"><i class="fa fa-angle-right"></i></button>
   </div>
 </div>
@@ -256,6 +256,16 @@
   .best-sellers {
     box-shadow: 0px 0px 16px rgb(107, 107, 107, 0.34);
     padding: 19px 12px;
+  }
+
+  @media (max-width: 767px) {
+    .best-sellers {
+      max-width: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+    }
   }
 </style>
 
