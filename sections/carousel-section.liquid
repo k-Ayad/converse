@@ -3,7 +3,7 @@
 
   <div class="owl-carousel">
     {% for product in section.settings.collection.products %}
-      {% if product %}
+      {% if product and product.title %}
         {% render 'card-product-custom', product: product %}
       {% endif %}
     {% endfor %}
