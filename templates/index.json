@@ -182,6 +182,14 @@
         "collection": "frontpage",
         "no_of_items": 1
       }
+    },
+    "carousel_with_side_section_CPaH3J": {
+      "type": "carousel-with-side-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage",
+        "no_of_items": 4
+      }
     }
   },
   "order": [
@@ -191,6 +199,7 @@
     "image-banner",
     "featured_collection_custom_HmbC3q",
     "collection-banner",
-    "carousel_section_h4YyB6"
+    "carousel_section_h4YyB6",
+    "carousel_with_side_section_CPaH3J"
   ]
 }
