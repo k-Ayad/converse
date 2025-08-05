@@ -35,7 +35,6 @@
               height="{{ product.featured_media.height }}"
             >
           </div>
-          {% comment %}
             <div class="product-info">
               <p class="product-title">{{ product.title }}</p>
               <div class="product-price">
@@ -45,8 +44,7 @@
                 {% endif %}
               </div>
             </div>
-          {% endcomment %}
-          <div class="arrival-content">
+          {% comment %} <div class="arrival-content">
             <ul class="list-inline">
               <li>
                 <h4 style="margin:0;">
@@ -61,7 +59,7 @@
                 <div class="color-price"></div>
               </li>
             </ul>
-          </div>
+          </div> {% endcomment %}
         </a>
       </div>
       {% if original_price > sale_price %}
@@ -184,7 +182,7 @@
     text-decoration: line-through;
   }
 
-  .arrival-content {
+  {% comment %} .arrival-content {
     padding: 1rem 4px !important;
   }
 
@@ -245,7 +243,7 @@
   .flag-sale {
     top: 9px;
     z-index: 99;
-  }
+  } {% endcomment %}
 </style>
 
 <script>
