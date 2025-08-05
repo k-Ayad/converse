@@ -304,6 +304,8 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    {{ 'owl.carousel.min.css' | asset_url | stylesheet_tag }}
+    {{ 'owl.theme.default.min.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -380,5 +382,7 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    <script src="{{ 'jquery-3.7.1.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'owl.carousel.min.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>
