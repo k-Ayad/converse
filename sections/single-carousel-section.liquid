@@ -208,41 +208,6 @@
   }
 </style>
 
-{% if section.settings.no_of_items == 4 %}
-  <script>
-    alert({{section.settings.no_of_items}});
-    document.addEventListener('DOMContentLoaded', function () {
-      var $carousel = $('.owl-carousel');
-  
-      $carousel.owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        smartSpeed: 600,
-        responsive: {
-          0: {
-            items: 1,
-          },
-          768: {
-            items: 4,
-          }
-        },
-      });
-  
-      $('.owl-prev-custom').on('click', function () {
-        $carousel.trigger('prev.owl.carousel');
-      });
-  
-      $('.owl-next-custom').on('click', function () {
-        $carousel.trigger('next.owl.carousel');
-      });
-    });
-  </script>
-{% elsif  section.settings.no_of_items == 1 %}
     <script>
       alert({{section.settings.no_of_items}});
     document.addEventListener('DOMContentLoaded', function () {
@@ -276,11 +241,10 @@
       });
     });
   </script>
-{% endif %}
 
 {% schema %}
 {
-  "name": "Product Carousel",
+  "name": "Product Single Carousel",
   "settings": [
     {
       "type": "collection",
@@ -299,7 +263,7 @@
   ],
   "presets": [
     {
-      "name": "Product Carousel"
+      "name": "Product Single Carousel"
     }
   ]
 }
