@@ -142,7 +142,8 @@
       "type": "carousel-section",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "collection": "frontpage"
+        "collection": "frontpage",
+        "number_of_items": 4
       }
     },
     "collection-banner": {
@@ -178,7 +179,8 @@
       "type": "carousel-section",
       "name": "Product Carousel",
       "settings": {
-        "collection": "frontpage"
+        "collection": "frontpage",
+        "number_of_items": 1
       }
     }
   },
