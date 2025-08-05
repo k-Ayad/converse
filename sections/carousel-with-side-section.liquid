@@ -95,7 +95,7 @@
     line-height: 12px;
     padding: 0;
     width: 50px;
-    top: 40%;
+    top: 50%;
     height: 50px;
     border-radius: 50%;
     border: none !important;
@@ -108,11 +108,27 @@
   }
 
   .owl-prev-custom-side {
-    left: 15%;
+    left: 3%;
   }
 
   .owl-next-custom-side {
-    right: 1.5%;
+    right: 3%;
+  }
+
+  /* Large screens (≥992px) */
+  @media (min-width: 992px) {
+    .owl-prev-custom-side,
+    .owl-next-custom-side {
+      top: 40%;
+    }
+
+    .owl-prev-custom-side {
+      left: 15%;
+    }
+
+    .owl-next-custom-side {
+      right: 1.5%;
+    }
   }
 
   .owl-prev-custom-side:hover,
