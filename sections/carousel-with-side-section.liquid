@@ -1,67 +1,71 @@
 <div class="product-carousel-wrapper">
   <div class="custom-column">
-    <div class="best-sellers position-relative">
-      <h1 class="text-white">BEST SELLERS</h1>
-      <a href="#">VIEW ALL <i class="las la-angle-right pl-1"></i></a>
+    <div style="position: relative;" class="best-sellers">
+      <h1 style="color: white;">{{ section.settings.collection.title }}</h1>
+      <a href="{{ section.settings.collection.url }}"
+        >VIEW ALL <i class="fa fa-long-arrow-right" aria-hidden="true"></i
+      ></a>
     </div>
   </div>
-  <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
-
-  <div class="owl-carousel">
-    {% for product in section.settings.collection.products %}
-      {% assign first_variant = product.variants.first %}
-      {% assign original_price = first_variant.compare_at_price %}
-      {% assign sale_price = first_variant.price %}
-      <div class="item product-card">
-        <a href="{{ product.url }}">
-          <div class="image-wrapper">
-            {% if original_price > sale_price %}
-              {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
-              <div class="sale-badge">{{ discount | abs }}% OFF</div>
-            {% endif %}
-            <img
-              srcset="
-                {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
-                {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
-                {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
-                {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
-                {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
-                {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
-                {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
-              "
-              src="{{ product.featured_media | image_url: width: 533 }}"
-              sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-              alt="{{ product.featured_media.alt | escape }}"
-              class="motion-reduce"
-              {% unless lazy_load == false %}
-                loading="lazy"
-              {% endunless %}
-              width="{{ product.featured_media.width }}"
-              height="{{ product.featured_media.height }}"
-            >
-          </div>
-          <div class="product-info">
-            <p class="product-title">{{ product.title }}</p>
-            <div class="product-price">
-              <span class="sale-price">{{ sale_price | money }}</span>
+  <div class="custom-wide-column">
+    <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
+  
+    <div class="owl-carousel">
+      {% for product in section.settings.collection.products %}
+        {% assign first_variant = product.variants.first %}
+        {% assign original_price = first_variant.compare_at_price %}
+        {% assign sale_price = first_variant.price %}
+        <div class="item product-card">
+          <a href="{{ product.url }}">
+            <div class="image-wrapper">
               {% if original_price > sale_price %}
-                <span class="compare-price">{{ original_price | money }}</span>
+                {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+                <div class="sale-badge">{{ discount | abs }}% OFF</div>
               {% endif %}
+              <img
+                srcset="
+                  {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                  {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                  {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                  {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                  {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                  {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                  {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+                "
+                src="{{ product.featured_media | image_url: width: 533 }}"
+                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                alt="{{ product.featured_media.alt | escape }}"
+                class="motion-reduce"
+                {% unless lazy_load == false %}
+                  loading="lazy"
+                {% endunless %}
+                width="{{ product.featured_media.width }}"
+                height="{{ product.featured_media.height }}"
+              >
             </div>
-          </div>
-        </a>
-      </div>
-      {% if original_price > sale_price %}
-        {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
-        <div class="flag-sale d-flex">
-          <div class="flag-product sale">sale</div>
-          <div class="flag-product off">{{ discount | abs }}%</div>
+            <div class="product-info">
+              <p class="product-title">{{ product.title }}</p>
+              <div class="product-price">
+                <span class="sale-price">{{ sale_price | money }}</span>
+                {% if original_price > sale_price %}
+                  <span class="compare-price">{{ original_price | money }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
         </div>
-      {% endif %}
-    {% endfor %}
+        {% if original_price > sale_price %}
+          {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+          <div class="flag-sale d-flex">
+            <div class="flag-product sale">sale</div>
+            <div class="flag-product off">{{ discount | abs }}%</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  
+    <button class="owl-next-custom"><i class="fa fa-angle-right"></i></button>
   </div>
-
-  <button class="owl-next-custom"><i class="fa fa-angle-right"></i></button>
 </div>
 
 <style>
@@ -227,6 +231,20 @@
     /* Large screens (≥992px) */
     @media (min-width: 992px) {
       width: 16.6667%; /* col-lg-2 = 2/12 columns = 16.6667% */
+    }
+  }
+
+  .custom-wide-column {
+    width: 100%; /* Default full width on small screens */
+
+    /* Medium screens (≥768px) */
+    @media (min-width: 768px) {
+      width: 75%; /* col-md-9 = 9/12 = 75% */
+    }
+
+    /* Large screens (≥992px) */
+    @media (min-width: 992px) {
+      width: 83.3333%; /* col-lg-10 = 10/12 = 83.3333% */
     }
   }
 
