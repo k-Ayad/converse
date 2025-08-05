@@ -2,8 +2,9 @@
   <div class="custom-column">
     <div style="position: relative;" class="best-sellers">
       <h1 style="color: white; font: 'Poppins', sans-serif;">{{ section.settings.collection.title | upcase }}</h1>
-      <a href="{{ section.settings.collection.url }}"
-        >VIEW ALL <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+      <a class="text-view" href="{{ section.settings.collection.url }}"
+        >VIEW ALL <i class="fa fa-angle-right" aria-hidden="true"></i
+      ></a>
     </div>
   </div>
   <div class="custom-wide-column">
@@ -258,6 +259,12 @@
   }
   .best-sellers a {
     text-decoration: none;
+  }
+  .text-view {
+    color: #be1623;
+  }
+  .text-view:hover {
+    color: #fff;
   }
 
   @media (max-width: 767px) {
