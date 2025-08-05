@@ -1,4 +1,10 @@
 <div class="product-carousel-wrapper">
+  <div class="custom-column">
+    <div class="best-sellers position-relative">
+      <h1 class="text-white">BEST SELLERS</h1>
+      <a href="#">VIEW ALL <i class="las la-angle-right pl-1"></i></a>
+    </div>
+  </div>
   <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
 
   <div class="owl-carousel">
@@ -205,6 +211,23 @@
   .product-card:hover .product-title,
   .product-card:hover .sale-price {
     color: #be1623;
+  }
+
+  .custom-column {
+    margin-bottom: 1rem; /* Same as Bootstrap's mb-3 */
+
+    /* Responsive column widths */
+    width: 100%; /* Default full width */
+
+    /* Medium screens (≥768px) */
+    @media (min-width: 768px) {
+      width: 25%; /* col-md-3 = 3/12 columns = 25% */
+    }
+
+    /* Large screens (≥992px) */
+    @media (min-width: 992px) {
+      width: 16.6667%; /* col-lg-2 = 2/12 columns = 16.6667% */
+    }
   }
 </style>
 
