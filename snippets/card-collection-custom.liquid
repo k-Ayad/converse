@@ -56,6 +56,16 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
       box-shadow 0.15s ease-in-out;
   }
+
+  .collections-content .bg-white {
+    color: #020203;
+    border-radius: 30px;
+    padding: 5px 16px;
+    font-size: 15px !important;
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0;
+}
 </style>
 {%- liquid
   assign ratio = 1
@@ -121,7 +131,7 @@
           <div class="collections-content">
             <h4 class="title">{{ card_collection.title | upcase }}</h4>
             <p class="title" style="color:white; font-weight:300 !important; margin: unset;">COLLECTION</p>
-            <a href="{{ card_collection.url }}" style="background-color:white; " class="btn bg-white"
+            <a href="{{ card_collection.url }}" style="background-color:white;" class="btn bg-white"
               >View All <i class="las la-long-arrow-alt-right"></i
             ></a>
           </div>
