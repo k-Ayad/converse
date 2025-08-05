@@ -1,7 +1,7 @@
 <div class="product-carousel-wrapper">
   <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
 
-  <div class="owl-carousel">
+  <div id="owl-carousel-single" class="owl-carousel">
     {% for product in section.settings.collection.products %}
       {% assign first_variant = product.variants.first %}
       {% assign original_price = first_variant.compare_at_price %}
@@ -206,11 +206,28 @@
   .product-card:hover .sale-price {
     color: #be1623;
   }
+
+  #owl-carousel-single.owl-carousel {
+    overflow: hidden;
+  }
+
+  #owl-carousel-single .owl-stage-outer {
+    overflow: hidden;
+  }
+
+  #owl-carousel-single .owl-stage {
+    display: flex !important;
+  }
+
+  #owl-carousel-single .owl-item {
+    float: none;
+    width: 100% !important;
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var $carousel = $('.owl-carousel');
+    var $carousel = $('#owl-carousel-single');
 
     $carousel.owlCarousel({
       loop: true,
@@ -226,12 +243,10 @@
           items: 1,
         },
         768: {
-          items: {{ section.settings.no_of_items | default: 4 }},
-        }
+          items: 1,
+        },
       },
     });
-
-    console.log('Items setting:', {{ section.settings.no_of_items | default: 4 }});
 
     $('.owl-prev-custom').on('click', function () {
       $carousel.trigger('prev.owl.carousel');
@@ -245,26 +260,17 @@
 
 {% schema %}
 {
-  "name": "Product Carousel",
+  "name": "Product Single Carousel",
   "settings": [
     {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
-    },
-    {
-      "type": "range",
-      "min": 1,
-      "max": 4,
-      "step": 1,
-      "label": "Number Of Items",
-      "id": "no_of_items",
-      "default": 4
     }
   ],
   "presets": [
     {
-      "name": "Product Carousel"
+      "name": "Product Single Carousel"
     }
   ]
 }
