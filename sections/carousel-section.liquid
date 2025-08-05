@@ -182,6 +182,48 @@
     text-decoration: line-through;
   }
 
+  /* Reset link styles inside product cards */
+.product-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Title styling */
+.product-card .product-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #000; /* force black like your design */
+  transition: color 0.3s ease;
+}
+
+/* Price styling */
+.product-card .product-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-card .sale-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+}
+
+.product-card .compare-price {
+  font-size: 14px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+/* Hover effect for title and price */
+.product-card:hover .product-title,
+.product-card:hover .sale-price {
+  color: #be1623;
+}
+
   {% comment %} .arrival-content {
     padding: 1rem 4px !important;
   }
