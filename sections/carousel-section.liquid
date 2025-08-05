@@ -3,7 +3,6 @@
 
   <div class="owl-carousel">
     {% for product in section.settings.collection.products %}
-      {{ product.title }}
       {% render 'card-product-custom', product: product %}
     {% endfor %}
   </div>
