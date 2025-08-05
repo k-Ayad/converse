@@ -1,4 +1,4 @@
-<style>
+{% style %}
   .product-card {
     text-align: center;
     padding: 10px;
@@ -90,7 +90,7 @@
   .product-card:hover .sale-price {
     color: #be1623;
   }
-</style>
+{% endstyle %}
 {% assign first_variant = product.variants.first %}
 {% assign original_price = first_variant.compare_at_price %}
 {% assign sale_price = first_variant.price %}
