@@ -35,17 +35,42 @@
               height="{{ product.featured_media.height }}"
             >
           </div>
-          <div class="product-info">
-            <p class="product-title">{{ product.title }}</p>
-            <div class="product-price">
-              <span class="sale-price">{{ sale_price | money }}</span>
-              {% if original_price > sale_price %}
-                <span class="compare-price">{{ original_price | money }}</span>
-              {% endif %}
+          {% comment %}
+            <div class="product-info">
+              <p class="product-title">{{ product.title }}</p>
+              <div class="product-price">
+                <span class="sale-price">{{ sale_price | money }}</span>
+                {% if original_price > sale_price %}
+                  <span class="compare-price">{{ original_price | money }}</span>
+                {% endif %}
+              </div>
             </div>
+          {% endcomment %}
+          <div class="arrival-content">
+            <ul class="list-inline">
+              <li>
+                <h4 style="margin:0;">
+                  <a href="{{ product.url }}">{{ product.title }}</a>
+                </h4>
+              </li>
+              <li class="product-price">
+                <h4 class="sale-price">{{ sale_price | money }}</h4>
+                {% if original_price > sale_price %}
+                  <h4 class="compare-price">{{ original_price | money }}</h4>
+                {% endif %}
+                <div class="color-price"></div>
+              </li>
+            </ul>
           </div>
         </a>
       </div>
+      {% if original_price > sale_price %}
+        {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+        <div class="flag-sale d-flex">
+          <div class="flag-product sale">sale</div>
+          <div class="flag-product off">{{ discount | abs }}%</div>
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 
@@ -157,6 +182,69 @@
     font-size: 14px;
     color: #888;
     text-decoration: line-through;
+  }
+
+  .arrival-content {
+    padding: 1rem 4px !important;
+  }
+
+  .arrival-content .list-inline {
+    gap: 5px;
+    min-height: 42px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  .arrival-content ul li:last-child {
+    text-align: right;
+  }
+  .product-price {
+    position: relative;
+  }
+  .product-price {
+    min-width: 100px;
+  }
+
+  .color-image,
+  .color-price {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
+
+  .flag-sale.d-flex {
+    background-color: transparent;
+    border: none;
+  }
+  .product-grid .flag-sale,
+  .flag-sale {
+    display: block !important;
+    margin: 0;
+    text-align: center;
+    border: solid 2px #d61f2e;
+    width: 12%;
+    min-width: 40px;
+    top: 10px;
+    left: 20px;
+    padding: 0px;
+    background: #d61f2e;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 21px;
+    background: none;
+    border: none;
+    min-width: 55px;
+    margin-left: 0;
+  }
+  .flag-sale {
+    top: 9px;
+    z-index: 99;
   }
 </style>
 
