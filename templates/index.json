@@ -192,19 +192,19 @@
         "featured_collection_JggGi8": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
+            "collection": "kids-collection"
           }
         },
         "featured_collection_dwU7Jx": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
+            "collection": "lifestyle-collection"
           }
         },
         "featured_collection_UBq9zF": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
+            "collection": "training-collection"
           }
         }
       },
