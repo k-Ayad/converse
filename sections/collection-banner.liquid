@@ -34,7 +34,7 @@
     }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
+{% comment %} <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-list-wrapper no-page-width isolate no-heading no-mobile-link section-{{ section.id }}-padding">
     <slider-component class="slider-mobile-gutter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <ul
@@ -71,7 +71,7 @@
       </ul>
     </slider-component>
   </div>
-</div>
+</div> {% endcomment %}
 
 <div style="display:flex;">
   {%- for block in section.blocks -%}
