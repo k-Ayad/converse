@@ -1,7 +1,7 @@
 <div class="product-carousel-wrapper">
   <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
 
-  <div class="owl-carousel">
+  <div class="owl-carousel-single">
     {% for product in section.settings.collection.products %}
       {% assign first_variant = product.variants.first %}
       {% assign original_price = first_variant.compare_at_price %}
@@ -64,12 +64,12 @@
     padding: 20px 40px;
   }
 
-  .owl-carousel .item {
+  .owl-carousel-single .item {
     text-align: center;
     padding: 10px;
   }
 
-  .owl-carousel .item img {
+  .owl-carousel-single .item img {
     max-width: 100%;
     height: auto;
     display: block;
@@ -210,7 +210,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var $carousel = $('.owl-carousel');
+      var $carousel = $('.owl-carousel-single');
   
       $carousel.owlCarousel({
         loop: true,
