@@ -226,7 +226,7 @@
           items: 1,
         },
         768: {
-          items: {{ section.settings.no_of_items }},
+          items: {{ section.settings.no_of_items | default: 4 }},
         }
       },
     });
