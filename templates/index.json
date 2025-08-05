@@ -173,6 +173,13 @@
         "featured_collection_UBq9zF"
       ],
       "settings": {}
+    },
+    "carousel_section_h4YyB6": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage"
+      }
     }
   },
   "order": [
@@ -181,6 +188,7 @@
     "collection-list",
     "image-banner",
     "featured_collection_custom_HmbC3q",
-    "collection-banner"
+    "collection-banner",
+    "carousel_section_h4YyB6"
   ]
 }
