@@ -172,11 +172,15 @@
         "featured_collection_dwU7Jx",
         "featured_collection_UBq9zF"
       ],
+      "custom_css": [
+        ".collection-list-wrapper {padding: 0; margin: 0; max-width: none;}",
+        ".collection-list {column-gap: unset;}"
+      ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "",
         "heading_size": "h1",
-        "image_ratio": "portrait",
+        "image_ratio": "adapt",
         "columns_desktop": 3,
         "color_scheme": "",
         "show_view_all": true,
