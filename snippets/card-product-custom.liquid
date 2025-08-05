@@ -1,309 +1,142 @@
-{% comment %}
-  Renders a product card
-
-  Accepts:
-  - card_product: {Object} Product Liquid object (optional)
-  - media_aspect_ratio: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
-  - image_shape: {String} Image mask to apply to the product image card. Values are "arch", "blob", "chevronleft", "chevronright", "diamond", "parallelogram", and "round". (optional)
-  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
-  - show_vendor: {Boolean} Show the product vendor. Default: false
-  - show_rating: {Boolean} Show the product rating. Default: false
-  - extend_height: {Boolean} Card height extends to available container space. Default: true (optional)
-  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
-  - skip_styles: {Boolean} Don't include component styles. Useful when rendering multiple product cards in a loop. Default: false (optional)
-  - quick_add: {Boolean} Show the quick add button.
-  - section_id: {String} The ID of the section that contains this card.
-  - horizontal_class: {Boolean} Add a card--horizontal class if set to true. Default: false (optional)
-  - horizontal_quick_add: {Boolean} Changes the quick add button styles when set to true. Default: false (optional)
-  - placeholder_image: {String} The placeholder image to use when no product exists. Default: 'product-apparel-2' (optional)
-
-  Usage:
-  {% render 'card-product', show_vendor: section.settings.show_vendor %}
-{% endcomment %}
 <style>
-  .block-arrival .t-shirt-tab ul li {
-    margin: 0 !important;
-  }
-  .block-arrival .t-shirt-tab {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-in-out;
-  }
-  .block-arrival:hover .t-shirt-tab {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.5s ease-in-out;
-  }
-  .block-arrival:hover .color {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-in-out;
-  }
-  .block-arrival {
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-    overflow: hidden;
-    border-radius: 6px;
-    margin: 10px;
-    position: relative;
-  }
-  .arriaval-img img {
-    min-height: 200px !important;
-  }
-  .arriaval-img {
-    overflow: hidden;
-    position: relative;
-  }
-  .color-image,
-  .color-price {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-  }
-  .color-image.active,
-  .color-price.active {
-    opacity: 1;
-  }
-  .arrival-content ul li:last-child h4 {
-    color: #7c7c7c;
-    font-size: 13px;
-    font-weight: 300;
-  }
-
-  .arrival-content ul li:last-child h4 num {
-    font-size: 15px;
-  }
-
-  .arrival-content {
-    padding: 1rem 4px !important;
-  }
-
-  .arrival-content .list-inline {
-    gap: 5px;
-    min-height: 42px;
-  }
-  .arrival-content ul li:first-child h4 {
-    font-size: 16px;
-    font-size: 16px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-  }
-
-  .flag-sale.d-flex {
-    background-color: transparent;
-    border: none;
-  }
-  .product-grid .flag-sale,
-  .flag-sale {
-    display: block !important;
-    margin: 0;
+  .product-card {
     text-align: center;
-    border: solid 2px #d61f2e;
-    width: 12%;
-    min-width: 40px;
-    top: 10px;
-    left: 20px;
-    padding: 0px;
-    background: #d61f2e;
+    padding: 10px;
+    position: relative;
+  }
+
+  .image-wrapper {
+    position: relative;
+  }
+
+  .sale-badge {
     position: absolute;
-    top: 0;
-    right: 0;
-    margin: 21px;
+    top: 8px;
+    left: 8px;
     background: none;
-    border: none;
-    min-width: 55px;
-    margin-left: 0;
-  }
-
-  .flag-sale {
-    top: 9px;
-    z-index: 99;
-  }
-
-  element.style {
-  }
-  .flag-product.sale {
-    display: none;
-  }
-  .flag-product {
-    top: 0 !important;
-    width: 100% !important;
-    font-size: 12px;
-    transform: none;
-    position: relative;
-    display: block;
-    border: none;
-    clip-path: none;
-    left: 0 !important;
-    top: 0;
-    right: 0;
-    background: #d61f2e;
+    color: #d00;
     font-weight: bold;
-    padding: 0px !important;
-    line-height: 1.5;
-    font-size: 15px !important;
-    position: relative;
+    font-size: 14px;
   }
-  .flag-product {
-    top: 35px;
-    width: 104px;
-  }
-  .flag-product {
-    color: #fff;
-    clip-path: polygon(75% 6%, 58% 48%, 75% 90%, 0% 90%, 0 0%, 0 6%);
-    -webkit-clip-path: polygon(75% 6%, 58% 48%, 75% 90%, 0% 90%, 0 0%, 0 6%);
-    font-size: 13px;
-    font-weight: 600;
-    left: -29px;
-    cursor: pointer;
-    padding: 5px 15px;
-    position: absolute;
-    text-transform: uppercase;
-    transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    top: 49px;
-    width: 130px;
-    letter-spacing: 2px;
-  }
-  .sale {
-    background: #be1623;
-    left: 10px !important;
-  }
-  .flag-product.off {
-    background: transparent;
-    color: #d61f2e;
-}
-</style>
-{%- unless skip_styles -%}
-  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
-  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
-  {{ 'component-price.css' | asset_url | stylesheet_tag }}
-  {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
-  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
-{%- endunless -%}
-{%- if card_product and card_product != empty -%}
-  <div class="block-arrival position-relative">
-    <div class="arriaval-img">
-      <a href="{{ card_product.url }}">
-        <img
-          srcset="
-            {%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if card_product.featured_media.width >= 533 -%}{{ card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
-            {%- if card_product.featured_media.width >= 720 -%}{{ card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
-            {%- if card_product.featured_media.width >= 940 -%}{{ card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
-            {%- if card_product.featured_media.width >= 1066 -%}{{ card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
-            {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w
-          "
-          src="{{ card_product.featured_media | image_url: width: 533 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-          alt="{{ card_product.featured_media.alt | escape }}"
-          class="motion-reduce"
-          {% unless lazy_load == false %}
-            loading="lazy"
-          {% endunless %}
-          width="{{ card_product.featured_media.width }}"
-          height="{{ card_product.featured_media.height }}"
-        >
-        <div class="color-image">
-          <img
-            srcset="
-              {%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
-              {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
-              {%- if card_product.featured_media.width >= 533 -%}{{ card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
-              {%- if card_product.featured_media.width >= 720 -%}{{ card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
-              {%- if card_product.featured_media.width >= 940 -%}{{ card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
-              {%- if card_product.featured_media.width >= 1066 -%}{{ card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
-              {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w
-            "
-            src="{{ card_product.featured_media | image_url: width: 533 }}"
-            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-            alt="{{ card_product.featured_media.alt | escape }}"
-            class="motion-reduce"
-            {% unless lazy_load == false %}
-              loading="lazy"
-            {% endunless %}
-            width="{{ card_product.featured_media.width }}"
-            height="{{ card_product.featured_media.height }}"
-          >
-        </div>
-      </a>
-    </div>
-    <div class="arrival-content p-3">
-      <ul class="list-inline d-flex justify-content-between m-0">
-        <li>
-          <h4 class="m-0">
-            <a href="{{ card_product.url }}"> {{ card_product.title | escape }} </a>
-          </h4>
-        </li>
-        <li class="product-price">
-          <h4 class="m-0">
-            {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
-          </h4>
-          <div class="color-price"></div>
-        </li>
-      </ul>
-    </div>
-  </div>
-{%- else -%}
-  {%- liquid
-    assign ratio = 1
-    assign placeholder = true
-    if media_aspect_ratio == 'portrait'
-      assign ratio = 0.8
-    endif
-  -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <div
-      class="
-        card card--{{ settings.card_style }}
-        {% if extend_height %} card--extend-height{% endif %}
-        {% if image_shape and image_shape != 'default' %} card--shape{% endif %}
-        {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %}
-      "
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-    >
-      <div
-        class="card__inner{% if settings.card_style == 'standard' %} color-{{ settings.card_color_scheme }} gradient{% endif %} ratio"
+  .product-info {
+    margin-top: 10px;
+  }
+
+  .product-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .product-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sale-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+  }
+
+  .compare-price {
+    font-size: 14px;
+    color: #888;
+    text-decoration: line-through;
+  }
+
+  /* Reset link styles inside product cards */
+  .product-card a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Title styling */
+  .product-card .product-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: #000; /* force black like your design */
+    transition: color 0.3s ease;
+  }
+
+  /* Price styling */
+  .product-card .product-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .product-card .sale-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+  }
+
+  .product-card .compare-price {
+    font-size: 14px;
+    color: #888;
+    text-decoration: line-through;
+  }
+
+  /* Hover effect for title and price */
+  .product-card:hover .product-title,
+  .product-card:hover .sale-price {
+    color: #be1623;
+  }
+</style>
+{% assign first_variant = product.variants.first %}
+{% assign original_price = first_variant.compare_at_price %}
+{% assign sale_price = first_variant.price %}
+<div class="item product-card">
+  <a href="{{ product.url }}">
+    <div class="image-wrapper">
+      {% if original_price > sale_price %}
+        {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+        <div class="sale-badge">{{ discount | abs }}% OFF</div>
+      {% endif %}
+      <img
+        srcset="
+          {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+          {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+          {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+          {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+          {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+          {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+          {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+        "
+        src="{{ product.featured_media | image_url: width: 533 }}"
+        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+        alt="{{ product.featured_media.alt | escape }}"
+        class="motion-reduce"
+        {% unless lazy_load == false %}
+          loading="lazy"
+        {% endunless %}
+        width="{{ product.featured_media.width }}"
+        height="{{ product.featured_media.height }}"
       >
-        <div
-          class="card__media {% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}"
-        >
-          <div
-            class="media media--transparent"
-          >
-            {%- if placeholder_image -%}
-              {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- else -%}
-              {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="card__content">
-        <div class="card__information">
-          <h3 class="card__heading card__heading--placeholder{% if settings.card_style == 'standard' %} h5{% endif %}">
-            <a role="link" aria-disabled="true" class="full-unstyled-link">
-              {{ 'onboarding.product_title' | t }}
-            </a>
-          </h3>
-          <div class="card-information">
-            {%- if show_vendor -%}
-              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
-              <div class="caption-with-letter-spacing light">{{ 'products.product.vendor' | t }}</div>
-            {%- endif -%}
-            {% render 'price', placeholder: placeholder, show_compare_at_price: true %}
-          </div>
-        </div>
+    </div>
+    <div class="product-info">
+      <p class="product-title">{{ product.title }}</p>
+      <div class="product-price">
+        <span class="sale-price">{{ sale_price | money }}</span>
+        {% if original_price > sale_price %}
+          <span class="compare-price">{{ original_price | money }}</span>
+        {% endif %}
       </div>
     </div>
+  </a>
+</div>
+{% if original_price > sale_price %}
+  {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+  <div class="flag-sale d-flex">
+    <div class="flag-product sale">sale</div>
+    <div class="flag-product off">{{ discount | abs }}%</div>
   </div>
-{%- endif -%}
+{% endif %}
