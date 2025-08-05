@@ -180,7 +180,7 @@
       "name": "Product Carousel",
       "settings": {
         "collection": "frontpage",
-        "no_of_items": 4
+        "no_of_items": 1
       }
     }
   },
