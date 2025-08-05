@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="custom-wide-column">
-    <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
+    <button class="owl-prev-custom-side"><i class="fa fa-angle-left"></i></button>
 
     <div class="owl-carousel">
       {% for product in section.settings.collection.products %}
@@ -64,7 +64,7 @@
       {% endfor %}
     </div>
 
-    <button class="owl-next-custom"><i class="fa fa-angle-right"></i></button>
+    <button class="owl-next-custom-side"><i class="fa fa-angle-right"></i></button>
   </div>
 </div>
 
@@ -86,8 +86,8 @@
     margin: 0 auto 10px;
   }
 
-  .owl-prev-custom,
-  .owl-next-custom {
+  .owl-prev-custom-side,
+  .owl-next-custom-side {
     position: absolute;
     cursor: pointer;
     background-color: #f5f5f5;
@@ -106,22 +106,22 @@
     opacity: 0.6;
   }
 
-  .owl-prev-custom {
+  .owl-prev-custom-side {
     left: 53px;
   }
 
-  .owl-next-custom {
+  .owl-next-custom-side {
     right: 53px;
   }
 
-  .owl-prev-custom:hover,
-  .owl-next-custom:hover {
+  .owl-prev-custom-side:hover,
+  .owl-next-custom-side:hover {
     opacity: 1;
     background-color: #be1623;
   }
 
-  .owl-prev-custom,
-  .owl-next-custom {
+  .owl-prev-custom-side,
+  .owl-next-custom-side {
     transition: all 0.4s ease-in-out;
   }
 
@@ -304,11 +304,11 @@
       },
     });
 
-    $('.owl-prev-custom').on('click', function () {
+    $('.owl-prev-custom-side').on('click', function () {
       $carousel.trigger('prev.owl.carousel');
     });
 
-    $('.owl-next-custom').on('click', function () {
+    $('.owl-next-custom-side').on('click', function () {
       $carousel.trigger('next.owl.carousel');
     });
   });
