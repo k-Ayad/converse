@@ -236,20 +236,23 @@
 }
 
 .product-info {
-  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  flex-wrap: wrap;
+  padding: 10px;
+  gap: 10px;
 }
 
 .product-title {
   font-size: 14px;
   font-weight: 500;
   margin: 0;
-  flex: 1 1 100%;
   color: #000;
   transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }
 
 .product-title:hover {
@@ -257,11 +260,11 @@
 }
 
 .product-price {
-  font-size: 14px;
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
-  margin-top: 6px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .sale-price {
@@ -273,7 +276,9 @@
   text-decoration: line-through;
   color: #888;
   font-weight: normal;
+  font-size: 13px;
 }
+
 
 
 .custom-column {
