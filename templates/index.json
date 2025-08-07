@@ -206,7 +206,7 @@
       "settings": {
         "collection": "frontpage",
         "no_of_items": 4,
-        "with_side": true
+        "with_side": false
       }
     }
   },
