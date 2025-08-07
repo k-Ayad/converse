@@ -53,7 +53,10 @@
 {% assign first_variant = product.variants.first %}
 {% assign original_price = first_variant.compare_at_price %}
 {% assign sale_price = first_variant.price %}
-{% assign is_on_sale = original_price > sale_price %}
+{% assign is_on_sale = false %}
+{% if original_price > sale_price %}
+  {% assign is_on_sale = true %}
+{% endif %}
 
 <div class="item product-card">
   <a href="{{ product.url }}" class="product-link">
