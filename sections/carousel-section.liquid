@@ -1,3 +1,5 @@
+{{ 'carousel-section.css' | asset_url | stylesheet_tag }}
+
 <div
   style="display: flex; flex-wrap: wrap"
   {% if section.settings.with_side %}
@@ -17,6 +19,7 @@
     </div>
   {% endif %}
   <div
+    id="{{ section.id }}"
     {% if section.settings.with_side %}
       class="custom-wide-column"
     {% endif %}
@@ -81,7 +84,7 @@
   </div>
 </div>
 
-<style>
+{% comment %} <style>
   .product-carousel-wrapper {
     position: relative;
     padding: 20px 40px;
@@ -349,11 +352,11 @@
       align-items: end;
     }
   }
-</style>
+</style> {% endcomment %}
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var $carousel = $('.owl-carousel');
+    var $carousel = $('#{{ section.id }} .owl-carousel');
 
     $carousel.owlCarousel({
       loop: true,
