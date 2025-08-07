@@ -27,7 +27,7 @@
     <div data-carousel-settings data-items-count="{{ section.settings.no_of_items | default: 4 }}"></div>
     <button {% if section.settings.with_side %} class="owl-prev-custom-side" {% else %} class="owl-prev-custom" {% endif %}><i class="fa fa-angle-left"></i></button>
 
-    <div class="owl-carousel">
+    <div class="owl-carousel" data-carousel-id="{{ section.id }}">
       {% for product in section.settings.collection.products %}
         {% assign first_variant = product.variants.first %}
         {% assign original_price = first_variant.compare_at_price %}
