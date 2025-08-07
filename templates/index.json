@@ -205,8 +205,8 @@
       "name": "Product Carousel",
       "settings": {
         "collection": "frontpage",
-        "no_of_items": 4,
-        "with_side": false
+        "no_of_items": 1,
+        "with_side": true
       }
     }
   },
