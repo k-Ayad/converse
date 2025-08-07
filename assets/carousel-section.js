@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var settingsEl = sectionEl.querySelector('[data-carousel-settings]');
     var itemsCount = settingsEl ? parseInt(settingsEl.dataset.itemsCount) || 4 : 4;
 
-    $(carouselWrapper).owlCarousel({
+    var $carousel = $(carouselWrapper);
+
+    $carousel.owlCarousel({
       loop: true,
       margin: 10,
       nav: false,
@@ -18,28 +20,27 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayHoverPause: true,
       smartSpeed: 600,
       responsive: {
-        0: {
-          items: 1
-        },
-        768: {
-          items: itemsCount
-        }
+        0: { items: 1 },
+        768: { items: itemsCount }
       }
     });
 
-    // Custom navigation
+    var currentIndex = 0;
+
     var prevBtn = sectionEl.querySelector('.owl-prev-custom, .owl-prev-custom-side');
     var nextBtn = sectionEl.querySelector('.owl-next-custom, .owl-next-custom-side');
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function () {
-        $(carouselWrapper).trigger('prev.owl.carousel');
+        currentIndex = $carousel.find('.owl-item.active').first().index();
+        $carousel.trigger('to.owl.carousel', [currentIndex - 1, 300, true]);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', function () {
-        $(carouselWrapper).trigger('next.owl.carousel');
+        currentIndex = $carousel.find('.owl-item.active').first().index();
+        $carousel.trigger('to.owl.carousel', [currentIndex + 1, 300, true]);
       });
     }
   });
