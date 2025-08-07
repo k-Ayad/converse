@@ -241,11 +241,12 @@
   align-items: start;
   padding: 10px;
   gap: 10px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .product-title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
   margin: 0;
   color: #000;
   transition: color 0.3s ease;
@@ -264,7 +265,8 @@
   flex-direction: column;
   gap: 6px;
   align-items: center;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 300;
   white-space: nowrap;
 }
 
