@@ -117,7 +117,7 @@
     transition: all 0.4s ease-in-out;
 }
 
-.product-card {
+/* .product-card {
     text-align: center;
     padding: 10px;
     position: relative;
@@ -167,24 +167,20 @@
     text-decoration: line-through;
 }
 
-/* Reset link styles inside product cards */
 .product-card a {
     text-decoration: none;
     color: inherit;
 }
 
-/* Title styling */
 .product-card .product-title {
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: 6px;
     color: #000;
-    /* force black like your design */
     transition: color 0.3s ease;
 }
 
-/* Price styling */
 .product-card .product-price {
     display: flex;
     justify-content: center;
@@ -204,11 +200,81 @@
     text-decoration: line-through;
 }
 
-/* Hover effect for title and price */
 .product-card:hover .product-title,
 .product-card:hover .sale-price {
     color: #be1623;
+} */
+
+/* === Product Card Styles === */
+.product-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
 }
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: transparent;
+  color: #be1623;
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 2;
+}
+
+.product-link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.product-info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.product-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  flex: 1 1 100%;
+  color: #000;
+  transition: color 0.3s ease;
+}
+
+.product-title:hover {
+  color: #be1623;
+}
+
+.product-price {
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.sale-price {
+  color: #000;
+  font-weight: 500;
+}
+
+.compare-price {
+  text-decoration: line-through;
+  color: #888;
+  font-weight: normal;
+}
+
 
 .custom-column {
     margin-bottom: 1rem;

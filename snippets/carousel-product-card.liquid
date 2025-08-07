@@ -1,4 +1,4 @@
-{% assign first_variant = product.variants.first %}
+{% comment %} {% assign first_variant = product.variants.first %}
 {% assign original_price = first_variant.compare_at_price %}
 {% assign sale_price = first_variant.price %}
 
@@ -48,4 +48,37 @@
     <div class="flag-product sale">sale</div>
     <div class="flag-product off">{{ discount | abs }}%</div>
   </div>
-{% endif %}
+{% endif %} {% endcomment %}
+
+{% assign first_variant = product.variants.first %}
+{% assign original_price = first_variant.compare_at_price %}
+{% assign sale_price = first_variant.price %}
+{% assign is_on_sale = original_price > sale_price %}
+
+<div class="item product-card">
+  <a href="{{ product.url }}" class="product-link">
+    <div class="image-wrapper">
+      {% if is_on_sale %}
+        {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+        <div class="sale-badge">-{{ discount | abs }}%</div>
+      {% endif %}
+      <img
+        src="{{ product.featured_media | image_url: width: 533 }}"
+        alt="{{ product.featured_media.alt | escape }}"
+        class="motion-reduce"
+        loading="lazy"
+        width="{{ product.featured_media.width }}"
+        height="{{ product.featured_media.height }}"
+      >
+    </div>
+    <div class="product-info">
+      <p class="product-title">{{ product.title }}</p>
+      <div class="product-price">
+        <span class="sale-price">{{ sale_price | money }}</span>
+        {% if is_on_sale %}
+          <span class="compare-price">{{ original_price | money }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+</div>
