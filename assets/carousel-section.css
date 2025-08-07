@@ -271,13 +271,11 @@
 }
 
 .sale-price {
-  color: #000;
   font-weight: 500;
 }
 
 .compare-price {
   text-decoration: line-through;
-  color: #888;
   font-weight: normal;
   font-size: 13px;
 }
