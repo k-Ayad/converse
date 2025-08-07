@@ -24,6 +24,7 @@
       class="custom-wide-column"
     {% endif %}
   >
+    <div data-carousel-settings data-items-count="{{ section.settings.no_of_items | default: 4 }}"></div>
     <button {% if section.settings.with_side %} class="owl-prev-custom-side" {% else %} class="owl-prev-custom" {% endif %}><i class="fa fa-angle-left"></i></button>
 
     <div class="owl-carousel">
@@ -84,7 +85,7 @@
   </div>
 </div>
 
-<script>
+{% comment %} <script>
   document.addEventListener('DOMContentLoaded', function () {
     var $carousel = $('#{{ section.id }} .owl-carousel');
 
@@ -117,7 +118,8 @@
       $carousel.trigger('next.owl.carousel');
     });
   });
-</script>
+</script> {% endcomment %}
+<script src="{{ 'quick-add-bulk.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
