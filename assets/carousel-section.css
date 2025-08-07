@@ -265,19 +265,19 @@
   flex-direction: column;
   gap: 6px;
   align-items: center;
-  font-weight: 300;
+  font-size: 15px;
   white-space: nowrap;
 }
 
 .sale-price {
-  color: #7c7c7c;
-  font-size: 15px;
+  color: #000;
+  font-weight: 500;
 }
 
 .compare-price {
   text-decoration: line-through;
-  color: #939190;
-  font-weight: 200;
+  color: #888;
+  font-weight: normal;
   font-size: 13px;
 }
 
