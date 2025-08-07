@@ -75,13 +75,13 @@
       >
     </div>
     <div class="product-info">
-      <p class="product-title">{{ product.title }}</p>
-      <div class="product-price">
-        <span class="sale-price">{{ sale_price | money }}</span>
-        {% if is_on_sale %}
-          <span class="compare-price">{{ original_price | money }}</span>
-        {% endif %}
-      </div>
+        <p class="product-title">{{ product.title }}</p>
+        <div class="product-price">
+            <span class="sale-price">{{ sale_price | money }}</span>
+            {% if is_on_sale %}
+            <span class="compare-price">{{ original_price | money }}</span>
+            {% endif %}
+        </div>
     </div>
   </a>
 </div>

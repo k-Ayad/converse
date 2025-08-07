@@ -238,7 +238,7 @@
 .product-info {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: start;
   padding: 10px;
   gap: 10px;
 }
@@ -250,8 +250,8 @@
   color: #000;
   transition: color 0.3s ease;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-wrap: auto;
+  text-align: start;
   flex: 1;
 }
 
@@ -261,6 +261,7 @@
 
 .product-price {
   display: flex;
+  flex-direction: column;
   gap: 6px;
   align-items: center;
   font-size: 14px;
