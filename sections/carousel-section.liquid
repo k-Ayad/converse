@@ -85,40 +85,6 @@
   </div>
 </div>
 
-{% comment %} <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var $carousel = $('#{{ section.id }} .owl-carousel');
-
-    $carousel.owlCarousel({
-      loop: true,
-      margin: 10,
-      nav: false,
-      dots: false,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true,
-      smartSpeed: 600,
-      responsive: {
-        0: {
-          items: 1,
-        },
-        768: {
-          items: {{ section.settings.no_of_items | default: 4 }},
-        }
-      },
-    });
-
-    console.log('Carousel Product setting:', {{ section.settings.no_of_items | default: 4 }});
-
-    $('.owl-prev-custom').on('click', function () {
-      $carousel.trigger('prev.owl.carousel');
-    });
-
-    $('.owl-next-custom').on('click', function () {
-      $carousel.trigger('next.owl.carousel');
-    });
-  });
-</script> {% endcomment %}
 <script src="{{ 'carousel-section.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
