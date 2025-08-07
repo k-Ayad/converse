@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Loop through each Shopify section
   var sectionElements = document.querySelectorAll('[id^="shopify-section-"]');
 
   sectionElements.forEach(function (sectionEl) {
@@ -7,13 +6,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var carouselEl = sectionEl.querySelector('[data-carousel-id="' + sectionId + '"]');
     if (!carouselEl) return;
 
-    var $carousel = $(carouselEl);
-
     var settingsEl = sectionEl.querySelector('[data-carousel-settings]');
     var itemsCount = settingsEl ? parseInt(settingsEl.dataset.itemsCount) || 4 : 4;
 
-    // Initialize Owl Carousel
-    $carousel.owlCarousel({
+    var $carousel = $(carouselEl);
+
+    // Initialize Owl Carousel and store the carousel instance
+    var owlInstance = $carousel.owlCarousel({
       loop: true,
       margin: 10,
       nav: false,
@@ -22,26 +21,26 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayTimeout: 3000,
       autoplayHoverPause: true,
       smartSpeed: 600,
-      slideBy: 1, // ✅ Ensures it moves one item at a time
+      slideBy: 1,
       responsive: {
         0: { items: 1 },
         768: { items: itemsCount }
       }
     });
 
-    // Set up buttons scoped to this section only
+    // Buttons scoped to this section
     var prevBtn = sectionEl.querySelector('.owl-prev-custom, .owl-prev-custom-side');
     var nextBtn = sectionEl.querySelector('.owl-next-custom, .owl-next-custom-side');
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function () {
-        $carousel.trigger('prev.owl.carousel');
+        owlInstance.trigger('prev.owl.carousel');
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', function () {
-        $carousel.trigger('next.owl.carousel');
+        owlInstance.trigger('next.owl.carousel');
       });
     }
   });
