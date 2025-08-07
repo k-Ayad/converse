@@ -1,247 +1,43 @@
-<div class="product-carousel-wrapper">
-  <button class="owl-prev-custom"><i class="fa fa-angle-left"></i></button>
+{{ 'carousel-section.css' | asset_url | stylesheet_tag }}
 
-  <div class="owl-carousel">
-    {% for product in section.settings.collection.products %}
-      {% assign first_variant = product.variants.first %}
-      {% assign original_price = first_variant.compare_at_price %}
-      {% assign sale_price = first_variant.price %}
-      <div class="item product-card">
-        <a href="{{ product.url }}">
-          <div class="image-wrapper">
-            {% if original_price > sale_price %}
-              {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
-              <div class="sale-badge">{{ discount | abs }}% OFF</div>
-            {% endif %}
-            <img
-              srcset="
-                {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
-                {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
-                {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
-                {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
-                {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
-                {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
-                {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
-              "
-              src="{{ product.featured_media | image_url: width: 533 }}"
-              sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-              alt="{{ product.featured_media.alt | escape }}"
-              class="motion-reduce"
-              {% unless lazy_load == false %}
-                loading="lazy"
-              {% endunless %}
-              width="{{ product.featured_media.width }}"
-              height="{{ product.featured_media.height }}"
-            >
-          </div>
-          <div class="product-info">
-            <p class="product-title">{{ product.title }}</p>
-            <div class="product-price">
-              <span class="sale-price">{{ sale_price | money }}</span>
-              {% if original_price > sale_price %}
-                <span class="compare-price">{{ original_price | money }}</span>
-              {% endif %}
-            </div>
-          </div>
-        </a>
+<div
+  style="display: flex; flex-wrap: wrap"
+  {% if section.settings.with_side %}
+    class="product-carousel-wrapper-side"
+  {% else %}
+    class="product-carousel-wrapper"
+  {% endif %}
+>
+  {% if section.settings.with_side %}
+    <div class="custom-column">
+      <div style="position: relative;" class="best-sellers">
+        <h1 style="color: white; font: 'Poppins', sans-serif;">{{ section.settings.collection.title | upcase }}</h1>
+        <a class="text-view" href="{{ section.settings.collection.url }}"
+          >VIEW ALL <i class="fa fa-angle-right" aria-hidden="true"></i
+        ></a>
       </div>
-      {% if original_price > sale_price %}
-        {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
-        <div class="flag-sale d-flex">
-          <div class="flag-product sale">sale</div>
-          <div class="flag-product off">{{ discount | abs }}%</div>
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+    </div>
+  {% endif %}
+  <div
+    id="{{ section.id }}"
+    {% if section.settings.with_side %}
+      class="custom-wide-column"
+    {% endif %}
+  >
+    <div data-carousel-settings data-items-count="{{ section.settings.no_of_items | default: 4 }}"></div>
+    <button {% if section.settings.with_side %} class="owl-prev-custom-side" {% else %} class="owl-prev-custom" {% endif %}><i class="fa fa-angle-left"></i></button>
 
-  <button class="owl-next-custom"><i class="fa fa-angle-right"></i></button>
+    <div class="owl-carousel" data-carousel-id="{{ section.id }}">
+      {% for product in section.settings.collection.products %}
+        {% render 'carousel-product-card', product: product %}
+      {% endfor %}
+    </div>
+
+    <button {% if section.settings.with_side %} class="owl-next-custom-side" {% else %} class="owl-next-custom" {% endif %}><i class="fa fa-angle-right"></i></button>
+  </div>
 </div>
 
-<style>
-  .product-carousel-wrapper {
-    position: relative;
-    padding: 20px 40px;
-  }
-
-  .owl-carousel .item {
-    text-align: center;
-    padding: 10px;
-  }
-
-  .owl-carousel .item img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-  }
-
-  .owl-prev-custom,
-  .owl-next-custom {
-    position: absolute;
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 24px;
-    width: 30px;
-    height: 30px;
-    top: calc(50% - 15px);
-    margin-top: 0;
-    padding: 0;
-    color: #fff;
-    border: none !important;
-    border-radius: 0;
-    background-color: #020203;
-    outline: 0 !important;
-    z-index: 99;
-    opacity: 0.6;
-  }
-
-  .owl-prev-custom {
-    left: 53px;
-  }
-
-  .owl-next-custom {
-    right: 53px;
-  }
-
-  .owl-prev-custom:hover,
-  .owl-next-custom:hover {
-    opacity: 1;
-    background-color: #be1623;
-  }
-
-  .owl-prev-custom,
-  .owl-next-custom {
-    transition: all 0.4s ease-in-out;
-  }
-
-  .product-card {
-    text-align: center;
-    padding: 10px;
-    position: relative;
-  }
-
-  .image-wrapper {
-    position: relative;
-  }
-
-  .sale-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: none;
-    color: #d00;
-    font-weight: bold;
-    font-size: 14px;
-  }
-
-  .product-info {
-    margin-top: 10px;
-  }
-
-  .product-title {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .product-price {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sale-price {
-    font-size: 16px;
-    font-weight: 500;
-    color: #111;
-  }
-
-  .compare-price {
-    font-size: 14px;
-    color: #888;
-    text-decoration: line-through;
-  }
-
-  /* Reset link styles inside product cards */
-  .product-card a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  /* Title styling */
-  .product-card .product-title {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    color: #000; /* force black like your design */
-    transition: color 0.3s ease;
-  }
-
-  /* Price styling */
-  .product-card .product-price {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .product-card .sale-price {
-    font-size: 16px;
-    font-weight: 500;
-    color: #111;
-  }
-
-  .product-card .compare-price {
-    font-size: 14px;
-    color: #888;
-    text-decoration: line-through;
-  }
-
-  /* Hover effect for title and price */
-  .product-card:hover .product-title,
-  .product-card:hover .sale-price {
-    color: #be1623;
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var $carousel = $('.owl-carousel');
-
-    $carousel.owlCarousel({
-      loop: true,
-      margin: 10,
-      nav: false,
-      dots: false,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true,
-      smartSpeed: 600,
-      responsive: {
-        0: {
-          items: 1,
-        },
-        768: {
-          items: {{ section.settings.no_of_items | default: 4 }},
-        }
-      },
-    });
-
-    console.log('Items setting:', {{ section.settings.no_of_items | default: 4 }});
-
-    $('.owl-prev-custom').on('click', function () {
-      $carousel.trigger('prev.owl.carousel');
-    });
-
-    $('.owl-next-custom').on('click', function () {
-      $carousel.trigger('next.owl.carousel');
-    });
-  });
-</script>
+<script src="{{ 'carousel-section.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -260,6 +56,12 @@
       "label": "Number Of Items",
       "id": "no_of_items",
       "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "with_side",
+      "label": "With side?",
+      "default": false
     }
   ],
   "presets": [
