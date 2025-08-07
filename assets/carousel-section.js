@@ -19,13 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayTimeout: 3000,
       autoplayHoverPause: true,
       smartSpeed: 600,
-      slideBy: 1, // ✅ Make sure carousel only slides one item at a time
+      slideBy: 1, // ✅ ensures only 1 item slides per click
       responsive: {
         0: { items: 1 },
         768: { items: itemsCount }
       }
     });
 
+    // ✅ Use Owl’s native next/prev triggers (slide by 1)
     var prevBtn = sectionEl.querySelector('.owl-prev-custom, .owl-prev-custom-side');
     var nextBtn = sectionEl.querySelector('.owl-next-custom, .owl-next-custom-side');
 
