@@ -184,6 +184,15 @@
         "no_of_items": 1,
         "with_side": false
       }
+    },
+    "carousel_section_kdmCpR": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage",
+        "no_of_items": 4,
+        "with_side": true
+      }
     }
   },
   "order": [
@@ -193,6 +202,7 @@
     "image-banner",
     "carousel_section_ir8hMB",
     "collection-banner",
-    "carousel_section_CgiKrn"
+    "carousel_section_CgiKrn",
+    "carousel_section_kdmCpR"
   ]
 }
