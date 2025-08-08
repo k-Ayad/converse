@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   const sections = document.querySelectorAll('[id^="shopify-section-"]');
+  console.log(sections);
 
   sections.forEach((sectionEl) => {
     const sectionId = sectionEl.id.replace('shopify-section-', '');
