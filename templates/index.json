@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-slideshow": {
@@ -11,7 +20,7 @@
             "heading_size": "h1",
             "subheading": "",
             "button_label": "Button label",
-            "link": "shopify:\/\/collections",
+            "link": "shopify://collections",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-right",
@@ -24,6 +33,7 @@
       "block_order": [
         "slide-0"
       ],
+      "disabled": true,
       "settings": {
         "layout": "full_bleed",
         "slide_height": "small",
@@ -37,6 +47,7 @@
     },
     "all-products": {
       "type": "featured-collection",
+      "disabled": true,
       "custom_css": [
         ".card--standard {max-width: 600px; margin: auto;}",
         "h2 {text-align: center; font-weight: 700; font-family: \"Poppins\", sans-serif;}"
@@ -101,6 +112,7 @@
         "collection-2",
         "collection-3"
       ],
+      "disabled": true,
       "settings": {
         "title": "Collections",
         "heading_size": "h2",
@@ -116,6 +128,7 @@
     },
     "image-banner": {
       "type": "image-banner",
+      "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
         "image_height": "small",
