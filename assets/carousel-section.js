@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       slideBy: 1, // slide one item per click
       responsive: {
         0: { items: 1 },
+        600: { items: 2 },
         768: { items: itemsCount }
       }
     });
