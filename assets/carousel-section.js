@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const carouselEl = sectionEl.querySelector(`[data-carousel-id="${sectionId}"]`);
     const settingsEl = sectionEl.querySelector('[data-carousel-settings]');
 
+    console.log(carouselEl);
+
     if (!carouselEl || !settingsEl) return;
 
     const itemsCount = parseInt(settingsEl.dataset.itemsCount) || 4;
