@@ -24,6 +24,7 @@
       "block_order": [
         "slide-0"
       ],
+      "disabled": true,
       "settings": {
         "layout": "full_bleed",
         "slide_height": "small",
@@ -37,6 +38,7 @@
     },
     "all-products": {
       "type": "featured-collection",
+      "disabled": true,
       "custom_css": [
         ".card--standard {max-width: 600px; margin: auto;}",
         "h2 {text-align: center; font-weight: 700; font-family: \"Poppins\", sans-serif;}"
@@ -101,6 +103,7 @@
         "collection-2",
         "collection-3"
       ],
+      "disabled": true,
       "settings": {
         "title": "Collections",
         "heading_size": "h2",
@@ -116,6 +119,7 @@
     },
     "image-banner": {
       "type": "image-banner",
+      "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
         "image_height": "small",
