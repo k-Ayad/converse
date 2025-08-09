@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
           0: { items: 1 },
           600: { items: 1 },
           800: { items: 2 },
-          1048: { items: 4 }
+          1048: { items: itemsCount }
         }
       : {
           0: { items: 1 },
