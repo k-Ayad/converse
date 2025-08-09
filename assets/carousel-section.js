@@ -17,19 +17,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if this section is with-side mode
     const isWithSide = sectionEl.querySelector('.product-carousel-wrapper-side') !== null;
 
-    // Use different responsive settings for with-side mode
+    // Updated responsive settings
     const responsiveSettings = isWithSide
       ? {
-          0: { items: 1 },
-          600: { items: 1 },
-          800: { items: 2 },
-          1048: { items: itemsCount }
+          0: { items: 1 },      // Phones
+          500: { items: 2 },    // Small tablets
+          900: { items: 3 },    // Tablets / small desktops
+          1200: { items: itemsCount } // Large desktops
         }
       : {
           0: { items: 1 },
-          600: { items: 2 },
+          500: { items: 2 },
           800: { items: 3 },
-          1048: { items: itemsCount }
+          1200: { items: itemsCount }
         };
 
     // Initialize Owl Carousel
@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayHoverPause: true,
       smartSpeed: 600,
       slideBy: 1,
-      responsiveBaseElement: window,
-      responsive: responsiveSettings
+      responsive: responsiveSettings // Removed responsiveBaseElement
     });
 
     // Scoped buttons to this section only
