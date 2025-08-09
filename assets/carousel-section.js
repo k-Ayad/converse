@@ -14,7 +14,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Prevent duplicate initialization
     if ($carousel.hasClass('owl-loaded')) return;
 
-    // Initialize Owl Carousel for this specific carousel only
+    // Check if this section is with-side mode
+    const isWithSide = sectionEl.querySelector('.product-carousel-wrapper-side') !== null;
+
+    // Use different responsive settings for with-side mode
+    const responsiveSettings = isWithSide
+      ? {
+          0: { items: 1 },
+          600: { items: 1 },
+          800: { items: 2 },
+          1048: { items: itemsCount }
+        }
+      : {
+          0: { items: 1 },
+          600: { items: 2 },
+          800: { items: 3 },
+          1048: { items: itemsCount }
+        };
+
+    // Initialize Owl Carousel
     $carousel.owlCarousel({
       loop: true,
       margin: 10,
@@ -24,13 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayTimeout: 3000,
       autoplayHoverPause: true,
       smartSpeed: 600,
-      slideBy: 1, // slide one item per click
-      responsive: {
-        0: { items: 1 },
-        600: { items: 2 },
-        800: { items: 3 },
-        1048: { items: itemsCount }
-      }
+      slideBy: 1,
+      responsiveBaseElement: window,
+      responsive: responsiveSettings
     });
 
     // Scoped buttons to this section only
