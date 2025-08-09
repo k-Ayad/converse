@@ -321,6 +321,14 @@
     }
 }
 
+  .product-carousel-wrapper-side {
+    flex-direction: column;
+  }
+  .product-carousel-wrapper-side .custom-column {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
 .best-sellers {
     background-color: #020204;
     min-height: initial !important;
