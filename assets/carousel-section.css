@@ -448,6 +448,7 @@
 .btn-1 {
     background-color: #be1623;
     border-color: #be1623;
+    text-decoration: none;
 }
 
 .btn-1:hover {
@@ -489,22 +490,6 @@
 .price h2 {
     margin: 0;
     font-size: 1.25rem;
-}
-
-.price sup {
-    font-size: 0.75rem;
-    top: -0.5em;
-    position: relative;
-}
-
-.price del {
-    color: #888;
-}
-
-/* ====== RATINGS ====== */
-.ratings.active i.fa-star {
-    color: #ffc107;
-    /* Bootstrap star color */
 }
 
 /*  */
