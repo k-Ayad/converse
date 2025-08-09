@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayHoverPause: true,
       smartSpeed: 600,
       slideBy: 1, // slide one item per click
+      responsiveBaseElement: window,
       responsive: {
         0: { items: 1 },
         600: { items: 2 },
