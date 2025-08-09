@@ -25,15 +25,36 @@
     {% endif %}
   >
     <div data-carousel-settings data-items-count="{{ section.settings.no_of_items | default: 4 }}"></div>
-    <button {% if section.settings.with_side %} class="owl-prev-custom-side" {% else %} class="owl-prev-custom" {% endif %}><i class="fa fa-angle-left"></i></button>
+    <button
+      {% if section.settings.with_side %}
+        class="owl-prev-custom-side"
+      {% else %}
+        class="owl-prev-custom"
+      {% endif %}
+    >
+      <i class="fa fa-angle-left"></i>
+    </button>
+    {% if section.settings.no_of_items == 1 %}
+      {% assign featured = true %}
+    {% else %}
+      {% assign featured = false %}
+    {% endif %}
 
     <div class="owl-carousel" data-carousel-id="{{ section.id }}">
       {% for product in section.settings.collection.products %}
-        {% render 'carousel-product-card', product: product %}
+        {% render 'carousel-product-card', product: product, featured: featured %}
       {% endfor %}
     </div>
 
-    <button {% if section.settings.with_side %} class="owl-next-custom-side" {% else %} class="owl-next-custom" {% endif %}><i class="fa fa-angle-right"></i></button>
+    <button
+      {% if section.settings.with_side %}
+        class="owl-next-custom-side"
+      {% else %}
+        class="owl-next-custom"
+      {% endif %}
+    >
+      <i class="fa fa-angle-right"></i>
+    </button>
   </div>
 </div>
 
