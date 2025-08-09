@@ -523,6 +523,8 @@ a:focus {
 .price .sale-price,
 .price .compare-price {
     margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 3.25rem;
 }
 
