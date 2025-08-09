@@ -388,16 +388,9 @@
 }
 
 /* Column widths for breakpoints */
-.col-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-@media (min-width: 768px) {
-    .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+.col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
 }
 
 @media (min-width: 992px) {
@@ -524,6 +517,7 @@ a:focus {
     display: flex;
     flex-direction: column;
 }
+
 .price .sale-price,
 .price .compare-price {
     margin: 0;
