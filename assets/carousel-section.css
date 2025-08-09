@@ -281,7 +281,9 @@
   font-size: 13px;
 }
 
-
+@media (min-width: 768px) {
+  .custom-wide-column { width: 75%; }
+}
 
 .custom-column {
     margin-bottom: 1rem;
