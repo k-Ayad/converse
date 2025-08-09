@@ -14,25 +14,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // Prevent duplicate initialization
     if ($carousel.hasClass('owl-loaded')) return;
 
-    // Better detection for "with side" — check for the actual side column
-    const isWithSide = !!sectionEl.querySelector('.custom-column');
+    // Check if this section is with-side mode
+    const isWithSide = sectionEl.querySelector('.product-carousel-wrapper-side') !== null;
 
-    // Responsive rules: be stricter when with-side is enabled
+    // Use different responsive settings for with-side mode
     const responsiveSettings = isWithSide
       ? {
-          0:    { items: 1 },   // phones
-          600:  { items: 1 },   // small tablets / large phones
-          800:  { items: 2 },   // tablets
-          1048: { items: itemsCount } // desktop (use admin setting)
+          0: { items: 1 },
+          600: { items: 1 },
+          800: { items: 2 },
+          1048: { items: itemsCount }
         }
       : {
-          0:    { items: 1 },
-          600:  { items: 2 },
-          800:  { items: 3 },
+          0: { items: 1 },
+          600: { items: 2 },
+          800: { items: 3 },
           1048: { items: itemsCount }
         };
-
-    console.log('[carousel] init', sectionId, 'withSide=', isWithSide, 'itemsCount=', itemsCount, 'responsive=', responsiveSettings);
 
     // Initialize Owl Carousel
     $carousel.owlCarousel({
@@ -47,28 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
       slideBy: 1,
       responsiveBaseElement: window,
       responsive: responsiveSettings
-    });
-
-    // Force a refresh after init and after window load (fix timing/layout issues)
-    setTimeout(function () {
-      try { $carousel.trigger('refresh.owl.carousel'); } catch (e) { /* ignore */ }
-      console.log('[carousel] post-init refresh', sectionId, 'carouselWidth=', carouselEl.offsetWidth, 'windowWidth=', window.innerWidth);
-    }, 60);
-
-    // On window load images/CSS are fully applied — refresh again
-    window.addEventListener('load', function () {
-      try { $carousel.trigger('refresh.owl.carousel'); } catch (e) {}
-      console.log('[carousel] window.load refresh', sectionId, 'carouselWidth=', carouselEl.offsetWidth, 'windowWidth=', window.innerWidth);
-    });
-
-    // Debounced resize refresh
-    let resizeTimer;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        try { $carousel.trigger('refresh.owl.carousel'); } catch (e) {}
-        console.log('[carousel] resize refresh', sectionId, 'carouselWidth=', carouselEl.offsetWidth, 'windowWidth=', window.innerWidth);
-      }, 150);
     });
 
     // Scoped buttons to this section only
