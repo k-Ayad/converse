@@ -434,6 +434,19 @@
     color: #fff !important;
 }
 
+.slide-content h1 a {
+    font-size: 2rem;
+}
+
+.slide-content h1 a {
+    font-size: 2.2rem;
+}
+
+.slide-content h1 a {
+    color: #3a3838;
+    font-size: 3.2rem;
+}
+
 /* ====== BUTTON ====== */
 
 .button-slider .btn-1:hover {
