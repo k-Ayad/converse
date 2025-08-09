@@ -516,6 +516,10 @@ a:focus {
 }
 
 /* ====== PRICE ====== */
+.price {
+    display: flex;
+    flex-direction: column;
+}
 .price .sale-price,
 .price .compare-price {
     margin: 0;
