@@ -448,6 +448,7 @@
 .button-slider .btn-1 {
     background-color: #be1623;
     border: 1px solid #be1623;
+    text-decoration: none;
     letter-spacing: 3px;
     padding: 13px 26px;
     border-radius: 0;
