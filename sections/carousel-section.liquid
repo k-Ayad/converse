@@ -1,5 +1,10 @@
 {{ 'carousel-section.css' | asset_url | stylesheet_tag }}
 
+{% if section.settings.no_of_items == 1 %}
+  {% assign featured = true %}
+{% else %}
+  {% assign featured = false %}
+{% endif %}
 <div
   style="display: flex; flex-wrap: wrap"
   {% if section.settings.with_side or featured %}
@@ -34,11 +39,6 @@
     >
       <i class="fa fa-angle-left"></i>
     </button>
-    {% if section.settings.no_of_items == 1 %}
-      {% assign featured = true %}
-    {% else %}
-      {% assign featured = false %}
-    {% endif %}
 
     <div class="owl-carousel" data-carousel-id="{{ section.id }}">
       {% for product in section.settings.collection.products %}
