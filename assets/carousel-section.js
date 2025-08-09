@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
       responsive: {
         0: { items: 1 },
         600: { items: 2 },
-        768: { items: itemsCount }
+        800: { items: 3 },
+        1048: { items: itemsCount }
       }
     });
 
