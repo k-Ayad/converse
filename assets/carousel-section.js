@@ -1,66 +1,60 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const sections = document.querySelectorAll('[id^="shopify-section-"]');
+document.addEventListener("DOMContentLoaded", function () {
+  const carousels = document.querySelectorAll("[data-carousel-id]");
 
-  sections.forEach((sectionEl) => {
-    const sectionId = sectionEl.id.replace('shopify-section-', '');
-    const carouselEl = sectionEl.querySelector(`[data-carousel-id="${sectionId}"]`);
-    const settingsEl = sectionEl.querySelector('[data-carousel-settings]');
+  carousels.forEach((carousel) => {
+    const sectionId = carousel.getAttribute("data-carousel-id");
+    const wrapper = carousel.closest(`#${sectionId}`);
+    const itemsCount = parseInt(
+      wrapper.querySelector("[data-carousel-settings]").dataset.itemsCount
+    );
 
-    if (!carouselEl || !settingsEl) return;
+    const isWithSide =
+      wrapper.classList.contains("custom-wide-column") ||
+      wrapper.classList.contains("with_side");
 
-    const itemsCount = parseInt(settingsEl.dataset.itemsCount) || 4;
-    const $carousel = $(carouselEl);
+    const prevBtn = wrapper.querySelector(
+      isWithSide ? ".owl-prev-custom-side" : ".owl-prev-custom"
+    );
+    const nextBtn = wrapper.querySelector(
+      isWithSide ? ".owl-next-custom-side" : ".owl-next-custom"
+    );
 
-    // Prevent duplicate initialization
-    if ($carousel.hasClass('owl-loaded')) return;
+    const $carousel = $(carousel);
 
-    // Check if this section is with-side mode
-    const isWithSide = sectionEl.querySelector('.product-carousel-wrapper-side') !== null;
+    // Destroy any existing instance to avoid duplicate initialization
+    if ($carousel.hasClass("owl-loaded")) {
+      $carousel.trigger("destroy.owl.carousel");
+    }
 
-    // Use different responsive settings for with-side mode
     const responsiveSettings = isWithSide
       ? {
-          0: { items: 1 },
-          600: { items: 1 },
-          800: { items: 2 },
-          1048: { items: itemsCount }
+          0: { items: 1 },        // Phones
+          500: { items: 2 },      // Small tablets
+          900: { items: 3 },      // Tablets
+          1200: { items: itemsCount } // Desktop uses the section setting
         }
       : {
           0: { items: 1 },
-          600: { items: 2 },
+          500: { items: 2 },
           800: { items: 3 },
-          1048: { items: itemsCount }
+          1200: { items: itemsCount }
         };
 
-    // Initialize Owl Carousel
     $carousel.owlCarousel({
       loop: true,
       margin: 10,
       nav: false,
       dots: false,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true,
+      autoplay: false,
       smartSpeed: 600,
-      slideBy: 1,
-      responsiveBaseElement: window,
       responsive: responsiveSettings
     });
 
-    // Scoped buttons to this section only
-    const prevBtn = sectionEl.querySelector('.owl-prev-custom, .owl-prev-custom-side');
-    const nextBtn = sectionEl.querySelector('.owl-next-custom, .owl-next-custom-side');
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function () {
-        $(carouselEl).trigger('prev.owl.carousel');
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function () {
-        $(carouselEl).trigger('next.owl.carousel');
-      });
-    }
+    prevBtn.addEventListener("click", () =>
+      $carousel.trigger("prev.owl.carousel")
+    );
+    nextBtn.addEventListener("click", () =>
+      $carousel.trigger("next.owl.carousel")
+    );
   });
 });
