@@ -516,8 +516,8 @@ a:focus {
 }
 
 /* ====== PRICE ====== */
-.price h1,
-.price h2 {
+.price .sale-price,
+.price .compare-price {
     margin: 0;
     font-size: 3.25rem;
 }
