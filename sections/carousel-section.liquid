@@ -2,7 +2,7 @@
 
 <div
   style="display: flex; flex-wrap: wrap"
-  {% if section.settings.with_side %}
+  {% if section.settings.with_side or featured %}
     class="product-carousel-wrapper-side"
   {% else %}
     class="product-carousel-wrapper"
