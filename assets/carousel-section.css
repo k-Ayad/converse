@@ -434,6 +434,10 @@
     color: #fff !important;
 }
 
+.slide-content {
+    text-align: start;
+}
+
 .slide-content h1 a {
     font-size: 2rem;
 }
@@ -526,6 +530,10 @@ a:focus {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 3.25rem;
+}
+
+.price h1 {
+    margin: 0;
 }
 
 /*  */
