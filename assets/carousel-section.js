@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   const sections = document.querySelectorAll('[id^="shopify-section-"]');
-  console.log(sections);
 
   sections.forEach((sectionEl) => {
     const sectionId = sectionEl.id.replace('shopify-section-', '');
     const carouselEl = sectionEl.querySelector(`[data-carousel-id="${sectionId}"]`);
     const settingsEl = sectionEl.querySelector('[data-carousel-settings]');
-
-    console.log(carouselEl);
 
     if (!carouselEl || !settingsEl) return;
 
