@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplayTimeout: 3000,
       autoplayHoverPause: true,
       smartSpeed: 600,
-      slideBy: 1, // slide one item per click
+      slideBy: 1,
+      responsiveBaseElement: window, // ✅ ensures breakpoints use viewport width
       responsive: {
         0: { items: 1 },
         600: { items: 2 },
