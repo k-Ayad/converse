@@ -404,6 +404,32 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
+
+
+  document.querySelectorAll('header-menu').forEach(menu => {
+  const details = menu.querySelector('details');
+  const summary = menu.querySelector('summary');
+  console.log(details);
+  
+
+  // Prevent default click toggle
+  summary.addEventListener('click', e => {
+    if (window.innerWidth >= 990) {
+      e.preventDefault();
+    }
+  });
+
+  // Hover open
+  menu.addEventListener('mouseenter', () => {
+    if (window.innerWidth >= 990) details.setAttribute('open', '');
+  });
+
+  menu.addEventListener('mouseleave', () => {
+    if (window.innerWidth >= 990) details.removeAttribute('open');
+  });
+});
+
+
 {% endjavascript %}
 
 <script type="application/ld+json">

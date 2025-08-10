@@ -133,7 +133,7 @@
                       {%- endif -%}
                     </div>
                   {%- when 'image' -%}
-                    <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}">
+                    <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}" style="flex-wrap: wrap;">
                       {%- if block.settings.image != blank -%}
                         {%- assign image_size_2x = block.settings.image_width | times: 2 | at_most: 5760 -%}
                         <div
@@ -152,7 +152,15 @@
                       {%- else -%}
                         {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
                       {%- endif -%}
+
+                      {%- if block.settings.image_richtext != blank -%}
+                        <div class="footer-block__image-text rte"
+                            style="margin-top: {{ block.settings.image_text_top_margin | default: 12 }}px;">
+                          {{ block.settings.image_richtext }}
+                        </div>
+                      {%- endif -%}
                     </div>
+
                 {%- endcase -%}
               </div>
             {%- endfor -%}
@@ -299,24 +307,38 @@
     </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-        </small>
-        <small class="copyright__content">{{ powered_by_link }}</small>
+        {% if section.settings.copyright_mode == 'custom' and section.settings.custom_copyright != blank %}
+          <div class="rte copyright__custom">{{ section.settings.custom_copyright }}</div>
+        {% else %}
+          <small class="copyright__content">
+            &copy; {{ 'now' | date: '%Y' }}
+            {% if section.settings.copyright_show_shop_link %}
+              {{ shop.name | link_to: routes.root_url }}
+            {% else %}
+              {{ shop.name }}
+            {% endif %}
+            {% if section.settings.copyright_suffix != blank %}
+              — {{ section.settings.copyright_suffix }}
+            {% endif %}
+          </small>
+          {% if section.settings.show_powered_by %}
+            <small class="copyright__content">{{ powered_by_link }}</small>
+          {% endif %}
+        {% endif %}
+
         {%- if section.settings.show_policy -%}
           <ul class="policies list-unstyled">
             {%- for policy in shop.policies -%}
               {%- if policy != blank -%}
                 <li>
-                  <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                  >
+                  <small class="copyright__content"><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small>
                 </li>
               {%- endif -%}
             {%- endfor -%}
           </ul>
         {%- endif -%}
       </div>
+
     </div>
   </div>
 </footer>
@@ -419,7 +441,24 @@
             }
           ],
           "default": "center"
+        },
+        {
+          "type": "richtext",
+          "id": "image_richtext",
+          "label": "Text below image",
+          "default": "<p>Add a short description here.</p>"
+        },
+        {
+          "type": "range",
+          "id": "image_text_top_margin",
+          "min": 0,
+          "max": 40,
+          "step": 4,
+          "unit": "px",
+          "label": "Spacing above text",
+          "default": 12
         }
+
       ]
     }
   ],
@@ -492,6 +531,45 @@
       "label": "t:sections.footer.settings.show_policy.label",
       "info": "t:sections.footer.settings.show_policy.info"
     },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "select",
+      "id": "copyright_mode",
+      "label": "Copyright content",
+      "options": [
+        { "value": "auto", "label": "Auto (Year + shop name)" },
+        { "value": "custom", "label": "Custom rich text" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "checkbox",
+      "id": "copyright_show_shop_link",
+      "label": "Link shop name to home",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copyright_suffix",
+      "label": "Auto mode: short suffix",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "Show “Powered by Shopify”",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "custom_copyright",
+      "label": "Custom copyright (rich text)",
+      "default": "<p>© 2025 Converse. All rights reserved.</p>"
+    }
+    ,
     {
       "type": "header",
       "content": "t:sections.all.spacing"

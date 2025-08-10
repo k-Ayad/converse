@@ -1,5 +1,6 @@
 .mega-menu {
   position: static;
+  
 }
 
 .mega-menu__content {
@@ -14,6 +15,7 @@
   position: absolute;
   right: 0;
   top: 100%;
+  
 }
 
 .shopify-section-header-sticky .mega-menu__content {
@@ -32,6 +34,7 @@
 .mega-menu[open] .mega-menu__content {
   opacity: 1;
   transform: translateY(0);
+
 }
 
 .mega-menu__list {
