@@ -1,0 +1,148 @@
+{% comment %}
+  {% assign first_variant = product.variants.first %}
+  {% assign original_price = first_variant.compare_at_price %}
+  {% assign sale_price = first_variant.price %}
+
+  <div class="item product-card">
+    <a href="{{ product.url }}">
+      <div class="image-wrapper">
+        {% if original_price > sale_price %}
+          {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+          <div class="sale-badge">{{ discount | abs }}% OFF</div>
+        {% endif %}
+        <img
+          srcset="
+            {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+            {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+            {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+            {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+            {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+          "
+          src="{{ product.featured_media | image_url: width: 533 }}"
+          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+          alt="{{ product.featured_media.alt | escape }}"
+          class="motion-reduce"
+          {% unless lazy_load == false %}
+            loading="lazy"
+          {% endunless %}
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+        >
+      </div>
+      <div class="product-info">
+        <p class="product-title">{{ product.title }}</p>
+        <div class="product-price">
+          <span class="sale-price">{{ sale_price | money }}</span>
+          {% if original_price > sale_price %}
+            <span class="compare-price">{{ original_price | money }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  </div>
+
+  {% if original_price > sale_price %}
+    {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+    <div class="flag-sale d-flex">
+      <div class="flag-product sale">sale</div>
+      <div class="flag-product off">{{ discount | abs }}%</div>
+    </div>
+  {% endif %}
+{% endcomment %}
+
+{% assign first_variant = product.variants.first %}
+{% assign original_price = first_variant.compare_at_price %}
+{% assign sale_price = first_variant.price %}
+{% assign is_on_sale = false %}
+{% if original_price > sale_price %}
+  {% assign is_on_sale = true %}
+{% endif %}
+
+{% if featured %}
+  <div class="item featured">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6 col-lg-5 pl-0">
+          <div class="slide-img">
+            <img
+              srcset="
+                {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+              "
+              src="{{ product.featured_media | image_url: width: 533 }}"
+              sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+              alt="{{ product.featured_media.alt | escape }}"
+              class="lazy img-fluid loaded"
+              {% unless lazy_load == false %}
+                loading="lazy"
+              {% endunless %}
+              width="{{ product.featured_media.width }}"
+              height="{{ product.featured_media.height }}"
+            >
+          </div>
+        </div>
+        <div class="col-6 col-lg-5">
+          <div class="slide-content">
+            <h1>
+              <a class="featured-carousel-card-title" href="{{ product.url }}"> CONVERSE MOVE CANVAS COLOR </a>
+            </h1>
+            <p></p>
+            <div class="d-flex justify-content-between">
+              <div class="price">
+                <h1>
+                  <span class="sale-price">{{ sale_price | money }}</span>
+                </h1>
+                <h2>
+                  <span class="compare-price">{{ original_price | money }}</span>
+                </h2>
+              </div>
+            </div>
+            <div class="button-slider">
+              <a
+                href="{{ product.url }}"
+                type="button"
+                class="btn btn-1 text-uppercase text-white"
+                >Buy Now</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="item product-card">
+    <a href="{{ product.url }}" class="product-link">
+      <div class="image-wrapper">
+        {% if is_on_sale %}
+          {% assign discount = 100 | times: sale_price | divided_by: original_price | minus: 100 | round %}
+          <div class="sale-badge">-{{ discount | abs }}%</div>
+        {% endif %}
+        <img
+          src="{{ product.featured_media | image_url: width: 533 }}"
+          alt="{{ product.featured_media.alt | escape }}"
+          class="motion-reduce"
+          loading="lazy"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+        >
+      </div>
+      <div class="product-info">
+        <p class="product-title">{{ product.title }}</p>
+        <div class="product-price">
+          <span class="sale-price">{{ sale_price | money }}</span>
+          {% if is_on_sale %}
+            <span class="compare-price">{{ original_price | money }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  </div>
+{% endif %}

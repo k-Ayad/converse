@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "multicolumn_i76hQ8": {
@@ -116,6 +125,7 @@
         "slide-0",
         "slide_fXhpmF"
       ],
+      "disabled": true,
       "settings": {
         "layout": "full_bleed",
         "slide_height": "adapt_image",
@@ -129,18 +139,20 @@
     },
     "all-products": {
       "type": "featured-collection",
+      "disabled": true,
       "custom_css": [
-        ".card--standard {max-width: 600px; margin: auto;}"
+        ".card--standard {max-width: 600px; margin: auto;}",
+        "h2 {text-align: center; font-weight: 700; font-family: \"Poppins\", sans-serif;}"
       ],
       "settings": {
         "collection": "all",
         "products_to_show": 24,
-        "title": "Featured collection",
-        "heading_size": "h2",
+        "title": "Latest Products",
+        "heading_size": "h1",
         "description": "",
         "show_description": true,
         "description_style": "subtitle",
-        "columns_desktop": 1,
+        "columns_desktop": 3,
         "enable_desktop_slider": true,
         "full_width": false,
         "show_view_all": true,
@@ -148,7 +160,7 @@
         "color_scheme": "scheme-1",
         "image_ratio": "adapt",
         "image_shape": "default",
-        "show_secondary_image": true,
+        "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
         "quick_add": "none",
@@ -192,6 +204,7 @@
         "collection-2",
         "collection-3"
       ],
+      "disabled": true,
       "settings": {
         "title": "Collections",
         "heading_size": "h2",
@@ -207,6 +220,7 @@
     },
     "image-banner": {
       "type": "image-banner",
+      "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
         "image_height": "small",
@@ -219,6 +233,62 @@
         "mobile_content_alignment": "center",
         "show_text_below": true
       }
+    },
+    "carousel_section_ir8hMB": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage",
+        "no_of_items": 4,
+        "with_side": false
+      }
+    },
+    "collection-banner": {
+      "type": "collection-banner",
+      "blocks": {
+        "featured_collection_JggGi8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "kids-collection"
+          }
+        },
+        "featured_collection_dwU7Jx": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "lifestyle-collection"
+          }
+        },
+        "featured_collection_UBq9zF": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "training-collection"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_JggGi8",
+        "featured_collection_dwU7Jx",
+        "featured_collection_UBq9zF"
+      ],
+      "settings": {}
+    },
+    "carousel_section_CgiKrn": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage",
+        "no_of_items": 1,
+        "with_side": false
+      }
+    },
+    "carousel_section_kdmCpR": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "frontpage",
+        "no_of_items": 4,
+        "with_side": true
+      }
     }
   },
   "order": [
@@ -226,6 +296,10 @@
     "hero-slideshow",
     "all-products",
     "collection-list",
-    "image-banner"
+    "image-banner",
+    "carousel_section_ir8hMB",
+    "collection-banner",
+    "carousel_section_CgiKrn",
+    "carousel_section_kdmCpR"
   ]
 }
