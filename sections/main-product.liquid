@@ -97,12 +97,34 @@
                   {{- block.settings.text -}}
                 </p>
               {%- when 'title' -%}
-                <div class="product__title" {{ block.shopify_attributes }}>
-                  <h1>{{ product.title | escape }}</h1>
+                <style>
+                  /* Scoped to this block instance */
+                  #Title-{{ section.id }}-{{ block.id }} h1,
+                  #Title-{{ section.id }}-{{ block.id }} .h1 {
+                    color: {{ block.settings.title_color }};
+                    font-weight: {{ block.settings.title_weight }};
+                    font-size: {{ block.settings.title_size_mobile | default: 22 }}px;
+                    line-height: 1.2;
+                    margin: 0;
+                  }
+
+                  @media screen and (min-width: 750px) {
+                    #Title-{{ section.id }}-{{ block.id }} h1,
+                    #Title-{{ section.id }}-{{ block.id }} .h1 {
+                      font-size: {{ block.settings.title_size_desktop | default: 36 }}px;
+                    }
+                  }
+                </style>
+
+                <div class="product__title" id="Title-{{ section.id }}-{{ block.id }}" {{ block.shopify_attributes }}>
+                  {%- comment -%}
+                    Prefer ONE semantic H1 for SEO. If you don’t need the link+H2, remove it.
+                  {%- endcomment -%}
+                  <h1 class="product-title-text">{{ product.title | escape }}</h1>
+
+                  {%- comment -%} Optional linked title duplicate; keep only if design requires it {%- endcomment -%}
                   <a href="{{ product.url }}" class="product__title">
-                    <h2 class="h1">
-                      {{ product.title | escape }}
-                    </h2>
+                    <h2 class="h1 product-title-text">{{ product.title | escape }}</h2>
                   </a>
                 </div>
               {%- when 'price' -%}
@@ -782,7 +804,49 @@
     {
       "type": "title",
       "name": "t:sections.main-product.blocks.title.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#111111"
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title weight",
+      "default": "700",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra Bold (800)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size (mobile)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Title size (desktop)",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "default": 36,
+      "unit": "px"
+    }
+      ]
     },
     {
       "type": "price",

@@ -65,13 +65,13 @@
         "color_scheme": "scheme-1",
         "media_size": "medium",
         "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "media_position": "left",
-        "image_zoom": "lightbox",
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "show",
-        "hide_variants": true,
-        "enable_video_looping": false,
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": false,
+        "enable_video_looping": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -82,6 +82,7 @@
         "collapsible-row-0": {
           "type": "collapsible_row",
           "settings": {
+            "heading": "Collapsible row",
             "icon": "none",
             "row_content": "",
             "page": ""
@@ -90,6 +91,7 @@
         "collapsible-row-1": {
           "type": "collapsible_row",
           "settings": {
+            "heading": "Collapsible row",
             "icon": "none",
             "row_content": "",
             "page": ""
@@ -98,6 +100,7 @@
         "collapsible-row-2": {
           "type": "collapsible_row",
           "settings": {
+            "heading": "Collapsible row",
             "icon": "none",
             "row_content": "",
             "page": ""
@@ -111,11 +114,12 @@
       ],
       "settings": {
         "caption": "",
+        "heading": "Collapsible content",
         "heading_size": "h1",
         "heading_alignment": "center",
         "layout": "section",
-        "color_scheme": "scheme-1",
         "container_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
         "open_first_collapsible_row": true,
         "image_ratio": "adapt",
         "desktop_layout": "image_second",
@@ -126,16 +130,17 @@
     "related-products": {
       "type": "related-products",
       "settings": {
+        "heading": "You may also like",
         "heading_size": "h2",
         "products_to_show": 4,
         "columns_desktop": 4,
+        "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "columns_mobile": "2",
         "padding_top": 36,
         "padding_bottom": 28
       }

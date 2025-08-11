@@ -42,6 +42,80 @@
   endif
 -%}
 
+    {% style %}
+      #GalleryViewer-{{ section.id }} {
+        position: relative;
+      }
+      #GalleryViewer-{{ section.id }} .slider-buttons--overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none; /* clicks pass through except on buttons */
+        padding: 0 0.75rem;
+      }
+      #GalleryViewer-{{ section.id }} .slider-buttons--overlay .slider-button {
+        pointer-events: auto;
+      }
+
+
+      /* Desktop only */
+        @media (min-width: 990px) {
+          .hide-desktop{
+            display:none !important;
+          }  
+        .pg-desktop-nav {
+            position: relative;
+            pointer-events: none; /* let clicks pass except on buttons */
+          }
+          .pg-btn {
+            pointer-events: auto;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: none;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,.5);
+            color: #fff;
+            font-size: 20px;
+            line-height: 44px;
+            text-align: center;
+            cursor: pointer;
+          }
+          .pg-btn--prev { left: 12px; }
+          .pg-btn--next { right: 12px; }
+        }
+
+        /* Hide on mobile */
+        @media (max-width: 989px) {
+          .pg-desktop-nav { display: none !important; }
+        }
+
+        .hide-desktop .slider-button , .thumbnail-slider .slider-button{
+          background : rgba(0,0,0,.5);
+          color:white;
+          font-size:20px;
+          width: 30px;
+          height: 30px;
+        }
+
+        .hide-desktop .slider-button:hover , .thumbnail-slider .slider-button{
+          color:white;
+        }
+
+       .hide-desktop .slider-button .icon{
+        height: 1rem;
+       }
+       .thumbnail-slider .slider-button{
+        height: 3rem;
+       }
+        
+
+    {% endstyle %}
+
 <media-gallery
   id="MediaGallery-{{ section.id }}"
   role="region"
@@ -125,6 +199,54 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
+
+
+    {% comment %}  added by kero {% endcomment %}
+    <div class="slider-buttons slider-buttons--overlay quick-add-hidden hide-desktop" aria-controls="Slider-Gallery-{{ section.id }}">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'general.slider.previous_slide' | t }}"
+        aria-controls="Slider-Gallery-{{ section.id }}"
+        data-step="1"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'general.slider.next_slide' | t }}"
+        aria-controls="Slider-Gallery-{{ section.id }}"
+        data-step="1"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      </div>
+
+      <div class="pg-desktop-nav slider-buttons--overlay" data-section-id="{{ section.id }}">
+        <button class="pg-btn pg-btn--prev slider-button--prev" type="button" aria-label="Previous image">
+          <span class="svg-wrapper text-white">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+        </button>
+
+        <button class="pg-btn pg-btn--next slider-button--next" type="button" aria-label="Next image">
+          <span class="svg-wrapper text-white">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+        </button>
+      </div>
+
+
+
+{% comment %} 
     <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
       <button
         type="button"
@@ -152,7 +274,7 @@
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
       </button>
-    </div>
+    </div> {% endcomment %}
   </slider-component>
   {%- if first_3d_model -%}
     <button
@@ -329,4 +451,90 @@
       </button>
     </slider-component>
   {%- endif -%}
+
+<script>
+  (function () {
+  function getThumbs(root) {
+    // Common selectors across Dawn/Rise variants:
+    const selectors = [
+      'media-gallery .thumbnail-list__item button',
+      'media-gallery .thumbnail',
+      '.product__media-thumbnails button',
+      '.product__media-thumbnails .thumbnail'
+    ];
+    for (const sel of selectors) {
+      const list = Array.from(root.querySelectorAll(sel));
+      if (list.length) return list;
+    }
+    return [];
+  }
+
+  function getActiveIndex(thumbs) {
+    let idx = thumbs.findIndex(t =>
+      t.getAttribute('aria-current') === 'true' ||
+      t.getAttribute('aria-selected') === 'true' ||
+      t.classList.contains('is-active')
+    );
+    if (idx === -1) {
+      // Fallback: read active from media list
+      const activeMedia = document.querySelector('.product__media-item.is-active');
+      if (activeMedia) {
+        const id = activeMedia.id || activeMedia.getAttribute('data-media-id');
+        idx = thumbs.findIndex(t => (t.getAttribute('aria-controls') === id) || (t.dataset.mediaId === id));
+      }
+    }
+    return idx > -1 ? idx : 0;
+  }
+
+  function clickThumb(thumb) {
+    // Some themes use <button>, others fire on <a>/<div>. Click covers both.
+    thumb.click();
+    // Keep the thumb strip in view
+    try { thumb.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch (e) {}
+  }
+
+  function setupNavForSection(nav) {
+    const sectionId = nav.getAttribute('data-section-id');
+    // Scope to the product section if possible for safety in modals/quickview
+    const scope = sectionId
+      ? document.querySelector('[id*="' + sectionId + '"]') || document
+      : document;
+
+    const thumbs = getThumbs(scope);
+    if (thumbs.length <= 1) {
+      nav.style.display = 'none';
+      return;
+    }
+
+    const prev = nav.querySelector('.pg-btn--prev');
+    const next = nav.querySelector('.pg-btn--next');
+
+    function step(delta) {
+      if (!window.matchMedia('(min-width: 990px)').matches) return; // desktop only
+      const i = getActiveIndex(thumbs);
+      let j = i + delta;
+      if (j < 0) j = thumbs.length - 1;
+      if (j >= thumbs.length) j = 0;
+      clickThumb(thumbs[j]);
+    }
+
+    prev.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+  }
+
+  function init() {
+    // Run only on product pages
+    if (!document.querySelector('media-gallery') && !document.querySelector('.product__media-list')) return;
+    const navs = document.querySelectorAll('.pg-desktop-nav');
+    navs.forEach(setupNavForSection);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+</script>
 </media-gallery>
