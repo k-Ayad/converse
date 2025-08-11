@@ -87,8 +87,6 @@
         "slide-0": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/3dc4a16fcd7881ecb499247330e86e2e.jpg",
-            "image_mobile": "shopify://shop_images/f6d2404eb03d10bc46d4602cde27de8b.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
