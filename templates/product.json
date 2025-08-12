@@ -22,7 +22,12 @@
         },
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "title_color": "#111111",
+            "title_weight": "700",
+            "title_size_mobile": 22,
+            "title_size_desktop": 36
+          }
         },
         "price": {
           "type": "price",
@@ -153,11 +158,21 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "carousel_section_tM9HqT": {
+      "type": "carousel-section",
+      "name": "Product Carousel",
+      "settings": {
+        "collection": "",
+        "no_of_items": 4,
+        "with_side": true
+      }
     }
   },
   "order": [
     "main",
     "collapsible-content",
-    "related-products"
+    "related-products",
+    "carousel_section_tM9HqT"
   ]
 }
