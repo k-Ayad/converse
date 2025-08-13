@@ -364,6 +364,11 @@
         justify-content: space-between;
         align-items: end;
     }
+
+    .image-wrapper img {
+        width: 100%;
+        height: fit-content;
+    }
 }
 
 
