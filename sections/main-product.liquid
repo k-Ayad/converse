@@ -128,14 +128,47 @@
                   </a>
                 </div>
               {%- when 'price' -%}
-                <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
-                </div>
+                  <style>
+                    /* Scoped to this block instance only */
+                    #Price-{{ section.id }}-{{ block.id }} .price__regular .price-item--regular,
+                    #Price-{{ section.id }}-{{ block.id }} .price__sale .price-item--sale {
+                      color: {{ block.settings.price_color }};
+                      font-weight: {{ block.settings.price_weight }};
+                      font-size: {{ block.settings.price_size_mobile | default: 22 }}px;
+                      line-height: 1.1;
+                    }
+
+                    #Price-{{ section.id }}-{{ block.id }} .price__sale s.price-item--regular,
+                    #Price-{{ section.id }}-{{ block.id }} .price__regular s.price-item--regular,
+                    #Price-{{ section.id }}-{{ block.id }} .variant-item__old-price {
+                      color: {{ block.settings.compare_color }};
+                      font-weight: {{ block.settings.compare_weight }};
+                      font-size: {{ block.settings.compare_size_mobile | default: 16 }}px;
+                      /* Keep the line-through from the <s> element; remove next line if you want stronger strike */
+                      text-decoration-thickness: .08em;
+                      opacity: .9; /* optional: soften it slightly */
+                    }
+
+                    @media screen and (min-width: 750px) {
+                      #Price-{{ section.id }}-{{ block.id }} .price__regular .price-item--regular,
+                      #Price-{{ section.id }}-{{ block.id }} .price__sale .price-item--sale {
+                        font-size: {{ block.settings.price_size_desktop | default: 32 }}px;
+                      }
+                      #Price-{{ section.id }}-{{ block.id }} .price__sale s.price-item--regular,
+                      #Price-{{ section.id }}-{{ block.id }} .price__regular s.price-item--regular,
+                      #Price-{{ section.id }}-{{ block.id }} .variant-item__old-price {
+                        font-size: {{ block.settings.compare_size_desktop | default: 18 }}px;
+                      }
+                    }
+                  </style>
+                  <div id="Price-{{ section.id }}-{{ block.id }}" role="status" {{ block.shopify_attributes }}>
+                    {%- render 'price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: {{block.settings.show_badges}},
+                      price_class: 'price--large'
+                    -%}
+                  </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -220,15 +253,140 @@
                   </div>
                 {%- endif -%}
               {%- when 'sku' -%}
-                <p
-                  class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
-                  id="Sku-{{ section.id }}"
-                  role="status"
-                  {{ block.shopify_attributes }}
-                >
-                  <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
-                  {{- product.selected_or_first_available_variant.sku -}}
-                </p>
+                  {%- assign init_available = product.selected_or_first_available_variant.available -%}
+
+                  <style>
+                    /* Scoped to this block only */
+                    #SkuBlock-{{ section.id }}-{{ block.id }} .sku-label {
+                      color: {{ block.settings.sku_label_color }};
+                      font-weight: {{ block.settings.sku_label_weight }};
+                      font-size: {{ block.settings.sku_label_size_mobile | default: 14 }}px;
+                      line-height: 1.2; margin: 0;
+                    }
+                    #SkuBlock-{{ section.id }}-{{ block.id }} .sku-value {
+                      color: {{ block.settings.sku_value_color }};
+                      font-weight: {{ block.settings.sku_value_weight }};
+                      font-size: {{ block.settings.sku_value_size_mobile | default: 14 }}px;
+                      line-height: 1.2; margin: 0;
+                    }
+                    #SkuBlock-{{ section.id }}-{{ block.id }} .avail-label {
+                      color: {{ block.settings.avail_label_color }};
+                      font-weight: {{ block.settings.avail_label_weight }};
+                      font-size: {{ block.settings.avail_label_size_mobile | default: 14 }}px;
+                      line-height: 1.2; margin: 0;
+                    }
+                    #SkuBlock-{{ section.id }}-{{ block.id }} .avail-value {
+                      color: {{ block.settings.avail_value_color }};
+                      font-weight: {{ block.settings.avail_value_weight }};
+                      font-size: {{ block.settings.avail_value_size_mobile | default: 14 }}px;
+                      line-height: 1.2; margin: 0;
+                    }
+                    @media (min-width: 750px) {
+                      #SkuBlock-{{ section.id }}-{{ block.id }} .sku-label {
+                        font-size: {{ block.settings.sku_label_size_desktop | default: 14 }}px;
+                      }
+                      #SkuBlock-{{ section.id }}-{{ block.id }} .sku-value {
+                        font-size: {{ block.settings.sku_value_size_desktop | default: 14 }}px;
+                      }
+                      #SkuBlock-{{ section.id }}-{{ block.id }} .avail-label {
+                        font-size: {{ block.settings.avail_label_size_desktop | default: 14 }}px;
+                      }
+                      #SkuBlock-{{ section.id }}-{{ block.id }} .avail-value {
+                        font-size: {{ block.settings.avail_value_size_desktop | default: 14 }}px;
+                      }
+                    }
+
+                       /* Scoped spacing between the two rows */
+                        #SkuBlock-{{ section.id }}-{{ block.id }} .avail-row {
+                          margin-bottom: {{ block.settings.sku_avail_space_mobile | default: 6 }}px;
+                        }
+                        @media (min-width: 750px) {
+                          #SkuBlock-{{ section.id }}-{{ block.id }} .avail-row {
+                            margin-bottom: {{ block.settings.sku_avail_space_desktop | default: 8 }}px;
+                          }
+                        }
+                  </style>
+
+                  <div id="SkuBlock-{{ section.id }}-{{ block.id }}" {{ block.shopify_attributes }}>
+                    <!-- Row 1: SKU -->
+                    <div class="d-flex justify-content-between align-items-center avail-row">
+                      <div class="sku-label">
+                        {{ block.settings.sku_title | default: 'SKU' }}
+                      </div>
+                      <p
+                        class="
+                          sku-value product__sku
+                          {%- if block.settings.text_style == 'uppercase' -%} caption-with-letter-spacing
+                          {%- elsif block.settings.text_style == 'subtitle' -%} subtitle
+                          {%- endif -%}
+                          {%- if product.selected_or_first_available_variant.sku.size == 0 -%} visibility-hidden{%- endif -%}
+                        "
+                        id="Sku-{{ section.id }}"
+                        role="status"
+                      >
+                        <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
+                        {{- product.selected_or_first_available_variant.sku -}}
+                      </p>
+                    </div>
+
+                    <!-- Row 2: Availability -->
+                    <div class="d-flex justify-content-between align-items-center mt-1">
+                      <div class="avail-label">
+                        {{ block.settings.availability_title | default: 'Availability' }}
+                      </div>
+                      <p
+                        id="AvailabilityValue-{{ section.id }}"
+                        class="avail-value m-0"
+                        role="status" aria-live="polite"
+                      >
+                        {%- if init_available -%}
+                          {{ block.settings.availability_text_in | default: 'In stock' }}
+                        {%- else -%}
+                          {{ block.settings.availability_text_out | default: 'Out of stock' }}
+                        {%- endif -%}
+                      </p>
+                    </div>
+                  </div>
+
+                  <script>
+                  (() => {
+                    const variants = {{ product.variants | json }};
+                    const availEl = document.getElementById('AvailabilityValue-{{ section.id }}');
+                    const container = document.getElementById('SkuBlock-{{ section.id }}-{{ block.id }}');
+                    if (!variants || !availEl || !container) return;
+
+                    const inText  = {{ block.settings.availability_text_in  | json }};
+                    const outText = {{ block.settings.availability_text_out | json }};
+
+                    function setAvail(isAvailable) {
+                      availEl.textContent = isAvailable ? (inText || 'In stock') : (outText || 'Out of stock');
+                    }
+
+                    function findScopedIdInput() {
+                      const scope = container.closest('[id^="shopify-section"], [id^="MainProduct"], .product') || document;
+                      return scope.querySelector('form[action*="/cart/add"] input[name="id"]')
+                          || document.querySelector('input[name="id"]');
+                    }
+
+                    function updateFromVariant() {
+                      const idInput = findScopedIdInput();
+                      if (!idInput) return;
+                      const currentId = parseInt(idInput.value, 10);
+                      const v = variants.find(x => x.id === currentId);
+                      if (v) setAvail(!!v.available);
+                    }
+
+                    document.addEventListener('change', (e) => {
+                      if (e.target && (e.target.name || '').startsWith('options')) updateFromVariant();
+                      if (e.target && e.target.name === 'id') updateFromVariant();
+                    });
+                    document.addEventListener('variant:change', updateFromVariant);
+                    document.addEventListener('variant:changed', updateFromVariant);
+
+                    updateFromVariant();
+                  })();
+                  </script>
+
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
               {%- when 'collapsible_tab' -%}
@@ -851,13 +1009,116 @@
     {
       "type": "price",
       "name": "t:sections.main-product.blocks.price.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Price styling"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Current price color",
+          "default": "#111111"
+        },
+        {
+          "type": "select",
+          "id": "price_weight",
+          "label": "Current price weight",
+          "default": "700",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra Bold (800)" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "price_size_mobile",
+          "label": "Current price size (mobile)",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 22,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "price_size_desktop",
+          "label": "Current price size (desktop)",
+          "min": 12,
+          "max": 90,
+          "step": 1,
+          "default": 32,
+          "unit": "px"
+        },
+
+        {
+          "type": "header",
+          "content": "Compare-at price styling"
+        },
+        {
+          "type": "color",
+          "id": "compare_color",
+          "label": "Compare-at color",
+          "default": "#888888"
+        },
+        {
+          "type": "select",
+          "id": "compare_weight",
+          "label": "Compare-at weight",
+          "default": "400",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "compare_size_mobile",
+          "label": "Compare-at size (mobile)",
+          "min": 8,
+          "max": 50,
+          "step": 1,
+          "default": 16,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "compare_size_desktop",
+          "label": "Compare-at size (desktop)",
+          "min": 10,
+          "max": 70,
+          "step": 1,
+          "default": 18,
+          "unit": "px"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badges",
+          "label": "Show Badges",
+          "default": true
+        }
+
+      ]
     },
     {
       "type": "sku",
       "name": "t:sections.main-product.blocks.sku.name",
       "limit": 1,
       "settings": [
+        {
+            "type": "text",
+            "id": "sku_title",
+            "label": "SKU title",
+            "default" : "SKU"
+        },
         {
           "type": "select",
           "id": "text_style",
@@ -877,7 +1138,99 @@
           ],
           "default": "body",
           "label": "t:sections.main-product.blocks.sku.settings.text_style.label"
+        },
+        {
+          "type": "header",
+          "content": "SKU – Title (label) styling"
+        },
+        { "type": "color", "id": "sku_label_color", "label": "Label color", "default": "#111111" },
+        {
+          "type": "select", "id": "sku_label_weight", "label": "Label weight", "default": "600",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ]
+        },
+        { "type": "range", "id": "sku_label_size_mobile", "label": "Label size (mobile)", "min": 10, "max": 40, "step": 1, "default": 14, "unit": "px" },
+        { "type": "range", "id": "sku_label_size_desktop", "label": "Label size (desktop)", "min": 10, "max": 60, "step": 1, "default": 14, "unit": "px" },
+
+        {
+          "type": "header",
+          "content": "SKU – Description (value) styling"
+        },
+        { "type": "color", "id": "sku_value_color", "label": "Value color", "default": "#444444" },
+        {
+          "type": "select", "id": "sku_value_weight", "label": "Value weight", "default": "500",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ]
+        },
+        { "type": "range", "id": "sku_value_size_mobile", "label": "Value size (mobile)", "min": 10, "max": 40, "step": 1, "default": 14, "unit": "px" },
+        { "type": "range", "id": "sku_value_size_desktop", "label": "Value size (desktop)", "min": 10, "max": 60, "step": 1, "default": 14, "unit": "px" },
+
+        {
+          "type": "header",
+          "content": "Availability – Title (label) styling"
+        },
+        { "type": "color", "id": "avail_label_color", "label": "Label color", "default": "#111111" },
+        {
+          "type": "select", "id": "avail_label_weight", "label": "Label weight", "default": "600",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ]
+        },
+        { "type": "range", "id": "avail_label_size_mobile", "label": "Label size (mobile)", "min": 10, "max": 40, "step": 1, "default": 14, "unit": "px" },
+        { "type": "range", "id": "avail_label_size_desktop", "label": "Label size (desktop)", "min": 10, "max": 60, "step": 1, "default": 14, "unit": "px" },
+
+        {
+          "type": "header",
+          "content": "Availability – Description (value) styling"
+        },
+        { "type": "color", "id": "avail_value_color", "label": "Value color", "default": "#198754" },
+        {
+          "type": "select", "id": "avail_value_weight", "label": "Value weight", "default": "600",
+          "options": [
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semibold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ]
+        },
+        { "type": "range", "id": "avail_value_size_mobile", "label": "Value size (mobile)", "min": 10, "max": 40, "step": 1, "default": 14, "unit": "px" },
+        { "type": "range", "id": "avail_value_size_desktop", "label": "Value size (desktop)", "min": 10, "max": 60, "step": 1, "default": 14, "unit": "px" },
+
+        { "type": "text", "id": "availability_title", "label": "Availability title", "default": "Availability" },
+        { "type": "text", "id": "availability_text_in", "label": "Text when in stock", "default": "In stock" },
+        { "type": "text", "id": "availability_text_out", "label": "Text when out of stock", "default": "Out of stock" }
+          ,{
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "range",
+          "id": "sku_avail_space_mobile",
+          "label": "Space between SKU & Availability (mobile)",
+          "min": 0, "max": 40, "step": 1, "default": 6, "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "sku_avail_space_desktop",
+          "label": "Space between SKU & Availability (desktop)",
+          "min": 0, "max": 60, "step": 1, "default": 8, "unit": "px"
         }
+
       ]
     },
     {
@@ -943,6 +1296,14 @@
             {
               "value": "button",
               "label": "t:sections.main-product.blocks.variant_picker.settings.picker_type.options__2.label"
+            },
+            {
+              "value": "swatch",
+              "label": "swatch"
+            },
+            {
+              "value": "image",
+              "label": "image"
             }
           ],
           "default": "button",
