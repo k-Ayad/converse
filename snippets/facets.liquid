@@ -1,4 +1,4 @@
-{% comment %}
+{% comment %} {% comment %}
   Renders facets (filtering and sorting)
 
   Accepts:
@@ -934,4 +934,118 @@
       </form>
     </facet-filters-form>
   {%- endif -%}
+</div> {% endcomment %}
+<div id="menu-left" data-category-id="{{ collection.id }}">
+  <div class="close-products-filter">
+    <label class="btn" for="show-hide-filter"><i class="fa fa-times"></i></label>
+  </div>
+
+  <form class="options-filter" id="CollectionFiltersForm" data-id="{{ section.id }}">
+    
+    <!-- Filter buttons -->
+    <div class="filter-actions">
+      <div class="row">
+        <div class="ft-btn button-slider col-6 text-center mb-3 mb-xs-0">
+          <a class="btn filter-btn text-uppercase text-white rounded-0 apply ml-0" href="{{ collection.url }}">
+            Reset
+          </a>
+        </div>
+        <div class="ft-btn col-xs-6 text-center">
+          <button type="submit" class="btn filter-btn text-uppercase text-white rounded-0 apply applyPrices ml-0 hasChanged">
+            Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion wrapper -->
+    <div class="filter-store accordion" id="accordionExample">
+      
+      {% for filter in results.filters %}
+        {% assign filter_name = filter.label | handle %}
+
+        <!-- Brand / Vendor filter -->
+        {% if filter.type == 'list' and filter.label contains 'Brand' %}
+          <div class="product-categories card option-filters-trigger" data-name="brands">
+            <h3 data-toggle="collapse" aria-expanded="true" data-target="#optionsCollapse-brands">
+              Brands
+            </h3>
+            <div id="optionsCollapse-brands" class="collapse show">
+              <fieldset class="brands">
+                {% for value in filter.values %}
+                  <label class="custom-control black-checkbox brands-container">
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      class="fill-control-input live-filter"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                    >
+                    <span class="fill-control-indicator"></span>
+                    <span class="fill-control-description">{{ value.label }}</span>
+                  </label>
+                {% endfor %}
+              </fieldset>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Other filters (example: Price Drop / New) -->
+        {% if filter.type == 'list' and filter.label contains 'Filter' %}
+          <div class="product-categories card option-filters-trigger" data-name="filters">
+            <h3 data-toggle="collapse" aria-expanded="true" data-target="#optionsCollapse-filters">
+              Filters
+            </h3>
+            <div id="optionsCollapse-filters" class="collapse show">
+              <fieldset class="filters">
+                {% for value in filter.values %}
+                  <label class="custom-control black-checkbox filters-container">
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      class="fill-control-input live-filter"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                    >
+                    <span class="fill-control-indicator"></span>
+                    <span class="fill-control-description">{{ value.label }}</span>
+                  </label>
+                {% endfor %}
+              </fieldset>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Price Range -->
+        {% if filter.type == 'price_range' %}
+          <div class="product-categories card">
+            <h3 data-toggle="collapse" aria-expanded="true" data-target="#collapseTwo">
+              Price Range <span class="price-range-currency">({{ cart.currency.iso_code }})</span>
+            </h3>
+            <div id="collapseTwo" class="collapse show">
+              <div id="slider-range" data-currency="{{ cart.currency.iso_code }}" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
+                
+                <div class="price-r d-block pt-4 align-items-center" id="count-number">
+                  <input type="hidden" class="live-filter min-price" value="{{ filter.min_value.value | default: filter.range_min | money_without_currency }}">
+                  <input type="hidden" class="live-filter max-price" value="{{ filter.max_value.value | default: filter.range_max | money_without_currency }}">
+
+                  <span class="d-block">
+                    <input type="text" id="amount" class="border-0 font-weight-bold">
+                  </span>
+                </div>
+
+                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+  </form>
 </div>
