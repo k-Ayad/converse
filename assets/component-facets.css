@@ -1255,3 +1255,91 @@ input.mobile-facets__checkbox {
     padding: 0 1rem 1rem;
   }
 }
+
+/* ==== Mobile Filter Overlay - Light Theme ==== */
+
+#menu-left-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.25); /* lighter backdrop */
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 998;
+}
+
+#show-hide-filter:checked ~ #menu-left-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+#menu-left {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  padding: 20px 16px;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 999;
+}
+
+#show-hide-filter:checked ~ #menu-left {
+  left: 0;
+}
+
+/* Close button */
+.close-products-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+.close-products-filter .btn {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s;
+}
+.close-products-filter .btn:hover {
+  background: #eaeaea;
+  color: #000;
+}
+
+/* Overlay filter actions (Reset/Apply buttons) */
+#menu-left .filter-actions {
+  border-top: 1px solid #eee;
+  padding-top: 14px;
+  margin-top: 20px;
+}
+#menu-left .filter-actions .btn {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Make mobile filters headings lighter */
+#menu-left .product-categories h3 {
+  font-size: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Mobile scrollbar minimal */
+#menu-left::-webkit-scrollbar {
+  width: 6px;
+}
+#menu-left::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+#menu-left::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
