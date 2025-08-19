@@ -154,6 +154,153 @@
   font-weight: bold;
 }
 
+/* Circle style for mobile and desktop boolean/list filters */
+.filter-option__circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  margin-right: 12px;
+  position: relative;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.filter-option__circle:hover {
+  border-color: #9ca3af;
+}
+
+.filter-option__circle--checked {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.filter-option__circle--checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+/* Mobile filter button styles */
+.mobile-filter-toggle {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-filter-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.mobile-filter-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile sidebar overlay */
+.mobile-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile sidebar */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 280px;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 1000;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-sidebar.active {
+  left: 0;
+}
+
+.mobile-sidebar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mobile-sidebar__header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.mobile-sidebar__close {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-sidebar__close svg {
+  width: 24px;
+  height: 24px;
+}
+
+.filter-count {
+  color: #6b7280;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
 .filter-option__label {
   font-size: 14px;
   color: #374151;
@@ -277,7 +424,12 @@
               {% when 'boolean', 'list' %}
                 <details class="filter-section" {% if forloop.index <= 2 %}open{% endif %}>
                   <summary class="filter-section__header">
-                    <h3 class="filter-section__title">{{ filter.label | escape }}</h3>
+                  <h3 class="filter-section__title">
+                    {{ filter.label | escape }}
+                    {%- if filter.active_values.size > 0 -%}
+                      <span class="filter-count">({{ filter.active_values.size }})</span>
+                    {%- endif -%}
+                  </h3>
                     <svg class="filter-section__arrow" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M8 12l-4-4h8l-4 4z"/>
                     </svg>
@@ -310,7 +462,7 @@
                           {% if is_disabled %}disabled{% endif %}
                           onchange="this.form.submit();"
                         >
-                        <div class="filter-option__checkbox{% if value.active %} filter-option__checkbox--checked{% endif %}"></div>
+                        <div class="filter-option__circle{% if value.active %} filter-option__circle--checked{% endif %}"></div>
                         <span class="filter-option__label">{{ value.label | escape }}</span>
                       </label>
                     {%- endfor -%}
@@ -326,10 +478,10 @@
                     </svg>
                   </summary>
                   <div class="price-range-section">
-                    {%- assign max_price = filter.range_max | divided_by: 100.0 -%}
-                    {%- assign min_price = filter.range_min | divided_by: 100.0 -%}
-                    {%- assign current_min = filter.min_value.value | default: min_price | divided_by: 100.0 -%}
-                    {%- assign current_max = filter.max_value.value | default: max_price | divided_by: 100.0 -%}
+                    {%- assign max_price = filter.range_max -%}
+                    {%- assign min_price = filter.range_min -%}
+                    {%- assign current_min = filter.min_value.value | default: min_price -%}
+                    {%- assign current_max = filter.max_value.value | default: max_price -%}
                     
                     <div class="price-range__slider">
                       <input
@@ -388,30 +540,172 @@
     </facet-filters-form>
   {%- endif -%}
 
-  <!-- Mobile and drawer filters remain unchanged -->
-  <menu-drawer
-    class="mobile-facets__wrapper{% if filter_type == 'horizontal' or filter_type == 'vertical' %} medium-hide large-up-hide{% endif %}"
-    data-breakpoint="mobile"
-  >
-    <!-- Original mobile facets code... -->
-  </menu-drawer>
+  <!-- Mobile Filter Toggle Button -->
+  <div class="mobile-filter-toggle medium-hide large-up-hide">
+    <button class="mobile-filter-btn" onclick="toggleMobileSidebar()">
+      <svg class="mobile-filter-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+      </svg>
+      <span>Filter & Sort</span>
+    </button>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay" onclick="closeMobileSidebar()"></div>
+  
+  <!-- Mobile Sidebar (same as desktop) -->
+  <div class="mobile-sidebar" id="mobileSidebar">
+    <div class="mobile-sidebar__header">
+      <h2>Filter & Sort</h2>
+      <button class="mobile-sidebar__close" onclick="closeMobileSidebar()">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="sidebar-filters__header">
+      <a href="{{ results_url }}" class="sidebar-filters__btn sidebar-filters__btn--reset">
+        RESET
+      </a>
+      <button class="sidebar-filters__btn sidebar-filters__btn--filter" onclick="document.getElementById('MobileFacetFiltersForm').submit();">
+        FILTER
+      </button>
+    </div>
+
+    <form id="MobileFacetFiltersForm" class="sidebar-filters__content">
+      {%- if results.terms -%}
+        <input type="hidden" name="q" value="{{ results.terms | escape }}">
+        <input name="options[prefix]" type="hidden" value="last">
+      {%- endif -%}
+
+      {% if enable_filtering %}
+        {%- for filter in results.filters -%}
+          {% case filter.type %}
+            {% when 'boolean', 'list' %}
+              <details class="filter-section" {% if forloop.index <= 2 %}open{% endif %}>
+                <summary class="filter-section__header">
+                  <h3 class="filter-section__title">
+                    {{ filter.label | escape }}
+                    {%- if filter.active_values.size > 0 -%}
+                      <span class="filter-count">({{ filter.active_values.size }})</span>
+                    {%- endif -%}
+                  </h3>
+                  <svg class="filter-section__arrow" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 12l-4-4h8l-4 4z"/>
+                  </svg>
+                </summary>
+                <div class="filter-section__content">
+                  {%- liquid
+                    assign sorted_values = filter.values
+                    if filter.operator == 'AND'
+                      assign active_filter_values = filter.values | where: 'active', true
+                      assign inactive_filter_values = filter.values | where: 'active', false
+                      assign sorted_values = active_filter_values | concat: inactive_filter_values
+                    endif
+                  -%}
+                  {%- for value in sorted_values -%}
+                    {% liquid
+                      assign input_id = 'MobileFilter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                      assign is_disabled = false
+                      if value.count == 0 and value.active == false
+                        assign is_disabled = true
+                      endif
+                    %}
+                    <label class="filter-option" for="{{ input_id }}">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        id="{{ input_id }}"
+                        style="display: none;"
+                        {% if value.active %}checked{% endif %}
+                        {% if is_disabled %}disabled{% endif %}
+                        onchange="this.form.submit();"
+                      >
+                      <div class="filter-option__circle{% if value.active %} filter-option__circle--checked{% endif %}"></div>
+                      <span class="filter-option__label">{{ value.label | escape }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </details>
+
+            {% when 'price_range' %}
+              <details class="filter-section" open>
+                <summary class="filter-section__header">
+                  <h3 class="filter-section__title">{{ filter.label | escape }}</h3>
+                  <svg class="filter-section__arrow" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 12l-4-4h8l-4 4z"/>
+                  </svg>
+                </summary>
+                <div class="price-range-section">
+                  {%- assign max_price = filter.range_max -%}
+                  {%- assign min_price = filter.range_min -%}
+                  {%- assign current_min = filter.min_value.value | default: min_price -%}
+                  {%- assign current_max = filter.max_value.value | default: max_price -%}
+                  
+                  <div class="price-range__slider">
+                    <input
+                      type="range"
+                      class="price-range__input"
+                      min="{{ min_price }}"
+                      max="{{ max_price }}"
+                      value="{{ current_min }}"
+                      name="{{ filter.min_value.param_name }}"
+                      onchange="this.form.submit();"
+                    >
+                  </div>
+                  <div class="price-range__values">
+                    <span>{{ min_price | money }}</span>
+                    <span>{{ max_price | money }}</span>
+                  </div>
+                </div>
+              </details>
+          {% endcase %}
+        {%- endfor -%}
+      {% endif %}
+    </form>
+  </div>
 </div>
 
 <script>
-// Handle checkbox visual state
+// Handle checkbox visual state for both desktop and mobile
 document.addEventListener('DOMContentLoaded', function() {
-  const checkboxes = document.querySelectorAll('.sidebar-filters input[type="checkbox"]');
+  const checkboxes = document.querySelectorAll('.sidebar-filters input[type="checkbox"], .mobile-sidebar input[type="checkbox"]');
   
   checkboxes.forEach(function(checkbox) {
     const visualCheckbox = checkbox.nextElementSibling;
     
     checkbox.addEventListener('change', function() {
       if (this.checked) {
-        visualCheckbox.classList.add('filter-option__checkbox--checked');
+        if (visualCheckbox.classList.contains('filter-option__circle')) {
+          visualCheckbox.classList.add('filter-option__circle--checked');
+        } else {
+          visualCheckbox.classList.add('filter-option__checkbox--checked');
+        }
       } else {
-        visualCheckbox.classList.remove('filter-option__checkbox--checked');
+        visualCheckbox.classList.remove('filter-option__circle--checked', 'filter-option__checkbox--checked');
       }
     });
   });
 });
+
+// Mobile sidebar toggle functions
+function toggleMobileSidebar() {
+  const overlay = document.getElementById('mobileSidebarOverlay');
+  const sidebar = document.getElementById('mobileSidebar');
+  
+  overlay.classList.add('active');
+  sidebar.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileSidebar() {
+  const overlay = document.getElementById('mobileSidebarOverlay');
+  const sidebar = document.getElementById('mobileSidebar');
+  
+  overlay.classList.remove('active');
+  sidebar.classList.remove('active');
+  document.body.style.overflow = '';
+}
 </script>
