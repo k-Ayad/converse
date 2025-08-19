@@ -364,6 +364,28 @@
         justify-content: space-between;
         align-items: end;
     }
+
+    .image-wrapper img {
+        width: 100%;
+        height: fit-content;
+    }
+
+    .product-info {
+        flex-direction: column;
+        gap: unset;
+    }
+
+    .product-title {
+        font-size: 13px;
+    }
+
+    .product-price {
+        font-size: 13px;
+    }
+
+    .compare-price {
+        font-size: 11px;
+    }
 }
 
 
