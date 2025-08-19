@@ -3605,3 +3605,126 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* ==== Filter Sidebar - Light Theme ==== */
+
+/* Headings (accordion titles) */
+.product-categories h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 12px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  color: #333;
+  border-bottom: 1px solid #eaeaea;
+  transition: color 0.2s;
+}
+.product-categories h3:hover {
+  color: #0077cc; /* light blue hover */
+}
+
+/* Accordion arrow */
+.product-categories h3::after {
+  content: "▾";
+  font-size: 12px;
+  margin-left: auto;
+  transition: transform 0.25s;
+  color: #777;
+}
+.product-categories h3[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+  color: #0077cc;
+}
+
+/* Checkboxes */
+.custom-control {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.fill-control-input { display: none; }
+.fill-control-indicator {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  margin-right: 8px;
+  position: relative;
+  background: #fff;
+  transition: all 0.2s;
+}
+.fill-control-input:checked + .fill-control-indicator {
+  background: #0077cc;
+  border-color: #0077cc;
+}
+.fill-control-input:disabled + .fill-control-indicator {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.fill-control-description {
+  font-size: 13px;
+  color: #444;
+}
+
+/* Price Range Slider */
+#slider-range {
+  margin: 18px 6px 10px;
+  height: 4px;
+  background: #e5e5e5;
+  border-radius: 2px;
+}
+.ui-slider-range {
+  background: #0077cc !important;
+  height: 4px;
+  border-radius: 2px;
+}
+.ui-slider-handle {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid #0077cc;
+  border-radius: 50%;
+  top: -6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ui-slider-handle:hover {
+  background: #0077cc;
+  border-color: #0077cc;
+}
+#amount {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  margin-top: 8px;
+  color: #333;
+}
+
+/* Filter Buttons */
+.filter-actions .btn.filter-btn {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 4px;
+  color: #333;
+  transition: all 0.2s;
+}
+.filter-actions .btn.filter-btn:hover {
+  background: #eaeaea;
+}
+.filter-actions .btn.filter-btn.apply {
+  background: #0077cc;
+  border: 1px solid #0077cc;
+  color: #fff;
+}
+.filter-actions .btn.filter-btn.apply:hover {
+  background: #005fa3;
+}
