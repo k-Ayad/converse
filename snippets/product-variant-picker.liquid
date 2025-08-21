@@ -52,6 +52,75 @@
             picker_type: picker_type
           %}
         </fieldset>
+       {%- elsif picker_type == 'image' -%}
+  {% assign optionName = option.name | downcase %}
+
+  {%- assign current = product.selected_or_first_available_variant -%}
+  {%- case option.position -%}
+    {%- when 1 -%}{%- assign selected_value = current.option1 -%}
+    {%- when 2 -%}{%- assign selected_value = current.option2 -%}
+    {%- when 3 -%}{%- assign selected_value = current.option3 -%}
+  {%- endcase -%}
+
+  {% if optionName == 'color' %}
+    <fieldset id="OptionFieldset-{{ section.id }}-{{ option.position }}" class="js product-form__input product-form__input--pill">
+      <legend class="form__label  text-black">
+        <span class="fw-bold">
+          {{ option.name }}:
+        </span> 
+        <span class="variant-chip js-option-value">{{ selected_value }}</span>
+      </legend>
+      {% render 'product-variant-options',
+        product: product,
+        option: option,
+        block: block,
+        picker_type: 'image'
+      %}
+    </fieldset>
+  {% else %}
+    <fieldset id="OptionFieldset-{{ section.id }}-{{ option.position }}" class="js product-form__input product-form__input--pill">
+      <legend class="form__label">
+         <span class="fw-bold">
+          {{ option.name }}:
+        </span> 
+        <span class="variant-chip js-option-value">{{ selected_value }}</span>
+      </legend>
+      {% render 'product-variant-options',
+        product: product,
+        option: option,
+        block: block,
+        picker_type: 'button'
+      %}
+    </fieldset>
+  {% endif %}
+
+  <script>
+    (function() {
+      var fs = document.getElementById('OptionFieldset-{{ section.id }}-{{ option.position }}');
+      if (!fs) return;
+      var display = fs.querySelector('.js-option-value');
+      if (!display) return;
+
+      function updateFromFieldset() {
+        var checked = fs.querySelector('input[type="radio"]:checked');
+        if (checked && checked.value) { display.textContent = checked.value; return; }
+
+        var sel = fs.querySelector('select');
+        if (sel && sel.value) {
+          var opt = sel.options[sel.selectedIndex];
+          display.textContent = opt ? opt.text : sel.value;
+          return;
+        }
+      }
+
+      fs.addEventListener('change', updateFromFieldset);
+      // Initial sync (in case the default is pre-selected)
+      updateFromFieldset();
+    })();
+  </script>
+
+
+
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">

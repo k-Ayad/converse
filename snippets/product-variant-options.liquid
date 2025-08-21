@@ -95,6 +95,64 @@
       {{ value -}}
       {{ label_unavailable }}
     </label>
+
+    {%- elsif picker_type == 'image' -%}
+    <input
+      type="radio"
+      id="{{ input_id }}"
+      name="{{ input_name | escape }}"
+      value="{{ value | escape }}"
+      form="{{ product_form_id }}"
+      variant_type="image"
+      {% if value.selected %}
+        checked
+      {% endif %}
+      {% if option_disabled %}
+        class="disabled"
+      {% endif %}
+      {{ input_dataset }}
+    >
+    <label for="{{ input_id }}">
+  {%- assign thumb_media = nil -%}
+
+  {%- assign oname = option.name | downcase -%}
+  {%- if oname contains 'color' or oname contains 'colour' -%}
+    {%- assign target = value | strip -%}
+
+    {%- comment %}Collect variants that share this color value (by option position){% endcomment -%}
+    {%- case option.position -%}
+      {%- when 1 -%}{%- assign candidates = product.variants | where: 'option1', target -%}
+      {%- when 2 -%}{%- assign candidates = product.variants | where: 'option2', target -%}
+      {%- when 3 -%}{%- assign candidates = product.variants | where: 'option3', target -%}
+    {%- endcase -%}
+
+    {%- if candidates and candidates.size > 0 -%}
+      {%- comment %}Prefer the first candidate that actually has an image{% endcomment -%}
+      {%- for cv in candidates -%}
+        {%- if cv.featured_media -%}
+          {%- assign thumb_media = cv.featured_media -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if thumb_media == nil -%}
+        {%- assign thumb_media = candidates.first.featured_media -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign thumb_media = thumb_media | default: product.featured_media | default: product.media.first -%}
+  {%- if thumb_media -%}
+    <img
+      class="variant-image-label__img"
+      src="{{ thumb_media | image_url: width: 96, height: 96, crop: 'center' }}"
+      alt="{{ value | escape }}"
+      width="48" height="48"
+      loading="lazy">
+  {%- endif -%}
+</label>
+
+
+
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       id="{{ input_id }}"

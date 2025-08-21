@@ -1,0 +1,359 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+We reuse some global spacing + color utilities; add a tiny tabs skin below.
+{%- endcomment -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .tabs-{{ section.id }} .nav-tabs {
+    display: flex;
+    gap: .5rem;
+    border-bottom: 0px !important;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  .tabs-{{ section.id }} .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    padding: .6rem .9rem;
+    font-weight: 600;
+    opacity: .85;
+    border-radius: 0px !important
+  }
+  .tabs-{{ section.id }} .nav-tabs .nav-link.active,
+  .tabs-{{ section.id }} .nav-tabs .nav-link[aria-selected="true"] {
+    border-top: 2px red solid;
+    background: transparent;
+    opacity: 1;
+    color:black !important;
+  }
+  .tabs-{{ section.id }} .tab-content {
+    border-top: 0;
+    padding: 1.2rem;
+    margin-top: -1px;
+  }
+
+  /* Optional image styling to match collapsible section */
+  .tabs-{{ section.id }} .media {
+    overflow: hidden;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="tabs-{{ section.id }} tabs-{{ section.settings.layout }}-layout isolate{% if section.settings.layout == 'section' %} page-width{% elsif section.settings.layout == 'none' %} content-container content-container--full-width{% endif %}">
+    <div class="tabs__wrapper section-{{ section.id }}-padding{% if section.settings.layout == 'section' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}">
+      <div class="{% if section.settings.image == blank %}tabs-wrapper-narrow{% else %}page-width{% endif %}">
+        <div
+          class="tabs__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="text-align: {{ section.settings.heading_alignment }};"
+        >
+          {%- if section.settings.caption != blank -%}
+            <p class="caption-with-letter-spacing">{{ section.settings.caption | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="tabs__heading inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+          {%- else -%}
+            <h2 class="visually-hidden">{{ 'accessibility.tabs' | t }}</h2>
+          {%- endif -%}
+        </div>
+
+        <div class="grid grid--1-col grid--2-col-tablet tabs__grid{% if section.settings.desktop_layout == 'image_second' %} tabs__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if section.settings.image != blank -%}
+            <div class="grid__item tabs__grid-item">
+              <div
+                class="tabs__media tabs__media--{{ section.settings.image_ratio }} media global-media-settings gradient"
+                {% if section.settings.image_ratio == 'adapt' %}
+                  style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+                {% endif %}
+              >
+                {%- liquid
+                  assign padding_multiplier = 1
+                  if section.settings.layout == 'section'
+                    assign padding_multiplier = 2
+                  endif
+                  assign desktop_tablet_padding = 100 | times: padding_multiplier | append: 'px'
+                  assign mobile_padding = 30 | times: padding_multiplier | append: 'px'
+                -%}
+                {%- capture sizes -%}
+                  (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width }}px - {{ desktop_tablet_padding }}) / 2),
+                  (min-width: 750px) calc((100vw - {{ desktop_tablet_padding }}) / 2),
+                  calc(100vw - {{ mobile_padding }})
+                {%- endcapture -%}
+                {{
+                  section.settings.image
+                  | image_url: width: 3200
+                  | image_tag:
+                    sizes: sizes,
+                    widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200'
+                }}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <div class="grid__item">
+            {%- assign open_index = 0 -%}
+            {%- if section.settings.open_first_tab -%}
+              {%- assign open_index = 1 -%}
+            {%- endif -%}
+
+            {%- comment -%} Tabs nav {%- endcomment -%}
+            {%- assign default_index = section.settings.default_tab | plus: 0 -%}
+            {%- assign open_first = section.settings.open_first_tab -%}
+            <ul class="nav nav-tabs" role="tablist">
+              {%- for block in section.blocks -%}
+                {%- assign is_active = false -%}
+                {%- if forloop.index == default_index -%}
+                  {%- assign is_active = true -%}
+                {%- elsif open_first and forloop.first -%}
+                  {%- assign is_active = true -%}
+                {%- endif -%}
+
+                <li class="nav-item" role="presentation" {{ block.shopify_attributes }}>
+                  <button
+                    class="nav-link{% if is_active %} active{% endif %} text-muted fw-normal"
+                    id="tab-{{ section.id }}-{{ block.id }}-button"
+                    type="button"
+                    role="tab"
+                    aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+                    aria-controls="tab-{{ section.id }}-{{ block.id }}-panel"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-{{ section.id }}-{{ block.id }}-panel"
+                  >
+                    {{ block.settings.heading | default: block.settings.page.title | escape }}
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- comment -%} Tabs content {%- endcomment -%}
+            <div class="tab-content">
+              {%- assign default_index = section.settings.default_tab | plus: 0 -%}
+              {%- assign open_first = section.settings.open_first_tab -%}
+              {%- for block in section.blocks -%}
+                {%- assign is_active = false -%}
+                {%- if forloop.index == default_index -%}
+                  {%- assign is_active = true -%}
+                {%- elsif open_first and forloop.first -%}
+                  {%- assign is_active = true -%}
+                {%- endif -%}
+
+                <div
+                  class="tab-pane fade{% if is_active %} show active{% endif %}"
+                  id="tab-{{ section.id }}-{{ block.id }}-panel"
+                  role="tabpanel"
+                  aria-labelledby="tab-{{ section.id }}-{{ block.id }}-button"
+                >
+                  <div class="rte">
+                    {{ block.settings.tab_content }}
+                    {{ block.settings.page.content }}
+                  </div>
+                </div>
+              {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%}
+Vanilla JS fallback if Bootstrap's tab JS isn't available.
+{%- endcomment -%}
+<script>
+  (function() {
+    var root = document.currentScript && document.currentScript.closest('.color-{{ section.settings.color_scheme }}');
+    if (!root) root = document.querySelector('.tabs-{{ section.id }}');
+    if (!root) return;
+
+    var anyBootstrap = typeof window.bootstrap !== 'undefined' ||
+      (typeof window.jQuery !== 'undefined' && typeof jQuery.fn.tab === 'function');
+
+    if (anyBootstrap) return; // Let Bootstrap handle it.
+
+    var navButtons = root.querySelectorAll('.nav-link[id^="tab-{{ section.id }}-"]');
+    var panes = root.querySelectorAll('.tab-pane[id^="tab-{{ section.id }}-"]');
+
+    function activate(btn) {
+      navButtons.forEach(function(b){
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      panes.forEach(function(p){
+        p.classList.remove('show','active');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      var target = document.querySelector(btn.getAttribute('data-bs-target')) ||
+                   document.getElementById(btn.getAttribute('aria-controls'));
+      if (target) {
+        target.classList.add('show','active');
+      }
+    }
+
+    navButtons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        activate(btn);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product tabs",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "text", "id": "caption", "label": "Caption" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Details"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h0", "label": "H0" },
+        { "value": "hxl", "label": "HXL" },
+        { "value": "hxxl", "label": "HXXL" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Container layout",
+      "options": [
+        { "value": "none", "label": "Full width" },
+        { "value": "row", "label": "Row (boxed tabs)" },
+        { "value": "section", "label": "Section (boxed outer)" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color_scheme",
+      "id": "container_color_scheme",
+      "label": "Container color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section color scheme",
+      "default": "scheme-1"
+    },
+
+    { "type": "header", "content": "Media (optional)" },
+    { "type": "image_picker", "id": "image", "label": "Side image" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "small", "label": "Short" },
+        { "value": "large", "label": "Tall" }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "image_first", "label": "Image left" },
+        { "value": "image_second", "label": "Image right" }
+      ],
+      "default": "image_second"
+    },
+
+    { "type": "header", "content": "Tabs behavior" },
+    {
+      "type": "checkbox",
+      "id": "open_first_tab",
+      "default": true,
+      "label": "Open first tab by default (fallback)"
+    },
+    {
+      "type": "range",
+      "id": "default_tab",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Default tab index (1-based, overrides above if set within range)",
+      "default": 1
+    },
+
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Tab title", "default": "Description" },
+        { "type": "richtext", "id": "tab_content", "label": "Tab content" },
+        { "type": "page", "id": "page", "label": "Or pick a page" }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [ 
+    {
+      "name": "Product tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "heading": "Description" } },
+        { "type": "tab", "settings": { "heading": "Shipping & Returns" } },
+        { "type": "tab", "settings": { "heading": "Care" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -330,7 +330,7 @@
                     </div>
 
                     <!-- Row 2: Availability -->
-                    <div class="d-flex justify-content-between align-items-center mt-1">
+                    <div class="d-flex justify-content-between align-items-center mt-1 mb-5">
                       <div class="avail-label">
                         {{ block.settings.availability_title | default: 'Availability' }}
                       </div>
@@ -410,7 +410,7 @@
               {%- when 'quantity_selector' -%}
                 <div
                   id="Quantity-Form-{{ section.id }}"
-                  class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
+                  class="mt-5 product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                   {{ block.shopify_attributes }}
                 >
                   {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
@@ -426,7 +426,7 @@
                       {{- 'products.product.quantity.label' | t -}}
                     {%- endif -%}
                   </span>
-                  <label
+                  {% comment %} <label
                     class="quantity__label form__label"
                     for="Quantity-{{ section.id }}"
                     aria-labelledby="quantity-label-{{ section.id }}"
@@ -440,9 +440,9 @@
                         )</span
                       >
                     </span>
-                  </label>
+                  </label> {% endcomment %}
                   <div class="price-per-item__container">
-                    <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
+                    <quantity-input style="background-color: #F9F9F9;" class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
                       <button class="quantity__button" name="minus" type="button">
                         <span class="visually-hidden">
                           {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
