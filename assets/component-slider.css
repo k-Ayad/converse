@@ -189,6 +189,11 @@ slider-component.slider-component-full-width {
     width: calc((100% - var(--desktop-margin-left-first-item)) / 4 - var(--grid-desktop-horizontal-spacing) * 3);
   }
 
+  .slider--desktop.custom-collection .grid__item {
+    width: 300px;
+    max-width: none;
+  }
+
   .slider--desktop.grid--3-col-desktop .grid__item {
     width: calc((100% - var(--desktop-margin-left-first-item)) / 3 - var(--grid-desktop-horizontal-spacing) * 4);
   }
