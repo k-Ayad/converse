@@ -904,10 +904,19 @@ summary::-webkit-details-marker {
   flex-shrink: 0;
 }
 
+/* === MD (≥750px): col-md-4 => 3 per row === */
 @media screen and (min-width: 750px) {
   .grid__item {
+    width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    max-width: calc(33.333% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
+}
+
+/* === LG (≥990px): col-lg-3 => 4 per row === */
+@media screen and (min-width: 990px) {
+  .grid__item {
     width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
-    max-width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2);
+    max-width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
   }
 }
 
