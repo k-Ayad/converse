@@ -7,12 +7,13 @@
 {% endif %}
 
 {%- comment -%} === Color Count === {%- endcomment -%}
-{% assign color_option_index = product.options_with_values | map: 'name' | downcase | index_of: 'color' %}
 {% assign color_count = 0 %}
-{% if color_option_index != -1 %}
-  {% assign color_values = product.options_with_values[color_option_index].values %}
-  {% assign color_count = color_values | size %}
-{% endif %}
+
+{% for option in product.options_with_values %}
+  {% if option.name == "Color" or option.name == "COLOR" or option.name == "colour" or option.name == "COLOUR" %}
+    {% assign color_count = option.values | size %}
+  {% endif %}
+{% endfor %}
 
 {% if featured %}
   <div class="item featured">
@@ -70,8 +71,7 @@
                 href="{{ product.url }}"
                 type="button"
                 class="btn btn-1 text-uppercase text-white"
-                >Buy Now</a
-              >
+              >Buy Now</a>
             </div>
           </div>
         </div>
@@ -101,18 +101,6 @@
         {% if color_count > 1 %}
           <p class="product-colors">{{ color_count }} colors</p>
         {% endif %}
-        {% for product_option in product.options_with_values %}
-          <label>
-            {{ product_option.name }}
-            <select>
-              {% for value in product_option.values %}
-                <option>
-                  {{ value }}
-                </option>
-              {% endfor %}
-            </select>
-          </label>
-        {% endfor %}
 
         <div class="product-price">
           <span class="sale-price">{{ sale_price | money }}</span>
