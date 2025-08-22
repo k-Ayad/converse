@@ -5,6 +5,14 @@
 {% else %}
   {% assign featured = false %}
 {% endif %}
+<product-recommendations
+  class="product-recommendations related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show | default: 8 }}"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+>
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+
 <div
   style="display: flex; flex-wrap: wrap"
   {% if section.settings.with_side or featured %}
@@ -17,11 +25,8 @@
     <div class="custom-column">
       <div style="position: relative;" class="best-sellers">
         <h1 style="color: white; font: 'Poppins', sans-serif;">
-          {{ section.settings.collection.title }}
+          {{ section.settings.title }}
         </h1>
-        <a class="text-view" href="{{ section.settings.collection.url | default: '#' }}"
-          >VIEW ALL <i class="fa fa-angle-right" aria-hidden="true"></i
-        ></a>
       </div>
     </div>
   {% endif %}
@@ -43,7 +48,7 @@
     </button>
 
     <div class="owl-carousel" data-carousel-id="{{ section.id }}">
-      {% assign products = section.settings.collection.products %}
+      {% assign products = recommendations.products %}
       {% for product in products %}
         {% render 'carousel-product-card', product: product, featured: featured %}
       {% endfor %}
@@ -61,16 +66,20 @@
   </div>
 </div>
 
-<script src="{{ 'carousel-section.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+</product-recommendations>
 
+
+<script src="{{ 'owl-after-recommendations.js' | asset_url }}" defer="defer"></script>
 {% schema %}
 {
-  "name": "Product Carousel",
+  "name": "Related Product Carousel",
   "settings": [
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default":"title"
     },
     {
       "type": "range",
@@ -86,11 +95,18 @@
       "id": "with_side",
       "label": "With side?",
       "default": false
-    }
+    },
+    {
+  "type": "range",
+  "id": "products_to_show",
+  "label": "Products to request",
+  "min": 2, "max": 12, "step": 1,
+  "default": 8
+}
   ],
   "presets": [
     {
-      "name": "Product Carousel"
+      "name": "Related Product Carousel"
     }
   ]
 }

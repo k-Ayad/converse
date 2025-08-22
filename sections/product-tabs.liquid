@@ -66,7 +66,7 @@ We reuse some global spacing + color utilities; add a tiny tabs skin below.
           {%- endif -%}
         </div>
 
-        <div class="grid grid--1-col grid--2-col-tablet tabs__grid{% if section.settings.desktop_layout == 'image_second' %} tabs__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="grid grid--1-col tabs__grid{% if section.settings.desktop_layout == 'image_second' %} tabs__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {%- if section.settings.image != blank -%}
             <div class="grid__item tabs__grid-item">
               <div

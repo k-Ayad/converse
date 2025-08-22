@@ -112,7 +112,7 @@
       {% endif %}
       {{ input_dataset }}
     >
-    <label for="{{ input_id }}">
+    <label for="{{ input_id }}" style="padding: 0%;">
   {%- assign thumb_media = nil -%}
 
   {%- assign oname = option.name | downcase -%}
@@ -146,7 +146,7 @@
       class="variant-image-label__img"
       src="{{ thumb_media | image_url: width: 96, height: 96, crop: 'center' }}"
       alt="{{ value | escape }}"
-      width="48" height="48"
+      width="60" height="60"
       loading="lazy">
   {%- endif -%}
 </label>
