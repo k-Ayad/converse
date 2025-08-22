@@ -277,10 +277,10 @@
     margin: 0;
     color: #000;
     transition: color 0.3s ease;
-    /* white-space: nowrap;
+    white-space: nowrap;
     text-wrap: auto;
     text-align: start;
-    flex: 1; */
+    flex: 1;
 }
 
 .product-title:hover {
