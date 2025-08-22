@@ -1,6 +1,7 @@
 .product-carousel-wrapper {
     position: relative;
     padding: 20px 40px;
+    overflow: hidden;
 }
 
 .product-carousel-wrapper-side {

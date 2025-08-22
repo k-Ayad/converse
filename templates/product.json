@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -22,44 +31,12 @@
         },
         "price": {
           "type": "price",
-          "settings": {
-            "price_color": "#7c7c7c",
-            "price_weight": "700",
-            "price_size_mobile": 22,
-            "price_size_desktop": 24,
-            "compare_color": "#7b7b7b",
-            "compare_weight": "400",
-            "compare_size_mobile": 20,
-            "compare_size_desktop": 22,
-            "show_badges": false
-          }
+          "settings": {}
         },
         "sku_aHdUBc": {
           "type": "sku",
           "settings": {
-            "sku_title": "Style",
-            "text_style": "body",
-            "sku_label_color": "#3a3838",
-            "sku_label_weight": "600",
-            "sku_label_size_mobile": 14,
-            "sku_label_size_desktop": 16,
-            "sku_value_color": "#444444",
-            "sku_value_weight": "500",
-            "sku_value_size_mobile": 14,
-            "sku_value_size_desktop": 16,
-            "avail_label_color": "#111111",
-            "avail_label_weight": "600",
-            "avail_label_size_mobile": 14,
-            "avail_label_size_desktop": 16,
-            "avail_value_color": "#6eca56",
-            "avail_value_weight": "600",
-            "avail_value_size_mobile": 14,
-            "avail_value_size_desktop": 16,
-            "availability_title": "Availability",
-            "availability_text_in": "In stock",
-            "availability_text_out": "Out of stock",
-            "sku_avail_space_mobile": 20,
-            "sku_avail_space_desktop": 20
+            "text_style": "body"
           }
         },
         "product-inventory": {
