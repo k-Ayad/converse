@@ -10,7 +10,7 @@
 {% assign color_count = 0 %}
 
 {% for option in product.options_with_values %}
-  {% if option.name == "Color" or option.name == "COLOR" or option.name == "colour" or option.name == "COLOUR" %}
+  {% if option.name == 'Color' or option.name == 'COLOR' or option.name == 'colour' or option.name == 'COLOUR' %}
     {% assign color_count = option.values | size %}
   {% endif %}
 {% endfor %}
@@ -71,7 +71,8 @@
                 href="{{ product.url }}"
                 type="button"
                 class="btn btn-1 text-uppercase text-white"
-              >Buy Now</a>
+                >Buy Now</a
+              >
             </div>
           </div>
         </div>
@@ -98,16 +99,16 @@
       <div class="product-info">
         <p class="product-title">{{ product.title }}</p>
 
-        {% if color_count > 1 %}
-          <p class="product-colors">{{ color_count }} colors</p>
-        {% endif %}
-
         <div class="product-price">
           <span class="sale-price">{{ sale_price | money }}</span>
           {% if is_on_sale %}
             <span class="compare-price">{{ original_price | money }}</span>
           {% endif %}
         </div>
+
+        {% if color_count > 1 %}
+          <p class="product-colors">{{ color_count }} colors available</p>
+        {% endif %}
       </div>
     </a>
   </div>
