@@ -223,9 +223,9 @@
     background: #fff;
 }
 
-/* .product-card:hover {
+.product-card:hover {
     box-shadow: 0 0 5px 5px rgba(100, 100, 100, 0.1);
-} */
+}
 
 .image-wrapper {
     position: relative;
@@ -249,9 +249,9 @@
     color: inherit;
 }
 
-.product-link:hover {
+/* .product-link:hover {
     box-shadow: 0 0 5px 5px rgba(100, 100, 100, 0.1);
-}
+} */
 
 .product-info {
     display: flex;
