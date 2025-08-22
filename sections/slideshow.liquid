@@ -242,7 +242,7 @@
         aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
         tabindex="-1"
       >
-        <div class="slideshow__media banner__media media{% if block.settings.image == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
+        <div class="slideshow__media banner__media media {% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
           {%- liquid
             assign image_desktop = block.settings.image_desktop
             assign image_mobile = block.settings.image_mobile
@@ -307,45 +307,46 @@
 
       {% if slide_link != blank %}
         <script>
-            const slide = document.getElementById('Slide-{{ section.id }}-{{ forloop.index }}');
-            let startX = 0;
-            let isDragging = false;
+          const slide = document.getElementById('Slide-{{ section.id }}-{{ forloop.index }}');
+          let startX = 0;
+          let isDragging = false;
 
-            slide.addEventListener('mousedown', (e) => {
-              startX = e.clientX;
-              isDragging = false;
-            });
+          slide.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = false;
+          });
 
-            slide.addEventListener('mousemove', (e) => {
-              if (Math.abs(e.clientX - startX) > 1) {
-                isDragging = true;
-              }
-            });
+          slide.addEventListener('mousemove', (e) => {
+            if (Math.abs(e.clientX - startX) > 10) {
+              isDragging = true;
+            }
+          });
 
-            slide.addEventListener('mouseup', (e) => {
-              if (!isDragging) {
-                window.location.href = "{{ slide_link }}";
-              }
-            });
+          slide.addEventListener('mouseup', (e) => {
+            if (e.button === 0 && !isDragging) {  // Only left click
+              window.location.href = "{{ slide_link }}";
+            }
+          });
 
-            // Also support touch devices
-            slide.addEventListener('touchstart', (e) => {
-              startX = e.touches[0].clientX;
-              isDragging = false;
-            });
+          // Touch devices
+          slide.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = false;
+          });
 
-            slide.addEventListener('touchmove', (e) => {
-              if (Math.abs(e.touches[0].clientX - startX) > 1) {
-                isDragging = true;
-              }
-            });
+          slide.addEventListener('touchmove', (e) => {
+            if (Math.abs(e.touches[0].clientX - startX) > 10) {
+              isDragging = true;
+            }
+          });
 
-            slide.addEventListener('touchend', (e) => {
-              if (!isDragging) {
-                window.location.href = "{{ slide_link }}";
-              }
-            });
+          slide.addEventListener('touchend', (e) => {
+            if (!isDragging) {
+              window.location.href = "{{ slide_link }}";
+            }
+          });
         </script>
+
 
       {% endif %}
     {%- endfor -%}
