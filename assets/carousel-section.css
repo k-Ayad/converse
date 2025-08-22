@@ -7,6 +7,7 @@
 .product-carousel-wrapper-side {
     position: relative;
     padding: 20px 0;
+    overflow: hidden;
 }
 
 .owl-carousel .item {
