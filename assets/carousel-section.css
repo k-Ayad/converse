@@ -1,11 +1,13 @@
 .product-carousel-wrapper {
     position: relative;
     padding: 20px 40px;
+    overflow: hidden;
 }
 
 .product-carousel-wrapper-side {
     position: relative;
     padding: 20px 0;
+    overflow: hidden;
 }
 
 .owl-carousel .item {
@@ -219,6 +221,11 @@
     border-radius: 6px;
     overflow: hidden;
     background: #fff;
+    transition: all 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    box-shadow: 0 0 5px 5px rgba(100, 100, 100, 0.1);
 }
 
 .image-wrapper {
@@ -243,13 +250,25 @@
     color: inherit;
 }
 
-.product-info {
+/* .product-link:hover {
+    box-shadow: 0 0 5px 5px rgba(100, 100, 100, 0.1) !important;
+} */
+
+/* .product-info {
     display: flex;
     justify-content: space-between;
     align-items: start;
     padding: 10px;
     gap: 10px;
     font-family: 'Poppins', sans-serif;
+} */
+
+.product-info {
+  display: flex;
+  flex-direction: column; /* stack product-top and colors */
+  align-items: flex-start;
+  padding: 10px;
+  gap: 6px;
 }
 
 .product-title {
@@ -271,7 +290,7 @@
 .product-price {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     align-items: center;
     font-size: 15px;
     white-space: nowrap;
@@ -289,6 +308,17 @@
     font-size: 13px;
 }
 
+.product-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* ensures title left, price right */
+}
+
+.product-colors {
+  font-size: 13px;
+  color: #555;
+}
 
 
 .custom-column {
