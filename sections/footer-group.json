@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -8,10 +17,10 @@
         "image_CJMJJa": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Untitled_design_1.png",
+            "image": "shopify://shop_images/Untitled_design_1.png",
             "image_width": 100,
             "alignment": "",
-            "image_richtext": "<p>Add a short description here.<\/p>",
+            "image_richtext": "<p>Sidewalks group is the official distributor of Nike, Levis, Converse, and Veja. Currently operating in Lebanon, Jordan, Egypt, and the UAE.</p>",
             "image_text_top_margin": 4
           }
         },
@@ -56,7 +65,7 @@
         "copyright_show_shop_link": true,
         "copyright_suffix": "All rights reserved.",
         "show_powered_by": true,
-        "custom_copyright": "<p>© 2025 Converse. All rights reserved.<\/p>",
+        "custom_copyright": "<p>© 2025 Converse. All rights reserved.</p>",
         "margin_top": 0,
         "padding_top": 36,
         "padding_bottom": 36
