@@ -1,0 +1,111 @@
+
+<style>
+    .store-background{
+        
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("https://cdn.shopify.com/s/files/1/0714/9813/7771/files/store-bg.jpg?v=1755945221");
+    }
+    .bg-red{
+        background-color: rgba(190,22,35, 0.7);
+        transition: all 2s;
+    }
+
+    .bg-red:hover{
+        background-color: rgba(190,22,35, 1);
+    }
+
+    .text-c{
+        color: white;
+    }
+
+    .text-c-h:hover{
+        color: black;
+    }
+
+    .h-100{
+        height: 412px !important;
+    }
+</style>
+
+<div class="container my-3">
+    <div class="row">
+
+        <div class="col-lg-6 mb-3 h-100">
+            <div class="shadow h-100 d-flex flex-wrap align-items-center">
+                    <div class="d-flex p-4">
+                        <div class="w-25">
+                            {% comment %} logo {% endcomment %}
+                            <img src="https://cdn.shopify.com/s/files/1/0714/9813/7771/files/marker.png?v=1755944581" alt="">
+                        </div>
+
+                        <div class="w-75">
+                            <h3>Address</h3>
+                            <p>Head office | Lebanon | BDD 1288 | Patriarcat Syriaques Street | Beirut Digital District | 5th floor</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex p-4 w-100">
+                        <div class="w-25">
+                            {% comment %} logo {% endcomment %}
+                            <img src="https://cdn.shopify.com/s/files/1/0714/9813/7771/files/whatsapp.png?v=1755946926" alt="">
+                        </div>
+
+                        <div class="w-75">
+                            <h3>Chat with us</h3>
+                            <p>96176664929</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex p-4 w-100">
+                        <div class="w-25">
+                            {% comment %} logo {% endcomment %}
+                            <img src="https://cdn.shopify.com/s/files/1/0714/9813/7771/files/envelope.png?v=1755946922" alt="">
+                        </div>
+
+                        <div class="w-75">
+                            <h3>Email</h3>
+                            <p>info.lb@sidewalks.net</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6 mb-3">
+            <div class="shadow h-100">
+
+                <div class="store-background  w-100 h-100">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center bg-red h-100">
+                        <div class="text-center">
+                            <div class="mb-3">
+                                {% comment %} logo {% endcomment %}
+                                <img class="m-auto" src="https://cdn.shopify.com/s/files/1/0714/9813/7771/files/marker.png?v=1755944581" alt="">
+                            </div>
+    
+                            <h2 class="mb-3 text-c">Looking for a store ?</h2>
+                            <h3><a href="" class="text-c text-c-h">click here for store locator</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% schema %}
+{
+    "name": "custom contact section",
+    "settings": [
+        
+        ],
+        "presets": [
+            {
+                "name":"custom contact section"
+            }
+        ]
+}
+{% endschema %}

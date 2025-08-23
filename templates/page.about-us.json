@@ -1,0 +1,83 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "rich_text_iehmjC": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_dY47dR": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>DIVERSITY AND DIFFERENCE<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "heading_hpPEaw": {
+          "type": "heading",
+          "settings": {
+            "heading": "<em>ARE OUR GUIDING PRINCIPLES<\/em>",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_dY47dR",
+        "heading_hpPEaw"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "image_with_text_6W8Tzf": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_XTqtN4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sidewalks Group is dedicated to bringing internationally renowned brands to consumers’ diverse lifestyles. <\/p><p>Sidewalks Group is the official distributor of Nike, Levis, Converse, and Veja. Currently operating in Lebanon, Jordan, Egypt, and the UAE.<\/p><p>Sidewalks Group launched its first official E-commerce website in 2020, <a href=\"https:\/\/sidewalks.net\/\"><strong>sidewalks.net<\/strong><\/a><strong>,<\/strong> offering customers a variety of brands that suit a dynamic lifestyle.<\/p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_XTqtN4"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.image-with-text__media-item {width: 40%; height: fit-content; align-self: center; } .image-with-text__text-item {width: 60%; }}"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Screenshot_2025-08-22_222121_ade3bc40-0cd4-49e9-99cc-897e1c7df96f.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_iehmjC",
+    "image_with_text_6W8Tzf"
+  ]
+}

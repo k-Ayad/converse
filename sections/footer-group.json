@@ -10,7 +10,9 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/Untitled_design_1.png",
             "image_width": 100,
-            "alignment": ""
+            "alignment": "",
+            "image_richtext": "<p>Add a short description here.<\/p>",
+            "image_text_top_margin": 4
           }
         },
         "link_list_FQNfE9": {
@@ -50,6 +52,11 @@
         "enable_language_selector": true,
         "payment_enable": true,
         "show_policy": false,
+        "copyright_mode": "auto",
+        "copyright_show_shop_link": true,
+        "copyright_suffix": "All rights reserved.",
+        "show_powered_by": true,
+        "custom_copyright": "<p>© 2025 Converse. All rights reserved.<\/p>",
         "margin_top": 0,
         "padding_top": 36,
         "padding_bottom": 36

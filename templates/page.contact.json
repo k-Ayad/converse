@@ -2,17 +2,23 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 36,
         "padding_bottom": 36
       }
     },
+    "custom_contact_section_m9JkFk": {
+      "type": "custom-contact-section",
+      "name": "custom contact section",
+      "settings": {}
+    },
     "form": {
       "type": "contact-form",
       "settings": {
-        "heading": "",
+        "heading": "<strong>Submit a Request<\/strong>",
         "heading_size": "h1",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-aa24e3c6-caeb-4f75-aaa1-57d5c81c44e8",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -20,6 +26,7 @@
   },
   "order": [
     "main",
+    "custom_contact_section_m9JkFk",
     "form"
   ]
 }
