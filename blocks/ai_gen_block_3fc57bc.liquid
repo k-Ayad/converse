@@ -1,0 +1,513 @@
+{% doc %}
+  @prompt
+    google maps section and a side menu that has locations when click on one of them it shows on the map
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-map-container-{{ ai_gen_id }} {
+    display: flex;
+    height: {{ block.settings.map_height }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-map-sidebar-{{ ai_gen_id }} {
+    width: {{ block.settings.sidebar_width }}px;
+    background-color: {{ block.settings.sidebar_bg_color }};
+    border-right: 1px solid {{ block.settings.border_color }};
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .ai-map-sidebar-header-{{ ai_gen_id }} {
+    padding: 20px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-map-sidebar-title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: 600;
+  }
+
+  .ai-map-locations-list-{{ ai_gen_id }} {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .ai-map-location-item-{{ ai_gen_id }} {
+    padding: 16px 20px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .ai-map-location-item-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.hover_color }};
+  }
+
+  .ai-map-location-item-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.active_color }};
+  }
+
+  .ai-map-location-name-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 4px 0;
+  }
+
+  .ai-map-location-address-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.secondary_text_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+  }
+
+  .ai-map-location-phone-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.secondary_text_color }};
+    margin: 0;
+  }
+
+  .ai-map-frame-{{ ai_gen_id }} {
+    flex: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-map-empty-state-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    background-color: #f8f8f8;
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    padding: 40px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-map-container-{{ ai_gen_id }} {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .ai-map-sidebar-{{ ai_gen_id }} {
+      width: 100%;
+      max-height: 300px;
+    }
+
+    .ai-map-frame-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_map_height }}px;
+    }
+
+    .ai-map-empty-state-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_map_height }}px;
+    }
+  }
+{% endstyle %}
+
+<google-maps-{{ ai_gen_id }}
+  class="ai-map-container-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-map-sidebar-{{ ai_gen_id }}">
+    <div class="ai-map-sidebar-header-{{ ai_gen_id }}">
+      <h2 class="ai-map-sidebar-title-{{ ai_gen_id }}">{{ block.settings.sidebar_title }}</h2>
+    </div>
+    <ul class="ai-map-locations-list-{{ ai_gen_id }}">
+      {% for i in (1..5) %}
+        {% liquid
+          assign name_key = 'location_' | append: i | append: '_name'
+          assign address_key = 'location_' | append: i | append: '_address'
+          assign phone_key = 'location_' | append: i | append: '_phone'
+          assign lat_key = 'location_' | append: i | append: '_lat'
+          assign lng_key = 'location_' | append: i | append: '_lng'
+
+          assign location_name = block.settings[name_key]
+          assign location_address = block.settings[address_key]
+          assign location_phone = block.settings[phone_key]
+          assign location_lat = block.settings[lat_key]
+          assign location_lng = block.settings[lng_key]
+        %}
+
+        {% if location_name != blank and location_address != blank %}
+          <li
+            class="ai-map-location-item-{{ ai_gen_id }}"
+            data-location-index="{{ i }}"
+            data-lat="{{ location_lat }}"
+            data-lng="{{ location_lng }}"
+          >
+            <h3 class="ai-map-location-name-{{ ai_gen_id }}">{{ location_name }}</h3>
+            <p class="ai-map-location-address-{{ ai_gen_id }}">{{ location_address }}</p>
+            {% if location_phone != blank %}
+              <p class="ai-map-location-phone-{{ ai_gen_id }}">{{ location_phone }}</p>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="ai-map-display-{{ ai_gen_id }}">
+    {% if block.settings.google_maps_api_key != blank %}
+      <iframe
+        class="ai-map-frame-{{ ai_gen_id }}"
+        src=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        data-api-key="{{ block.settings.google_maps_api_key }}"></iframe>
+    {% else %}
+      <div class="ai-map-empty-state-{{ ai_gen_id }}">
+        <div>
+          <p>Add your Google Maps API key to display the map</p>
+          <p style="font-size: 14px; margin-top: 8px; opacity: 0.7;">Configure locations in the block settings</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</google-maps-{{ ai_gen_id }}><script>
+  (function() {
+    class GoogleMaps{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentMarkers = [];
+        this.map = null;
+      }
+
+      connectedCallback() {
+        this.locationItems = this.querySelectorAll('.ai-map-location-item-{{ ai_gen_id }}');
+        this.mapFrame = this.querySelector('.ai-map-frame-{{ ai_gen_id }}');
+        this.apiKey = this.mapFrame?.dataset.apiKey;
+
+        if (this.apiKey && this.locationItems.length > 0) {
+          this.initializeMap();
+          this.setupEventListeners();
+        }
+      }
+
+      initializeMap() {
+        const firstLocation = this.locationItems[0];
+        const lat = firstLocation.dataset.lat || '40.7128';
+        const lng = firstLocation.dataset.lng || '-74.0060';
+        const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${lat},${lng}&zoom=15`;
+        this.mapFrame.src = mapUrl;
+        firstLocation.classList.add('active');
+      }
+
+      setupEventListeners() {
+        this.locationItems.forEach((item) => {
+          item.addEventListener('click', () => {
+            this.selectLocation(item);
+          });
+        });
+      }
+
+      selectLocation(selectedItem) {
+        this.locationItems.forEach(item => item.classList.remove('active'));
+        selectedItem.classList.add('active');
+
+        const lat = selectedItem.dataset.lat;
+        const lng = selectedItem.dataset.lng;
+        const name = selectedItem.querySelector('.ai-map-location-name-{{ ai_gen_id }}').textContent;
+
+        if (lat && lng) {
+          const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${lat},${lng}&zoom=15`;
+          this.mapFrame.src = mapUrl;
+        } else {
+          const address = selectedItem.querySelector('.ai-map-location-address-{{ ai_gen_id }}').textContent;
+          const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${encodeURIComponent(address)}&zoom=15`;
+          this.mapFrame.src = mapUrl;
+        }
+      }
+    }
+
+    customElements.define('google-maps-{{ ai_gen_id }}', GoogleMaps{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Google Maps",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Google Maps setup"
+    },
+    {
+      "type": "text",
+      "id": "google_maps_api_key",
+      "label": "Google Maps API key",
+      "info": "Get your API key from Google Cloud Console"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar title",
+      "default": "Our Locations"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Map height",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "mobile_map_height",
+      "min": 200,
+      "max": 500,
+      "step": 25,
+      "unit": "px",
+      "label": "Mobile map height",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "sidebar_width",
+      "min": 250,
+      "max": 400,
+      "step": 25,
+      "unit": "px",
+      "label": "Sidebar width",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "sidebar_bg_color",
+      "label": "Sidebar background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Secondary text",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Hover background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "active_color",
+      "label": "Active background",
+      "default": "#e3f2fd"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Location 1"
+    },
+    {
+      "type": "text",
+      "id": "location_1_name",
+      "label": "Name",
+      "default": "Downtown Store"
+    },
+    {
+      "type": "textarea",
+      "id": "location_1_address",
+      "label": "Address",
+      "default": "123 Main Street, New York, NY 10001"
+    },
+    {
+      "type": "text",
+      "id": "location_1_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "location_1_lat",
+      "label": "Latitude"
+    },
+    {
+      "type": "text",
+      "id": "location_1_lng",
+      "label": "Longitude"
+    },
+    {
+      "type": "header",
+      "content": "Location 2"
+    },
+    {
+      "type": "text",
+      "id": "location_2_name",
+      "label": "Name"
+    },
+    {
+      "type": "textarea",
+      "id": "location_2_address",
+      "label": "Address"
+    },
+    {
+      "type": "text",
+      "id": "location_2_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "location_2_lat",
+      "label": "Latitude"
+    },
+    {
+      "type": "text",
+      "id": "location_2_lng",
+      "label": "Longitude"
+    },
+    {
+      "type": "header",
+      "content": "Location 3"
+    },
+    {
+      "type": "text",
+      "id": "location_3_name",
+      "label": "Name"
+    },
+    {
+      "type": "textarea",
+      "id": "location_3_address",
+      "label": "Address"
+    },
+    {
+      "type": "text",
+      "id": "location_3_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "location_3_lat",
+      "label": "Latitude"
+    },
+    {
+      "type": "text",
+      "id": "location_3_lng",
+      "label": "Longitude"
+    },
+    {
+      "type": "header",
+      "content": "Location 4"
+    },
+    {
+      "type": "text",
+      "id": "location_4_name",
+      "label": "Name"
+    },
+    {
+      "type": "textarea",
+      "id": "location_4_address",
+      "label": "Address"
+    },
+    {
+      "type": "text",
+      "id": "location_4_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "location_4_lat",
+      "label": "Latitude"
+    },
+    {
+      "type": "text",
+      "id": "location_4_lng",
+      "label": "Longitude"
+    },
+    {
+      "type": "header",
+      "content": "Location 5"
+    },
+    {
+      "type": "text",
+      "id": "location_5_name",
+      "label": "Name"
+    },
+    {
+      "type": "textarea",
+      "id": "location_5_address",
+      "label": "Address"
+    },
+    {
+      "type": "text",
+      "id": "location_5_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "location_5_lat",
+      "label": "Latitude"
+    },
+    {
+      "type": "text",
+      "id": "location_5_lng",
+      "label": "Longitude"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Google Maps"
+    }
+  ]
+}
+{% endschema %}
