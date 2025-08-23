@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -41,7 +50,7 @@
           "settings": {
             "heading": "WHAT PAYMENT METHOD CAN I USE TO MAKE MY PURCHASE?",
             "icon": "none",
-            "row_content": "<p>We offer the following payment methods:<\/p><ul><li>International or Fresh USD cards<\/li><li>Cash USD on Delivery | We accept fresh cash in dollars only<\/li><\/ul>",
+            "row_content": "<p>We offer the following payment methods:</p><ul><li>International or Fresh USD cards</li><li>Cash USD on Delivery | We accept fresh cash in dollars only</li></ul>",
             "page": ""
           }
         },
@@ -50,7 +59,7 @@
           "settings": {
             "heading": "IS IT SAFE TO USE MY CREDIT CARD ON THE WEBSITE?",
             "icon": "none",
-            "row_content": "<p>At sidewalks.net, we take every precaution to ensure that our site is secure. All credit card transactions on the website are processed using a secure online payment gateway that encrypts your card details in a secure host environment. These details will be fully encrypted and only used to process card transactions that you have initiated. To help ensure that your shopping experience is safe, simple, and reliable, sidewalks.net uses the 3D Secure Payment technology, which authenticates the cardholder’s identity at the time of purchase through methods including the Verified by Visa and MasterCard Secure Code.<\/p><p> <\/p><p>In order to process your order, we will need to hold the following information: your name, email address, phone numbers, home and shipping addresses, and credit or debit card billing address.<\/p><p> <\/p><p>Saved card details will never be shared with third parties and will only be used to process your order using our payment partner's systems. Additionally, we may also obtain information as a result of authentication or identity checks. Sometimes we may ask for your telephone number, and this may be given to our courier for delivery services. These details allow us to process your order and let you know the status of your order. If you have any questions about payment or your credit card security, please chat with our support team on WhatsApp at 76 66 49 29. From Monday to Friday, between 10 a.m. and 5 p.m.<\/p><p><\/p>",
+            "row_content": "<p>At sidewalks.net, we take every precaution to ensure that our site is secure. All credit card transactions on the website are processed using a secure online payment gateway that encrypts your card details in a secure host environment. These details will be fully encrypted and only used to process card transactions that you have initiated. To help ensure that your shopping experience is safe, simple, and reliable, sidewalks.net uses the 3D Secure Payment technology, which authenticates the cardholder’s identity at the time of purchase through methods including the Verified by Visa and MasterCard Secure Code.</p><p> </p><p>In order to process your order, we will need to hold the following information: your name, email address, phone numbers, home and shipping addresses, and credit or debit card billing address.</p><p> </p><p>Saved card details will never be shared with third parties and will only be used to process your order using our payment partner's systems. Additionally, we may also obtain information as a result of authentication or identity checks. Sometimes we may ask for your telephone number, and this may be given to our courier for delivery services. These details allow us to process your order and let you know the status of your order. If you have any questions about payment or your credit card security, please chat with our support team on WhatsApp at 76 66 49 29. From Monday to Friday, between 10 a.m. and 5 p.m.</p><p></p>",
             "page": ""
           }
         }
@@ -65,7 +74,7 @@
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
         "caption": "",
-        "heading": "<strong>Payment<\/strong>",
+        "heading": "<strong>Payment</strong>",
         "heading_size": "h2",
         "heading_alignment": "left",
         "layout": "none",
@@ -86,7 +95,7 @@
           "settings": {
             "heading": "Where is my order?",
             "icon": "none",
-            "row_content": "<p>Your order will arrive within 1-6 business days<strong>(Monday-Friday)<\/strong>after it's been placed.<\/p>",
+            "row_content": "<p>Your order will arrive within 1-6 business days<strong>(Monday-Friday)</strong>after it's been placed.</p>",
             "page": ""
           }
         }
@@ -100,7 +109,7 @@
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
         "caption": "",
-        "heading": "<strong>Travk Order<\/strong>",
+        "heading": "<strong>Track Order</strong>",
         "heading_size": "h2",
         "heading_alignment": "left",
         "layout": "none",
