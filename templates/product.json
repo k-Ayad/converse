@@ -116,6 +116,9 @@
         "buy_buttons",
         "share_bxBCpK"
       ],
+      "custom_css": [
+        "variant-selects label{font-size: 18px}"
+      ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
