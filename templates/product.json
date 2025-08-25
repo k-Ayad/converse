@@ -32,7 +32,7 @@
         "price": {
           "type": "price",
           "settings": {
-            "price_color": "#111111",
+            "price_color": "#7c7c7c",
             "price_weight": "700",
             "price_size_mobile": 22,
             "price_size_desktop": 32,
