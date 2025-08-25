@@ -46,7 +46,7 @@
         "sku_aHdUBc": {
           "type": "sku",
           "settings": {
-            "sku_title": "SKU",
+            "sku_title": "Style",
             "text_style": "body",
             "sku_label_color": "#111111",
             "sku_label_weight": "600",
