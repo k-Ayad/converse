@@ -241,7 +241,8 @@
       "settings": {
         "title": "You May Also Like",
         "no_of_items": 4,
-        "with_side": true
+        "with_side": true,
+        "products_to_show": 8
       }
     }
   },
