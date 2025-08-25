@@ -67,8 +67,8 @@
             "availability_title": "Availability",
             "availability_text_in": "In stock",
             "availability_text_out": "Out of stock",
-            "sku_avail_space_mobile": 6,
-            "sku_avail_space_desktop": 8
+            "sku_avail_space_mobile": 20,
+            "sku_avail_space_desktop": 20
           }
         },
         "product-inventory": {
