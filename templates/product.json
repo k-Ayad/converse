@@ -117,7 +117,7 @@
         "share_bxBCpK"
       ],
       "custom_css": [
-        "variant-selects .form__label {font-size: 18px;}"
+        "variant-selects .form__label {font-size: 16px;}"
       ],
       "settings": {
         "enable_sticky_info": true,
