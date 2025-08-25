@@ -31,12 +31,44 @@
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "price_color": "#111111",
+            "price_weight": "700",
+            "price_size_mobile": 22,
+            "price_size_desktop": 32,
+            "compare_color": "#888888",
+            "compare_weight": "400",
+            "compare_size_mobile": 16,
+            "compare_size_desktop": 18,
+            "show_badges": false
+          }
         },
         "sku_aHdUBc": {
           "type": "sku",
           "settings": {
-            "text_style": "body"
+            "sku_title": "SKU",
+            "text_style": "body",
+            "sku_label_color": "#111111",
+            "sku_label_weight": "600",
+            "sku_label_size_mobile": 14,
+            "sku_label_size_desktop": 14,
+            "sku_value_color": "#444444",
+            "sku_value_weight": "500",
+            "sku_value_size_mobile": 14,
+            "sku_value_size_desktop": 14,
+            "avail_label_color": "#111111",
+            "avail_label_weight": "600",
+            "avail_label_size_mobile": 14,
+            "avail_label_size_desktop": 14,
+            "avail_value_color": "#198754",
+            "avail_value_weight": "600",
+            "avail_value_size_mobile": 14,
+            "avail_value_size_desktop": 14,
+            "availability_title": "Availability",
+            "availability_text_in": "In stock",
+            "availability_text_out": "Out of stock",
+            "sku_avail_space_mobile": 6,
+            "sku_avail_space_desktop": 8
           }
         },
         "product-inventory": {
