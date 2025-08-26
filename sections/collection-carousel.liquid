@@ -1,33 +1,29 @@
 <section class="collection-carousel relative w-full flex flex-col md:flex-row items-center justify-center py-12">
   <!-- Carousel Image -->
-  <div class="carousel-image w-full md:w-1/2 relative">
+  <div class="carousel-image w-full md:w-1/2 relative flex items-center justify-center">
     {% for block in section.blocks %}
       {% assign coll = block.settings.collection %}
       {% if coll %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-        <img
-              srcset="
-                {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
-                {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
-                {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
-                {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
-                {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
-                {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-                {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
-                {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
-              "
-              src="{{ coll.featured_image | image_url: width: 1500 }}"
-              sizes="
-                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 3 }}px,
-                (min-width: 750px) calc((100vw - 10rem) / 2),
-                calc(100vw - 3rem)
-              "
-              alt="{{ coll.title | escape }}"
-              height="{{ coll.featured_image.height }}"
-              width="{{ coll.featured_image.width }}"
-              loading="lazy"
-              class="motion-reduce w-full h-auto object-cover"
-            >
+          <img
+            srcset="
+              {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
+              {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
+              {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
+              {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
+              {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+              {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+              {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+              {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
+            "
+            src="{{ coll.featured_image | image_url: width: 1000 }}"
+            sizes="(min-width: 750px) 50vw, 100vw"
+            alt="{{ coll.title | escape }}"
+            height="{{ coll.featured_image.height }}"
+            width="{{ coll.featured_image.width }}"
+            loading="lazy"
+            class="motion-reduce w-full h-auto object-contain max-h-[500px]"
+          >
         </div>
       {% endif %}
     {% endfor %}
@@ -51,10 +47,11 @@
 .collection-carousel {
   position: relative;
 }
+.carousel-image {
+  position: relative;
+}
 .carousel-item {
   display: none;
-  position: absolute;
-  inset: 0;
 }
 .carousel-item.active {
   display: block;
@@ -70,6 +67,7 @@
   opacity: 1;
 }
 </style>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
