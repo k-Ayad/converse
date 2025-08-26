@@ -5,22 +5,24 @@
       {% assign coll = block.settings.collection %}
       {% if coll %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-          <img
-            srcset="
-              {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
-              {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
-              {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
-              {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
-              {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
-              {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-              {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
-              {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
-            "
-            src="{{ coll.featured_image | image_url: width: 1000 }}"
-            alt="{{ coll.title | escape }}"
-            loading="lazy"
-            class="carousel-img"
-          >
+            <a href="{{ coll.url }}">
+                <img
+                  srcset="
+                    {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                    {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                    {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
+                  "
+                  src="{{ coll.featured_image | image_url: width: 1000 }}"
+                  alt="{{ coll.title | escape }}"
+                  loading="lazy"
+                  class="carousel-img"
+                >
+            </a>
         </div>
       {% endif %}
     {% endfor %}
