@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function(){
     interval = setInterval(()=>{
       index = (index + 1) % items.length;
       showSlide(index);
-    }, 3000);
+    }, {{ section.settings.autoplay-duration }});
   }
 
   autoplay();
@@ -165,7 +165,15 @@ document.addEventListener("DOMContentLoaded", function(){
 {% schema %}
 {
   "name": "Collection Carousel",
-  "settings": [],
+  "settings": [
+    {
+        "type": "number",
+        "default": 3000,
+        "placeholder": "transition duration",
+        "label": "Duration",
+        "id": "autoplay-duration"
+    }
+  ],
   "blocks": [
     {
       "type": "collection",
