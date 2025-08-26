@@ -1,6 +1,6 @@
-<section class="collection-carousel relative w-full flex flex-col md:flex-row items-center justify-center py-12">
+<section class="collection-carousel">
   <!-- Carousel Image -->
-  <div class="carousel-image w-full md:w-1/2 relative flex items-center justify-center">
+  <div class="carousel-image">
     {% for block in section.blocks %}
       {% assign coll = block.settings.collection %}
       {% if coll %}
@@ -17,12 +17,9 @@
               {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
             "
             src="{{ coll.featured_image | image_url: width: 1000 }}"
-            sizes="(min-width: 750px) 50vw, 100vw"
             alt="{{ coll.title | escape }}"
-            height="{{ coll.featured_image.height }}"
-            width="{{ coll.featured_image.width }}"
             loading="lazy"
-            class="motion-reduce max-h-[500px] w-auto h-auto object-contain mx-auto"
+            class="carousel-img"
           >
         </div>
       {% endif %}
@@ -30,13 +27,13 @@
   </div>
 
   <!-- Collection Names -->
-  <div class="collection-list w-full md:w-1/2 flex flex-col items-start justify-center px-6 md:px-12">
+  <div class="collection-list">
     {% for block in section.blocks %}
       {% assign coll = block.settings.collection %}
       {% if coll %}
-        <div class="collection-link group flex items-center space-x-2 py-2 cursor-pointer" data-index="{{ forloop.index0 }}">
-          <span class="arrow opacity-0 group-hover:opacity-100 transition">→</span>
-          <span class="title font-light text-2xl group-hover:font-bold group-hover:text-black transition">{{ coll.title }}</span>
+        <div class="collection-link" data-index="{{ forloop.index0 }}">
+          <span class="arrow">→</span>
+          <span class="title">{{ coll.title }}</span>
         </div>
       {% endif %}
     {% endfor %}
@@ -44,31 +41,85 @@
 </section>
 
 <style>
+/* Layout */
 .collection-carousel {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
 }
+.carousel-image,
+.collection-list {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .collection-carousel {
+    flex-direction: row;
+    align-items: center;
+  }
+  .carousel-image,
+  .collection-list {
+    width: 50%;
+  }
+}
+
+/* Carousel Image */
 .carousel-image {
   position: relative;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
 }
 .carousel-item {
   display: none;
+  text-align: center;
 }
 .carousel-item.active {
   display: block;
 }
-.collection-link .title {
-  color: #666;
+.carousel-img {
+  max-width: 100%;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
 }
+
+/* Collection List */
+.collection-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+.collection-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #666;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+.collection-link .arrow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.collection-link:hover .arrow,
+.collection-link.active .arrow {
+  opacity: 1;
+}
+.collection-link:hover .title,
 .collection-link.active .title {
   font-weight: 700;
   color: #000;
 }
-.collection-link.active .arrow {
-  opacity: 1;
-}
 </style>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
