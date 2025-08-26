@@ -261,7 +261,9 @@
         "collection_KWRCtc"
       ],
       "name": "Collection Carousel",
-      "settings": {}
+      "settings": {
+        "autoplay-duration": 6000
+      }
     },
     "carousel_section_ir8hMB": {
       "type": "carousel-section",
