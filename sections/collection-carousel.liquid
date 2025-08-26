@@ -31,138 +31,151 @@
     {% for block in section.blocks %}
       {% assign coll = block.settings.collection %}
       {% if coll %}
-        <div class="collection-link" data-index="{{ forloop.index0 }}">
-          <span class="arrow">→</span>
+        <a href="{{ coll.url }}" class="collection-link" data-index="{{ forloop.index0 }}">
+          <span class="arrow">
+            <svg
+              role="presentation"
+              focusable="false"
+              stroke-width="2"
+              title="Arrow-right"
+              width="57"
+              height="42"
+              class="icon icon-arrow-right-slider-con"
+              viewBox="0 0 57 42"
+            >
+              <path d="M27.9 0l-3.6 3.5 12.5 12.1H0v4.9h36.8l-12.5 12 3.6 3.5 18.6-18z"></path>
+            </svg>
+          </span>
           <span class="title">{{ coll.title }}</span>
-        </div>
+        </a>
       {% endif %}
     {% endfor %}
   </div>
 </section>
 
 <style>
-/* Layout */
-.collection-carousel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-}
-.carousel-image,
-.collection-list {
-  width: 100%;
-}
-@media (min-width: 768px) {
+  /* Layout */
   .collection-carousel {
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
   }
   .carousel-image,
   .collection-list {
-    width: 50%;
+    width: 100%;
   }
-}
+  @media (min-width: 768px) {
+    .collection-carousel {
+      flex-direction: row;
+      align-items: center;
+    }
+    .carousel-image,
+    .collection-list {
+      width: 50%;
+    }
+  }
 
-/* Carousel Image */
-.carousel-image {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-}
-.carousel-item {
-  display: none;
-  text-align: center;
-  margin-right: 0
-}
-.carousel-item.active {
-  display: block;
-}
-.carousel-img {
-  max-width: 100%;
-  max-height: 500px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  margin: 0 auto;
-}
+  /* Carousel Image */
+  .carousel-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+  .carousel-item {
+    display: none;
+    text-align: center;
+    margin-right: 0;
+  }
+  .carousel-item.active {
+    display: block;
+  }
+  .carousel-img {
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+  }
 
-/* Collection List */
-.collection-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-}
-.collection-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 2rem;
-  font-weight: 300;
-  color: #666;
-  cursor: pointer;
-  margin: 0.5rem 0;
-  transition: all 0.3s ease;
-}
-.collection-link .arrow {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.collection-link:hover .arrow,
-.collection-link.active .arrow {
-  opacity: 1;
-}
-.collection-link .title {
-  color: #666;
-}
-.collection-link:hover .title,
-.collection-link.active .title {
-  font-weight: 700;
-  color: #000;
-}
+  /* Collection List */
+  .collection-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .collection-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #666;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+  }
+  .collection-link .arrow {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .collection-link:hover .arrow,
+  .collection-link.active .arrow {
+    opacity: 1;
+  }
+  .collection-link .title {
+    color: #666;
+  }
+  .collection-link:hover .title,
+  .collection-link.active .title {
+    font-weight: 700;
+    color: #000;
+  }
 </style>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-  const items = document.querySelectorAll(".carousel-item");
-  const links = document.querySelectorAll(".collection-link");
-  let index = 0;
-  let interval;
+  document.addEventListener("DOMContentLoaded", function(){
+    const items = document.querySelectorAll(".carousel-item");
+    const links = document.querySelectorAll(".collection-link");
+    let index = 0;
+    let interval;
 
-  function showSlide(i){
-    items.forEach((el, idx)=> {
-      el.classList.toggle("active", idx === i);
-    });
-    links.forEach((el, idx)=> {
-      el.classList.toggle("active", idx === i);
-    });
-    index = i;
-  }
+    function showSlide(i){
+      items.forEach((el, idx)=> {
+        el.classList.toggle("active", idx === i);
+      });
+      links.forEach((el, idx)=> {
+        el.classList.toggle("active", idx === i);
+      });
+      index = i;
+    }
 
-  // Hover effect
-  links.forEach(link=>{
-    link.addEventListener("mouseenter", ()=>{
-      clearInterval(interval);
-      showSlide(parseInt(link.dataset.index));
+    // Hover effect
+    links.forEach(link=>{
+      link.addEventListener("mouseenter", ()=>{
+        clearInterval(interval);
+        showSlide(parseInt(link.dataset.index));
+      });
+      link.addEventListener("mouseleave", ()=>{
+        autoplay();
+      });
     });
-    link.addEventListener("mouseleave", ()=>{
-      autoplay();
-    });
+
+    // Autoplay
+    function autoplay(){
+      interval = setInterval(()=>{
+        index = (index + 1) % items.length;
+        showSlide(index);
+      }, {{ section.settings.autoplay-duration }});
+    }
+
+    autoplay();
   });
-
-  // Autoplay
-  function autoplay(){
-    interval = setInterval(()=>{
-      index = (index + 1) % items.length;
-      showSlide(index);
-    }, {{ section.settings.autoplay-duration }});
-  }
-
-  autoplay();
-});
 </script>
 
 {% schema %}
@@ -170,11 +183,11 @@ document.addEventListener("DOMContentLoaded", function(){
   "name": "Collection Carousel",
   "settings": [
     {
-        "type": "number",
-        "default": 3000,
-        "placeholder": "transition duration",
-        "label": "Duration",
-        "id": "autoplay-duration"
+      "type": "number",
+      "default": 3000,
+      "placeholder": "transition duration",
+      "label": "Duration",
+      "id": "autoplay-duration"
     }
   ],
   "blocks": [
