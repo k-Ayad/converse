@@ -235,6 +235,31 @@
     },
     "collection_carousel_J448fw": {
       "type": "collection-carousel",
+      "blocks": {
+        "collection_jjLwyR": {
+          "type": "collection",
+          "settings": {
+            "collection": "training-collection"
+          }
+        },
+        "collection_axnRCB": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-collection"
+          }
+        },
+        "collection_KWRCtc": {
+          "type": "collection",
+          "settings": {
+            "collection": "lifestyle-collection"
+          }
+        }
+      },
+      "block_order": [
+        "collection_jjLwyR",
+        "collection_axnRCB",
+        "collection_KWRCtc"
+      ],
       "name": "Collection Carousel",
       "settings": {}
     },
