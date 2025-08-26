@@ -22,7 +22,7 @@
             height="{{ coll.featured_image.height }}"
             width="{{ coll.featured_image.width }}"
             loading="lazy"
-            class="motion-reduce w-full h-auto object-contain max-h-[500px]"
+            class="motion-reduce max-h-[500px] w-auto h-auto object-contain mx-auto"
           >
         </div>
       {% endif %}
@@ -49,6 +49,7 @@
 }
 .carousel-image {
   position: relative;
+  text-align: center;
 }
 .carousel-item {
   display: none;
