@@ -5,24 +5,24 @@
       {% assign coll = block.settings.collection %}
       {% if coll %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-            <a href="{{ coll.url }}">
-                <img
-                  srcset="
-                    {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-                    {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
-                    {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
-                  "
-                  src="{{ coll.featured_image | image_url: width: 1000 }}"
-                  alt="{{ coll.title | escape }}"
-                  loading="lazy"
-                  class="carousel-img"
-                >
-            </a>
+          <a href="{{ coll.url }}">
+            <img
+              srcset="
+                {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
+                {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
+                {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
+                {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
+              "
+              src="{{ coll.featured_image | image_url: width: 1000 }}"
+              alt="{{ coll.title | escape }}"
+              loading="lazy"
+              class="carousel-img"
+            >
+          </a>
         </div>
       {% endif %}
     {% endfor %}
@@ -39,7 +39,6 @@
               role="presentation"
               focusable="false"
               stroke-width="2"
-              title="Arrow-right"
               width="57"
               height="42"
               class="icon icon-arrow-right-slider-con"
@@ -56,129 +55,136 @@
 </section>
 
 <style>
-  /* Layout */
+/* Layout */
+.collection-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+.carousel-image,
+.collection-list {
+  width: 100%;
+}
+@media (min-width: 768px) {
   .collection-carousel {
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    padding: 3rem 1rem;
   }
   .carousel-image,
   .collection-list {
-    width: 100%;
+    width: 50%;
   }
-  @media (min-width: 768px) {
-    .collection-carousel {
-      flex-direction: row;
-      align-items: center;
-    }
-    .carousel-image,
-    .collection-list {
-      width: 50%;
-    }
-  }
+}
 
-  /* Carousel Image */
-  .carousel-image {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-  }
-  .carousel-item {
-    display: none;
-    text-align: center;
-    margin-right: 0;
-  }
-  .carousel-item.active {
-    display: block;
-  }
-  .carousel-img {
-    max-width: 100%;
-    max-height: 500px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    margin: 0 auto;
-  }
+/* Carousel Image with fade */
+.carousel-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  overflow: hidden;
+}
+.carousel-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-item.active {
+  opacity: 1;
+  z-index: 2;
+}
+.carousel-img {
+  max-width: 100%;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
 
-  /* Collection List */
-  .collection-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-  }
-  .collection-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 2rem;
-    font-weight: 300;
-    color: #666;
-    cursor: pointer;
-    margin: 0.5rem 0;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  .collection-link .arrow {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .collection-link:hover .arrow,
-  .collection-link.active .arrow {
-    opacity: 1;
-  }
-  .collection-link .title {
-    color: #666;
-  }
-  .collection-link:hover .title,
-  .collection-link.active .title {
-    font-weight: 700;
-    color: #000;
-  }
+/* Collection List */
+.collection-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+.collection-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #666;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.collection-link .arrow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.collection-link:hover .arrow,
+.collection-link.active .arrow {
+  opacity: 1;
+}
+.collection-link .title {
+  color: #666;
+}
+.collection-link:hover .title,
+.collection-link.active .title {
+  font-weight: 700;
+  color: #000;
+}
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(){
-    const items = document.querySelectorAll(".carousel-item");
-    const links = document.querySelectorAll(".collection-link");
-    let index = 0;
-    let interval;
+document.addEventListener("DOMContentLoaded", function(){
+  const items = document.querySelectorAll(".carousel-item");
+  const links = document.querySelectorAll(".collection-link");
+  let index = 0;
+  let interval;
 
-    function showSlide(i){
-      items.forEach((el, idx)=> {
-        el.classList.toggle("active", idx === i);
-      });
-      links.forEach((el, idx)=> {
-        el.classList.toggle("active", idx === i);
-      });
-      index = i;
-    }
-
-    // Hover effect
-    links.forEach(link=>{
-      link.addEventListener("mouseenter", ()=>{
-        clearInterval(interval);
-        showSlide(parseInt(link.dataset.index));
-      });
-      link.addEventListener("mouseleave", ()=>{
-        autoplay();
-      });
+  function showSlide(i){
+    items.forEach((el, idx)=> {
+      el.classList.toggle("active", idx === i);
     });
+    links.forEach((el, idx)=> {
+      el.classList.toggle("active", idx === i);
+    });
+    index = i;
+  }
 
-    // Autoplay
-    function autoplay(){
-      interval = setInterval(()=>{
-        index = (index + 1) % items.length;
-        showSlide(index);
-      }, {{ section.settings.autoplay-duration }});
-    }
-
-    autoplay();
+  // Hover effect (pause on hover)
+  links.forEach(link=>{
+    link.addEventListener("mouseenter", ()=>{
+      clearInterval(interval);
+      showSlide(parseInt(link.dataset.index));
+    });
+    link.addEventListener("mouseleave", ()=>{
+      autoplay();
+    });
   });
+
+  // Autoplay
+  function autoplay(){
+    clearInterval(interval);
+    interval = setInterval(()=>{
+      index = (index + 1) % items.length;
+      showSlide(index);
+    }, {{ section.settings.autoplay-duration }});
+  }
+
+  autoplay();
+});
 </script>
 
 {% schema %}
@@ -187,10 +193,9 @@
   "settings": [
     {
       "type": "number",
-      "default": 3000,
-      "placeholder": "transition duration",
-      "label": "Duration",
-      "id": "autoplay-duration"
+      "id": "autoplay-duration",
+      "label": "Autoplay duration (ms)",
+      "default": 3000
     }
   ],
   "blocks": [
