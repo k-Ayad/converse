@@ -3621,3 +3621,20 @@ details-disclosure > details {
 }
 
 
+@font-face {
+  font-family: 'proxima';
+  src: url('{{ "proxima.woff2" | file_url }}') format("woff2"),
+       url('{{ "proxima.woff" | file_url }}') format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'proxima';
+  src: url('{{ "proxima-bold.woff2" | file_url }}') format("woff2"),
+       url('{{ "proxima-bold.woff" | file_url }}') format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
