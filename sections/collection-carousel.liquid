@@ -114,7 +114,6 @@
   .collection-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     font-size: 2rem;
     font-weight: 300;
     color: #666;
@@ -122,25 +121,34 @@
     margin: 0.5rem 0;
     text-decoration: none;
     transition: all 0.3s ease;
+    overflow: hidden;
   }
   .collection-link .arrow {
     opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .collection-link:hover .arrow,
-  .collection-link.active .arrow {
-    opacity: 1;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
   }
   .collection-link .title {
     font-family: 'proxima', sans-serif;
     color: #666;
     margin: 0;
+    transition: transform 0.3s ease, color 0.3s ease, font-weight 0.3s ease;
+  }
+
+  /* Hover + Active states */
+  .collection-link:hover .arrow,
+  .collection-link.active .arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
   .collection-link:hover .title,
   .collection-link.active .title {
     font-family: 'proxima', sans-serif;
     font-weight: 700;
     color: #000;
+    transform: translateX(10px); /* shift right when arrow visible */
   }
 </style>
 
