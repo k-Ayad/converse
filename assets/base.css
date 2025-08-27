@@ -3621,3 +3621,19 @@ details-disclosure > details {
 }
 
 
+@font-face {
+  font-family: 'proxima';
+  src: url('{{ "Fontspring-DEMO-proximanova-regular.otf" | file_url }}') format("otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'proxima';
+  src: url('{{ "Fontspring-DEMO-proximanovaexcn-bold.otf" | file_url }}') format("otf"),
+       url('{{ "proxima-bold.woff" | file_url }}') format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
