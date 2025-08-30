@@ -132,8 +132,17 @@
   }
   .collection-link .title {
     font-family: 'proxima', sans-serif;
-    color: #666;
+    font-size: 4.5rem !important;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
     margin: 0;
+    line-height: 8rem;
+    font-style: normal !important;
     transition: transform 0.3s ease, color 0.3s ease, font-weight 0.3s ease;
   }
 
@@ -149,6 +158,9 @@
     font-weight: 700;
     color: #000;
     transform: translateX(10px); /* shift right when arrow visible */
+  }
+  .collection-link:hover,.collection-link.active {
+    transform: translateX(65px);
   }
 </style>
 
