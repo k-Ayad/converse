@@ -68,6 +68,16 @@
   .collection-list {
     width: 100%;
   }
+  @media (min-width: 768px) {
+    .collection-carousel {
+      flex-direction: row;
+      align-items: center;
+    }
+    .carousel-image,
+    .collection-list {
+      width: 50%;
+    }
+  }
 
   /* Carousel Image */
   .carousel-image {
@@ -125,7 +135,11 @@
     font-size: 4.5rem !important;
     font-weight: 700;
     color: #fff;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: 
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
     margin: 0;
     line-height: 8rem;
     font-style: normal !important;
@@ -145,43 +159,8 @@
     color: #000;
     transform: translateX(10px); /* shift right when arrow visible */
   }
-  .collection-link:hover,
-  .collection-link.active {
+  .collection-link:hover,.collection-link.active {
     transform: translateX(65px);
-  }
-
-  @media (min-width: 768px) {
-    .collection-carousel {
-      flex-direction: row;
-      align-items: center;
-    }
-    .carousel-image,
-    .collection-list {
-      width: 50%;
-    }
-  }
-
-  /* Force side-by-side even on small screens */
-  @media (max-width: 767px) {
-    .collection-carousel {
-      flex-direction: row; /* keep row layout */
-      align-items: flex-start;
-    }
-    .carousel-image,
-    .collection-list {
-      width: 50%; /* half screen each */
-      max-height: 80vh; /* prevent overflow */
-      overflow-y: auto; /* allow list to scroll */
-    }
-
-    /* Tweak text sizes for mobile */
-    .collection-link .title {
-      font-size: 1.2rem !important;
-      line-height: 1.6rem;
-    }
-    .collection-link {
-      margin: 0.4rem 0;
-    }
   }
 </style>
 
