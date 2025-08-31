@@ -167,49 +167,52 @@
     flex-direction: column; /* stacked layout */
   }
 
-  /* Put tabs above image */
+  /* Tabs container: horizontal, wrapping */
   .collection-list {
-    order: -1; /* above carousel-image */
+    order: -1;                /* move above the image */
     display: flex;
-    flex-wrap: wrap;       /* allow wrapping onto multiple lines */
-    justify-content: center;
+    flex-wrap: wrap;          /* allow tabs to wrap to next line */
+    justify-content: center;  /* center the tabs */
     gap: 0.5rem;
     padding: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid #ddd; /* optional, just for clarity */
+    background: transparent;  /* keep container background neutral */
   }
 
+  /* Tabs (links) */
   .collection-link {
-    flex: 0 1 auto; /* allow resizing */
+    flex: 0 1 auto;           /* allow resizing */
     font-size: 1rem;
     font-weight: 600;
-    color: #555;
-    background: #f5f5f5;
+    color: #555;              /* default text color */
+    background: #f5f5f5;      /* default tab background */
     border-radius: 20px;
     padding: 0.5rem 1rem;
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
   }
 
-  .collection-link.active,
-  .collection-link:hover {
-    background: #000;
-    color: #fff;
-    transform: none; /* remove horizontal shift */
+  /* Active tab */
+  .collection-link.active {
+    background: #000;         /* black background */
+    color: #fff;              /* white text */
   }
 
-  /* Remove arrow & big text styling for mobile */
+  /* Remove arrow for mobile */
   .collection-link .arrow {
-    display: none !important; /* hide the arrow on mobile */
+    display: none !important;
   }
+
+  /* Make sure the title inherits the color from the parent link */
   .collection-link .title {
     font-size: 1rem !important;
     line-height: 1.4rem;
     font-weight: 600;
     text-shadow: none;
+    color: inherit;           /* 🔹 ensures white when parent is active */
   }
 
-  /* Adjust image */
+  /* Adjust image size */
   .carousel-image {
     min-height: 200px;
     margin-top: 1rem;
