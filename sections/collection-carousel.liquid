@@ -176,7 +176,7 @@
     gap: 0.5rem;
     padding: 0.5rem;
     width: 100%;
-    background: transparent;  /* keep container background neutral */
+    background: transparent;  /* neutral background */
   }
 
   /* Tabs (links) */
@@ -190,26 +190,28 @@
     padding: 0.5rem 1rem;
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
+    transform: none !important; /* 🔹 disable transform effect from desktop */
   }
 
   /* Active tab */
-  .collection-link.active,.collection-link:hover {
-    background: #000 !important;         /* black background */
-    color: #fff !important;              /* white text */
+  .collection-link.active {
+    background: #000 !important; /* black background */
+    color: #fff !important;      /* white text */
   }
 
-  /* Remove arrow for mobile */
+  /* Remove arrow on mobile */
   .collection-link .arrow {
     display: none !important;
   }
 
-  /* Make sure the title inherits the color from the parent link */
+  /* Make sure the title inherits the correct color */
   .collection-link .title {
     font-size: 1rem !important;
     line-height: 1.4rem;
     font-weight: 600;
     text-shadow: none;
-    color: inherit;           /* 🔹 ensures white when parent is active */
+    color: inherit !important; /* 🔹 ensures it follows parent color */
+    transform: none !important; /* 🔹 stop title shift effect */
   }
 
   /* Adjust image size */
@@ -222,7 +224,6 @@
     object-fit: contain;
   }
 }
-
 </style>
 
 <script>
