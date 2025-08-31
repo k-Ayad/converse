@@ -162,6 +162,62 @@
   .collection-link:hover,.collection-link.active {
     transform: translateX(65px);
   }
+  @media (max-width: 767px) {
+  .collection-carousel {
+    flex-direction: column; /* keep stacked */
+  }
+
+  /* Move list above the image */
+  .collection-list {
+    order: -1; /* put above carousel image */
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+    width: 100%;
+    border-bottom: 1px solid #ddd; /* optional */
+  }
+
+  /* Tabs look */
+  .collection-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    background: #f5f5f5;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    flex: 0 0 auto; /* don't shrink */
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .collection-link.active,
+  .collection-link:hover {
+    background: #000;
+    color: #fff;
+    transform: none; /* remove big shift */
+  }
+
+  .collection-link .arrow,
+  .collection-link .title {
+    text-shadow: none;
+    font-size: 1rem !important;
+    line-height: 1.2rem;
+    font-weight: 600;
+    transform: none;
+  }
+
+  /* Reduce image height for phones */
+  .carousel-image {
+    min-height: 200px;
+  }
+  .carousel-img {
+    max-height: 250px;
+    object-fit: contain;
+  }
+}
+
 </style>
 
 <script>
