@@ -181,16 +181,22 @@
 
   /* Tabs (links) */
   .collection-link {
-    flex: 0 1 auto;           /* allow resizing */
+    flex: 0 1 auto;           
     font-size: 1rem;
     font-weight: 600;
-    color: #555;              /* default text color */
-    background: #f5f5f5;      /* default tab background */
+    color: #555;
+    background: #f5f5f5;
     border-radius: 20px;
     padding: 0.5rem 1rem;
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
-    transform: none !important; /* 🔹 disable transform effect from desktop */
+    transform: none !important; /* disable transform effect from desktop */
+
+    /* 🔹 Center text horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   /* Active tab */
@@ -210,8 +216,10 @@
     line-height: 1.4rem;
     font-weight: 600;
     text-shadow: none;
-    color: inherit !important; /* 🔹 ensures it follows parent color */
-    transform: none !important; /* 🔹 stop title shift effect */
+    color: inherit !important;   /* follow parent color */
+    transform: none !important;  /* stop title shift */
+    text-align: center;          /* ensure centered text alignment */
+    width: 100%;                 /* helps if multiple words */
   }
 
   /* Adjust image size */
@@ -224,6 +232,7 @@
     object-fit: contain;
   }
 }
+
 </style>
 
 <script>
