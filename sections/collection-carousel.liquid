@@ -1,0 +1,309 @@
+<section class="collection-carousel">
+  <!-- Carousel Image -->
+  <div class="carousel-image">
+    {% for block in section.blocks %}
+      {% assign coll = block.settings.collection %}
+      {% if coll %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+          <a href="{{ coll.url }}">
+            <img
+              srcset="
+                {%- if coll.featured_image.width >= 165 -%}{{ coll.featured_image | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if coll.featured_image.width >= 330 -%}{{ coll.featured_image | image_url: width: 330 }} 330w,{%- endif -%}
+                {%- if coll.featured_image.width >= 535 -%}{{ coll.featured_image | image_url: width: 535 }} 535w,{%- endif -%}
+                {%- if coll.featured_image.width >= 750 -%}{{ coll.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
+                {%- if coll.featured_image.width >= 1000 -%}{{ coll.featured_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                {%- if coll.featured_image.width >= 1500 -%}{{ coll.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                {%- if coll.featured_image.width >= 3000 -%}{{ coll.featured_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                {{ coll.featured_image | image_url }} {{ coll.featured_image.width }}w
+              "
+              src="{{ coll.featured_image | image_url: width: 1000 }}"
+              alt="{{ coll.title | escape }}"
+              loading="lazy"
+              class="carousel-img"
+            >
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Collection Names -->
+  <div class="collection-list">
+    {% for block in section.blocks %}
+      {% assign coll = block.settings.collection %}
+      {% if coll %}
+        <a href="{{ coll.url }}" class="collection-link" data-index="{{ forloop.index0 }}">
+          <span class="arrow">
+            <svg
+              role="presentation"
+              focusable="false"
+              stroke-width="2"
+              title="Arrow-right"
+              width="57"
+              height="42"
+              class="icon icon-arrow-right-slider-con"
+              viewBox="0 0 57 42"
+            >
+              <path d="M27.9 0l-3.6 3.5 12.5 12.1H0v4.9h36.8l-12.5 12 3.6 3.5 18.6-18z"></path>
+            </svg>
+          </span>
+          <span class="title">{{ coll.title | upcase }}</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  /* Layout */
+  .collection-carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+  .carousel-image,
+  .collection-list {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .collection-carousel {
+      flex-direction: row;
+      align-items: center;
+    }
+    .carousel-image,
+    .collection-list {
+      width: 50%;
+    }
+  }
+
+  /* Carousel Image */
+  .carousel-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+  .carousel-item {
+    display: none;
+    text-align: center;
+    margin-right: 0;
+  }
+  .carousel-item.active {
+    display: block;
+  }
+  .carousel-img {
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  /* Collection List */
+  .collection-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .collection-link {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #666;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .collection-link .arrow {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  .collection-link .title {
+    font-family: 'proxima', sans-serif;
+    font-size: 4.5rem !important;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+    margin: 0;
+    line-height: 8rem;
+    font-style: normal !important;
+    transition: transform 0.3s ease, color 0.3s ease, font-weight 0.3s ease;
+  }
+
+  /* Hover + Active states */
+  .collection-link:hover .arrow,
+  .collection-link.active .arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .collection-link:hover .title,
+  .collection-link.active .title {
+    font-family: 'proxima', sans-serif;
+    font-weight: 700;
+    color: #000;
+    transform: translateX(10px); /* shift right when arrow visible */
+  }
+  .collection-link:hover,.collection-link.active {
+    transform: translateX(65px);
+  }
+  @media (max-width: 767px) {
+  .collection-carousel {
+    flex-direction: column; /* stacked layout */
+  }
+
+  /* Tabs container: horizontal, wrapping */
+  .collection-list {
+    order: -1;                /* move above the image */
+    display: flex;
+    flex-wrap: wrap;          /* allow tabs to wrap to next line */
+    justify-content: center;  /* center the tabs */
+    gap: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+    background: transparent;  /* neutral background */
+  }
+
+  /* Tabs (links) */
+  .collection-link {
+    flex: 0 1 auto;           
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    background: #f5f5f5;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    transform: none !important; /* disable transform effect from desktop */
+
+    /* 🔹 Center text horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Active tab */
+  .collection-link.active {
+    background: #000 !important; /* black background */
+    color: #fff !important;      /* white text */
+  }
+
+  /* Remove arrow on mobile */
+  .collection-link .arrow {
+    display: none !important;
+  }
+
+  /* Make sure the title inherits the correct color */
+  .collection-link .title {
+    font-size: 1rem !important;
+    line-height: 2.4rem;
+    font-weight: 600;
+    text-shadow: none;
+    color: inherit !important;   /* follow parent color */
+    transform: none !important;  /* stop title shift */
+    text-align: center;          /* ensure centered text alignment */
+    width: 100%;                 /* helps if multiple words */
+  }
+
+  /* Adjust image size */
+  .carousel-image {
+    min-height: 200px;
+    margin-top: 1rem;
+  }
+  .carousel-img {
+    max-height: 250px;
+    object-fit: contain;
+  }
+}
+
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    const items = document.querySelectorAll(".carousel-item");
+    const links = document.querySelectorAll(".collection-link");
+    let index = 0;
+    let interval;
+
+    function showSlide(i){
+      items.forEach((el, idx)=> {
+        el.classList.toggle("active", idx === i);
+      });
+      links.forEach((el, idx)=> {
+        el.classList.toggle("active", idx === i);
+      });
+      index = i;
+    }
+
+    // Hover effect
+    links.forEach(link=>{
+      link.addEventListener("mouseenter", ()=>{
+        clearInterval(interval);
+        showSlide(parseInt(link.dataset.index));
+      });
+      link.addEventListener("mouseleave", ()=>{
+        autoplay();
+      });
+    });
+
+    // Autoplay
+    function autoplay(){
+      interval = setInterval(()=>{
+        index = (index + 1) % items.length;
+        showSlide(index);
+      }, {{ section.settings.autoplay-duration }});
+    }
+
+    autoplay();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection Carousel",
+  "settings": [
+    {
+      "type": "number",
+      "default": 3000,
+      "placeholder": "transition duration",
+      "label": "Duration",
+      "id": "autoplay-duration"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Carousel"
+    }
+  ]
+}
+{% endschema %}

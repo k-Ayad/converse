@@ -234,6 +234,38 @@
         "show_text_below": true
       }
     },
+    "collection_carousel_J448fw": {
+      "type": "collection-carousel",
+      "blocks": {
+        "collection_jjLwyR": {
+          "type": "collection",
+          "settings": {
+            "collection": "training-collection"
+          }
+        },
+        "collection_axnRCB": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-collection"
+          }
+        },
+        "collection_KWRCtc": {
+          "type": "collection",
+          "settings": {
+            "collection": "lifestyle-collection"
+          }
+        }
+      },
+      "block_order": [
+        "collection_jjLwyR",
+        "collection_axnRCB",
+        "collection_KWRCtc"
+      ],
+      "name": "Collection Carousel",
+      "settings": {
+        "autoplay-duration": 3000
+      }
+    },
     "carousel_section_ir8hMB": {
       "type": "carousel-section",
       "name": "Product Carousel",
@@ -297,6 +329,7 @@
     "all-products",
     "collection-list",
     "image-banner",
+    "collection_carousel_J448fw",
     "carousel_section_ir8hMB",
     "collection-banner",
     "carousel_section_CgiKrn",
